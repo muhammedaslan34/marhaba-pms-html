@@ -146,6 +146,26 @@
       <button class="btn btn-primary" data-action="close-modal" data-target="guest-modal" onclick="PMS.toast('تم حفظ النزيل (تجريبي)')">حفظ</button>
     </div>
   </div>
-  <script src="../assets/js/app.js?v=prop1"></script>
+  <script src="../assets/js/pms-data.js"></script>
+  <script>
+    (function () {
+      var GUEST_PROPERTY_MAP = {
+        "ابراهيم": "HOMS1",
+        "محمد سعد العتيبي": "HOMS1",
+        "عبدالرحمن": "HOMS1",
+        "ريم فهد الدوسري": "HOMS1",
+        "عمر خالد الغامدي": "HALEP1",
+        "لطيفة أحمد الزهراني": "HALEP1",
+        "LISTFIX GUEST": "HALEP1",
+        "Ebrahim Al-desouki": "HALEP1",
+      };
+      document.querySelectorAll("table.data-table tbody tr").forEach(function (row) {
+        var name = (row.querySelector("td") || {}).textContent || "";
+        var pid = GUEST_PROPERTY_MAP[name.trim()];
+        if (pid) row.setAttribute("data-record-property", pid);
+      });
+    })();
+  </script>
+  <script src="../assets/js/app.js?v=prop2"></script>
 </body>
 </html>

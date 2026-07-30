@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>???????? � Solvfast PMS</title>
+  <title>التقارير — Solvfast PMS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,103 +18,519 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=prop1" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=rep1" />
 </head>
-<body class="app-bg font-sans" data-page="reports" data-title="????????"
-  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"????????"}]'>
+<body class="app-bg font-sans" data-page="reports" data-title="التقارير"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التقارير"}]'>
   <div class="min-h-screen lg:flex">
     <aside id="app-sidebar"></aside>
     <div class="flex-1 min-w-0 flex flex-col">
       <header id="app-header"></header>
       <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
-        <p class="text-sm text-slate-500">?????? ??????? ??????</p>
 
-        <div class="panel p-4 flex flex-col lg:flex-row lg:items-end gap-3">
-          <div class="flex-1"><label class="field-label">?? ?????</label><input type="date" class="field-input" value="2026-07-01" /></div>
-          <div class="flex-1"><label class="field-label">??? ?????</label><input type="date" class="field-input" value="2026-07-30" /></div>
-          <div class="flex-1"><label class="field-label">??????</label><select class="field-select"><option>??????????</option><option>SYP</option><option>USD</option></select></div>
-          <button class="btn btn-secondary">?????</button>
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">تحليلات المنشأة والأداء التشغيلي</p>
+            <p class="text-slate-800 font-extrabold text-lg mt-1">تقارير يوليو 2026 · MADINAH1</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn btn-secondary btn-sm" data-action="toast" data-message="تم جدولة التقرير">جدولة تقرير</button>
+            <button type="button" class="btn btn-primary btn-sm" data-action="toast" data-message="تم تصدير الملخص">تصدير الملخص</button>
+          </div>
         </div>
 
+        <section class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+          <article class="stat-card" data-tone="primary">
+            <div class="stat-label">حجوزات نشطة</div>
+            <div class="stat-value text-primary">8</div>
+            <div class="text-xs text-slate-500 mt-2 font-semibold">ضمن الفترة المحددة</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">إيراد معروض</div>
+            <div class="stat-value text-emerald-600">10,350</div>
+            <div class="text-xs text-emerald-700/80 mt-2 font-bold">SYP</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="stat-label">إشغال اليوم</div>
+            <div class="stat-value text-secondary">14.3%</div>
+            <div class="text-xs text-secondary mt-2 font-bold">6 من 42 غرفة</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">وصول اليوم</div>
+            <div class="stat-value text-amber-600">3</div>
+            <div class="text-xs text-amber-700 mt-2 font-bold">جاهز للتسجيل</div>
+          </article>
+        </section>
+
+        <section class="rpt-filters panel">
+          <div class="rpt-filters-head">
+            <div>
+              <h2 class="font-extrabold text-base">فلاتر التقرير</h2>
+              <p class="text-xs text-slate-500 font-semibold mt-0.5">حدد الفترة والعملة ثم طبّق على التقرير النشط</p>
+            </div>
+            <div class="rpt-range-chips" role="group" aria-label="فترات سريعة">
+              <button type="button" class="rpt-chip" data-range="today">اليوم</button>
+              <button type="button" class="rpt-chip is-on" data-range="month">هذا الشهر</button>
+              <button type="button" class="rpt-chip" data-range="30">30 يوم</button>
+              <button type="button" class="rpt-chip" data-range="ytd">منذ بداية السنة</button>
+            </div>
+          </div>
+
+          <div class="rpt-filters-grid">
+            <div>
+              <label class="field-label" for="rpt-from">من تاريخ</label>
+              <div class="dp-field" data-datepicker data-placeholder="اختر تاريخ البداية">
+                <button type="button" class="field-input dp-trigger" id="rpt-from" aria-haspopup="dialog" aria-label="من تاريخ">
+                  <span class="dp-text">07/01/2026</span>
+                  <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                </button>
+                <input type="hidden" name="from" value="2026-07-01" id="rpt-from-val" />
+                <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ البداية">
+                  <div class="dp-head">
+                    <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                      <span data-dp-month-label>يوليو 2026</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="dp-nav">
+                      <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                      <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="dp-months" aria-label="اختيار الشهر"></div>
+                  <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                  <div class="dp-foot">
+                    <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                    <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="field-label" for="rpt-to">إلى تاريخ</label>
+              <div class="dp-field" data-datepicker data-placeholder="اختر تاريخ النهاية">
+                <button type="button" class="field-input dp-trigger" id="rpt-to" aria-haspopup="dialog" aria-label="إلى تاريخ">
+                  <span class="dp-text">07/30/2026</span>
+                  <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                </button>
+                <input type="hidden" name="to" value="2026-07-30" id="rpt-to-val" />
+                <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ النهاية">
+                  <div class="dp-head">
+                    <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                      <span data-dp-month-label>يوليو 2026</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="dp-nav">
+                      <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                      <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="dp-months" aria-label="اختيار الشهر"></div>
+                  <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                  <div class="dp-foot">
+                    <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                    <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="field-label" for="rpt-currency">العملة</label>
+              <select id="rpt-currency" class="field-select">
+                <option value="default">الافتراضية</option>
+                <option value="SYP">SYP</option>
+                <option value="USD">USD</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="field-label" for="rpt-status">حالة الحجز</label>
+              <select id="rpt-status" class="field-select">
+                <option value="all">كل الحالات</option>
+                <option value="confirmed">مؤكد</option>
+                <option value="inhouse">تم الدخول</option>
+                <option value="unconfirmed">غير مؤكد</option>
+                <option value="cancelled">ملغى</option>
+              </select>
+            </div>
+
+            <div class="rpt-filters-actions">
+              <button type="button" class="btn btn-ghost btn-sm" id="rpt-reset">إعادة ضبط</button>
+              <button type="button" class="btn btn-primary" id="rpt-apply">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                تطبيق الفلاتر
+              </button>
+            </div>
+          </div>
+        </section>
+
         <section>
-          <h2 class="font-bold mb-3">?????? ???????</h2>
-          <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3" id="report-list">
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn is-active border-primary/40 bg-primary-soft/30" data-report="arrivals">???? ?????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="departures">?????? ?????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="occupancy">??????? ??????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="revenue">??????? ??????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="monthly">????? ??????? ??????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="types">????? ????? ???????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="inhouse">??????? ????????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="noshow">????? ??? ??????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="cancel">????? ?????????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="methods">????? ??? ?????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="balances">??????? ????????</button>
-            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="rooms">????? ???? ???????</button>
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <h2 class="font-extrabold text-lg">كتالوج التقارير</h2>
+            <span class="badge badge-primary">12 تقريراً</span>
+          </div>
+          <div class="rpt-catalog" id="report-list">
+            <button type="button" class="rpt-card is-active" data-report="arrivals" data-tone="sky">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 0 1 2 2v4M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">وصول اليوم</span>
+                <span class="rpt-card-desc">قائمة النزلاء المتوقع وصولهم</span>
+              </span>
+              <span class="rpt-card-meta">3</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="departures" data-tone="amber">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">مغادرة اليوم</span>
+                <span class="rpt-card-desc">مغادرات مجدولة ومتأخرة</span>
+              </span>
+              <span class="rpt-card-meta">2</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="occupancy" data-tone="primary">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">تقرير الإشغال</span>
+                <span class="rpt-card-desc">نسب الإشغال حسب اليوم والنوع</span>
+              </span>
+              <span class="rpt-card-meta">14%</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="revenue" data-tone="emerald">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M7 8h8a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h8"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">تقرير الإيرادات</span>
+                <span class="rpt-card-desc">تحصيلات وإيراد الغرف</span>
+              </span>
+              <span class="rpt-card-meta">10.3k</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="monthly" data-tone="violet">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">ملخص الحجوزات الشهري</span>
+                <span class="rpt-card-desc">أداء الحجوزات خلال الشهر</span>
+              </span>
+              <span class="rpt-card-meta">48</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="types" data-tone="cyan">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">ملخص أنواع الغرف</span>
+                <span class="rpt-card-desc">توزيع الحجوزات حسب النوع</span>
+              </span>
+              <span class="rpt-card-meta">5</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="inhouse" data-tone="teal">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">النزلاء الحاليون</span>
+                <span class="rpt-card-desc">من داخل الفندق الآن</span>
+              </span>
+              <span class="rpt-card-meta">6</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="noshow" data-tone="rose">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">تقرير عدم الحضور</span>
+                <span class="rpt-card-desc">حجوزات no-show</span>
+              </span>
+              <span class="rpt-card-meta">1</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="cancel" data-tone="orange">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">تقرير الإلغاءات</span>
+                <span class="rpt-card-desc">الإلغاءات وأسبابها</span>
+              </span>
+              <span class="rpt-card-meta">4</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="methods" data-tone="indigo">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">ملخص طرق الدفع</span>
+                <span class="rpt-card-desc">نقد / بطاقة / تحويل</span>
+              </span>
+              <span class="rpt-card-meta">3</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="balances" data-tone="lime">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M6 16V9m4 7V5m4 11v-6m4 6V8"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">أرصدة الحجوزات</span>
+                <span class="rpt-card-desc">المستحق والمدفوع والمتبقي</span>
+              </span>
+              <span class="rpt-card-meta">4.3k</span>
+            </button>
+
+            <button type="button" class="rpt-card" data-report="rooms" data-tone="slate">
+              <span class="rpt-card-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-8h6v8"/></svg>
+              </span>
+              <span class="rpt-card-body">
+                <span class="rpt-card-title">حالة غرف الفندق</span>
+                <span class="rpt-card-desc">نظيفة / مشغولة / صيانة</span>
+              </span>
+              <span class="rpt-card-meta">42</span>
+            </button>
           </div>
         </section>
 
         <section class="panel overflow-hidden" id="report-panel">
-          <div class="px-5 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h3 class="font-bold" id="report-title">???? ????? � 2026-07-30</h3>
-            <div class="flex gap-2">
-              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="????? Excel">Excel</button>
-              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="????? PDF">PDF</button>
-              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="?????">?????</button>
+          <div class="rpt-panel-head">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="rpt-live-dot" aria-hidden="true"></span>
+                <h3 class="font-extrabold text-base truncate" id="report-title">وصول اليوم — 30 يوليو 2026</h3>
+              </div>
+              <p class="text-xs text-slate-500 font-semibold mt-1" id="report-sub">1 يوليو → 30 يوليو 2026 · العملة الافتراضية</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="تم تصدير Excel">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>
+                Excel
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="تم تصدير PDF">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+                PDF
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" data-action="toast" data-message="جاري الطباعة">طباعة</button>
             </div>
           </div>
           <div class="table-wrap">
             <table class="data-table">
-              <thead><tr><th>??????</th><th>??????</th><th>??? ??????</th><th>????? ??????</th><th>????? ??????</th><th>??????</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>النزيل</th>
+                  <th>الفندق</th>
+                  <th>نوع الغرفة</th>
+                  <th>تسجيل الدخول</th>
+                  <th>تسجيل الخروج</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
               <tbody id="report-body">
-                <tr><td>LISTFIX GUEST</td><td>MADINAH1</td><td>Double � Kaaba</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">?? ??????</span></td></tr>
-                <tr><td>???????</td><td>MADINAH1</td><td>Double � Haram</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">?? ??????</span></td></tr>
-                <tr><td>???????</td><td>MADINAH1</td><td>Double � Haram</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">?? ??????</span></td></tr>
+                <tr>
+                  <td class="font-semibold">LISTFIX GUEST</td>
+                  <td><span class="badge badge-primary">MADINAH1</span></td>
+                  <td>Double · Kaaba</td>
+                  <td>2026-07-30</td>
+                  <td>2026-07-31</td>
+                  <td><span class="badge badge-success">تم الدخول</span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">ابراهيم</td>
+                  <td><span class="badge badge-primary">MADINAH1</span></td>
+                  <td>Double · Haram</td>
+                  <td>2026-07-30</td>
+                  <td>2026-07-31</td>
+                  <td><span class="badge badge-success">تم الدخول</span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">ابراهيم</td>
+                  <td><span class="badge badge-primary">MADINAH1</span></td>
+                  <td>Double · Haram</td>
+                  <td>2026-07-30</td>
+                  <td>2026-07-31</td>
+                  <td><span class="badge badge-info">مؤكد</span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">لطيفة أحمد الزهراني</td>
+                  <td><span class="badge badge-primary">MADINAH1</span></td>
+                  <td>Single · Haram</td>
+                  <td>2026-07-29</td>
+                  <td>2026-08-02</td>
+                  <td><span class="badge badge-success">تم الدخول</span></td>
+                </tr>
+                <tr>
+                  <td class="font-semibold">عمر خالد الغامدي</td>
+                  <td><span class="badge badge-primary">MADINAH1</span></td>
+                  <td>Twin · Kaaba</td>
+                  <td>2026-07-28</td>
+                  <td>2026-07-31</td>
+                  <td><span class="badge badge-warning">غير مؤكد</span></td>
+                </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <section class="panel p-5">
-          <div class="flex items-center justify-between mb-3">
-            <h2 class="font-bold text-slate-600">???? ????? (?????)</h2>
-            <button class="btn btn-ghost btn-sm" data-action="toast" data-message="PDF">PDF</button>
+        <section class="rpt-summary panel p-5 sm:p-6">
+          <div class="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 class="font-extrabold text-lg">ملخص سريع</h2>
+              <p class="text-xs text-slate-500 font-semibold mt-0.5">مؤشرات الفترة المحددة (تجريبي)</p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="تم تصدير PDF">PDF</button>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 text-sm">
-            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">?????? ????</div><div class="text-2xl font-bold mt-1">8</div></div>
-            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">????? ?????</div><div class="text-2xl font-bold mt-1">10,350</div></div>
-            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">????? ?????</div><div class="text-2xl font-bold mt-1">14.3%</div></div>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div class="rpt-summary-tile" data-tone="primary">
+              <div class="text-slate-500 text-xs font-bold">حجوزات نشطة</div>
+              <div class="text-2xl font-extrabold text-primary mt-1">8</div>
+            </div>
+            <div class="rpt-summary-tile" data-tone="success">
+              <div class="text-slate-500 text-xs font-bold">إيراد معروض</div>
+              <div class="text-2xl font-extrabold text-emerald-600 mt-1">10,350</div>
+            </div>
+            <div class="rpt-summary-tile" data-tone="secondary">
+              <div class="text-slate-500 text-xs font-bold">إشغال اليوم</div>
+              <div class="text-2xl font-extrabold text-secondary mt-1">14.3%</div>
+            </div>
           </div>
         </section>
+
       </main>
     </div>
   </div>
-  <script src="../assets/js/app.js"></script>
+
+  <script src="../assets/js/pms-data.js"></script>
+
+  <script src="../assets/js/app.js?v=rep1"></script>
   <script>
-    const titles = {
-      arrivals: '???? ????? � 2026-07-30',
-      departures: '?????? ????? � 2026-07-30',
-      occupancy: '??????? ??????',
-      revenue: '??????? ??????',
-      monthly: '????? ??????? ??????',
-      types: '????? ????? ???????',
-      inhouse: '??????? ????????',
-      noshow: '????? ??? ??????',
-      cancel: '????? ?????????',
-      methods: '????? ??? ?????',
-      balances: '??????? ????????',
-      rooms: '????? ???? ???????',
-    };
-    document.querySelectorAll('.report-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.report-btn').forEach((b) => {
-          b.classList.remove('is-active', 'border-primary/40', 'bg-primary-soft/30');
+    (function () {
+      const titles = {
+        arrivals: "وصول اليوم — 30 يوليو 2026",
+        departures: "مغادرة اليوم — 30 يوليو 2026",
+        occupancy: "تقرير الإشغال",
+        revenue: "تقرير الإيرادات",
+        monthly: "ملخص الحجوزات الشهري",
+        types: "ملخص أنواع الغرف",
+        inhouse: "النزلاء الحاليون",
+        noshow: "تقرير عدم الحضور",
+        cancel: "تقرير الإلغاءات",
+        methods: "ملخص طرق الدفع",
+        balances: "أرصدة الحجوزات",
+        rooms: "حالة غرف الفندق",
+      };
+
+      const currencyLabel = function () {
+        const sel = document.getElementById("rpt-currency");
+        if (!sel) return "العملة الافتراضية";
+        const map = { default: "العملة الافتراضية", SYP: "SYP", USD: "USD" };
+        return map[sel.value] || sel.value;
+      };
+
+      const syncSub = function () {
+        const sub = document.getElementById("report-sub");
+        if (!sub) return;
+        const from = document.getElementById("rpt-from-val")?.value || "2026-07-01";
+        const to = document.getElementById("rpt-to-val")?.value || "2026-07-30";
+        sub.textContent = from + " → " + to + " · " + currencyLabel();
+      };
+
+      document.querySelectorAll(".report-btn, .rpt-card").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".rpt-card").forEach(function (b) {
+            b.classList.remove("is-active");
+          });
+          btn.classList.add("is-active");
+          const key = btn.dataset.report;
+          document.getElementById("report-title").textContent = titles[key] || btn.querySelector(".rpt-card-title")?.textContent || "";
+          syncSub();
+          if (window.PMS && PMS.toast) PMS.toast("تم تحميل التقرير (تجريبي)");
         });
-        btn.classList.add('is-active', 'border-primary/40', 'bg-primary-soft/30');
-        document.getElementById('report-title').textContent = titles[btn.dataset.report] || btn.textContent;
-        PMS.toast('?? ????? ??????? (??????)');
       });
-    });
+
+      document.querySelectorAll(".rpt-chip").forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          document.querySelectorAll(".rpt-chip").forEach(function (c) {
+            c.classList.remove("is-on");
+          });
+          chip.classList.add("is-on");
+          const range = chip.dataset.range;
+          const fromEl = document.getElementById("rpt-from-val");
+          const toEl = document.getElementById("rpt-to-val");
+          const fromText = document.querySelector("#rpt-from .dp-text");
+          const toText = document.querySelector("#rpt-to .dp-text");
+          if (!fromEl || !toEl) return;
+          if (range === "today") {
+            fromEl.value = "2026-07-30";
+            toEl.value = "2026-07-30";
+            if (fromText) fromText.textContent = "07/30/2026";
+            if (toText) toText.textContent = "07/30/2026";
+          } else if (range === "30") {
+            fromEl.value = "2026-07-01";
+            toEl.value = "2026-07-30";
+            if (fromText) fromText.textContent = "07/01/2026";
+            if (toText) toText.textContent = "07/30/2026";
+          } else if (range === "ytd") {
+            fromEl.value = "2026-01-01";
+            toEl.value = "2026-07-30";
+            if (fromText) fromText.textContent = "01/01/2026";
+            if (toText) toText.textContent = "07/30/2026";
+          } else {
+            fromEl.value = "2026-07-01";
+            toEl.value = "2026-07-30";
+            if (fromText) fromText.textContent = "07/01/2026";
+            if (toText) toText.textContent = "07/30/2026";
+          }
+          syncSub();
+        });
+      });
+
+      document.getElementById("rpt-apply")?.addEventListener("click", function () {
+        syncSub();
+        if (window.PMS && PMS.toast) PMS.toast("تم تطبيق الفلاتر");
+      });
+
+      document.getElementById("rpt-reset")?.addEventListener("click", function () {
+        document.querySelectorAll(".rpt-chip").forEach(function (c) {
+          c.classList.toggle("is-on", c.dataset.range === "month");
+        });
+        const fromEl = document.getElementById("rpt-from-val");
+        const toEl = document.getElementById("rpt-to-val");
+        const cur = document.getElementById("rpt-currency");
+        const st = document.getElementById("rpt-status");
+        if (fromEl) fromEl.value = "2026-07-01";
+        if (toEl) toEl.value = "2026-07-30";
+        const fromText = document.querySelector("#rpt-from .dp-text");
+        const toText = document.querySelector("#rpt-to .dp-text");
+        if (fromText) fromText.textContent = "07/01/2026";
+        if (toText) toText.textContent = "07/30/2026";
+        if (cur) {
+          cur.value = "default";
+          cur.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        if (st) {
+          st.value = "all";
+          st.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        syncSub();
+        if (window.PMS && PMS.toast) PMS.toast("تمت إعادة ضبط الفلاتر");
+      });
+
+      document.getElementById("rpt-currency")?.addEventListener("change", syncSub);
+      syncSub();
+    })();
   </script>
 </body>
 </html>

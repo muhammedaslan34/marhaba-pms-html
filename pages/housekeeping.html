@@ -743,7 +743,16 @@
     </div>
   </div>
 
-  <script src="../assets/js/app.js?v=prop1"></script>
+  <script src="../assets/js/pms-data.js"></script>
+  <script>
+    (function () {
+      document.querySelectorAll("[data-room]").forEach(function (el) {
+        var num = Number(el.getAttribute("data-room"));
+        el.setAttribute("data-record-property", num < 400 ? "HOMS1" : "HALEP1");
+      });
+    })();
+  </script>
+  <script src="../assets/js/app.js?v=prop2"></script>
   <script>
     (function () {
       const grid = document.getElementById('room-grid');

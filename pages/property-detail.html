@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تفاصيل المنشأة — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="properties" data-title="تفاصيل المنشأة"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المنشآت","href":"properties.html"},{"label":"تفاصيل المنشأة"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5" id="page-root">
+
+        <div id="not-found-state" class="state-block is-danger hidden">
+          <div class="state-block-icon">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <p class="state-block-title">المنشأة غير موجودة</p>
+          <p class="state-block-desc">تعذّر العثور على هذه المنشأة، أو أنها لم تعد ضمن قائمة منشآتك.</p>
+          <a href="properties.html" class="btn btn-primary mt-4">العودة إلى المنشآت</a>
+        </div>
+
+        <div id="detail-root" class="space-y-5 hidden">
+          <div class="panel p-5 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="prop-card-icon !w-14 !h-14">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-extrabold text-lg text-slate-800" id="pd-name">—</span>
+                    <span class="badge badge-primary" id="pd-code">—</span>
+                    <span id="pd-status-badge"></span>
+                  </div>
+                  <div class="text-sm text-slate-500 font-semibold mt-0.5" id="pd-sub">—</div>
+                </div>
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <a href="#" id="pd-edit-link" class="btn btn-secondary btn-sm">تعديل المنشأة</a>
+                <a href="dashboard.html" class="btn btn-primary btn-sm">فتح لوحة التحكم</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <div class="flex items-center gap-2 w-max" data-tabs data-tabs-target="pd-panels" id="pd-tabs">
+              <button type="button" class="chip is-active" data-tab="overview">نظرة عامة</button>
+              <button type="button" class="chip" data-tab="rooms">الغرف والطوابق</button>
+              <button type="button" class="chip" data-tab="rates">الأسعار</button>
+              <button type="button" class="chip" data-tab="users">المستخدمون</button>
+              <button type="button" class="chip" data-tab="operations">التشغيل</button>
+              <button type="button" class="chip" data-tab="financial">الإعدادات المالية</button>
+              <button type="button" class="chip" data-tab="documents">المستندات</button>
+              <button type="button" class="chip" data-tab="settings">إعدادات المنشأة</button>
+            </div>
+          </div>
+
+          <div data-tabs id="pd-panels">
+            <div data-tab-panel="overview" class="space-y-5">
+              <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" id="pd-stats"></section>
+              <section class="panel p-5 sm:p-6">
+                <h3 class="font-extrabold mb-4">معلومات المنشأة</h3>
+                <div class="grid sm:grid-cols-3 gap-3" id="pd-info-grid"></div>
+              </section>
+            </div>
+
+            <div data-tab-panel="rooms" class="hidden space-y-4">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-sm text-slate-500 font-semibold"><span id="pd-room-count">0</span> غرفة مسجّلة</p>
+                <button type="button" class="btn btn-primary btn-sm" data-action="open-modal" data-target="add-room-modal">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+                  إضافة غرفة
+                </button>
+              </div>
+              <div class="panel overflow-hidden">
+                <div class="table-wrap">
+                  <table class="data-table" data-no-pager>
+                    <thead><tr><th>رقم الغرفة</th><th>الحالة</th><th class="text-center">الإجراءات</th></tr></thead>
+                    <tbody id="pd-rooms-body"></tbody>
+                  </table>
+                </div>
+                <div class="empty-state hidden" id="pd-rooms-empty">لا توجد غرف مسجّلة بعد — ابدأ بإضافة أول غرفة.</div>
+              </div>
+            </div>
+
+            <div data-tab-panel="rates" class="hidden space-y-4">
+              <div class="panel overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200"><h3 class="font-extrabold">خطط الأسعار الأساسية</h3></div>
+                <div class="table-wrap">
+                  <table class="data-table" data-no-pager>
+                    <thead><tr><th>نوع الغرفة</th><th>السعر الأساسي</th><th>نهاية الأسبوع</th></tr></thead>
+                    <tbody id="pd-rates-body"></tbody>
+                  </table>
+                </div>
+              </div>
+              <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3">عدّل أي سعر مباشرة ثم اضغط خارج الحقل للحفظ (تجريبي).</p>
+            </div>
+
+            <div data-tab-panel="users" class="hidden space-y-4">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-sm text-slate-500 font-semibold"><span id="pd-user-count">0</span> مستخدم لديه صلاحية وصول</p>
+                <a href="#" id="pd-assign-user" class="btn btn-primary btn-sm">إسناد مستخدم</a>
+              </div>
+              <div class="panel overflow-hidden">
+                <div class="table-wrap">
+                  <table class="data-table" data-no-pager>
+                    <thead><tr><th>المستخدم</th><th>الدور</th><th>افتراضية</th><th>الحالة</th></tr></thead>
+                    <tbody id="pd-users-body"></tbody>
+                  </table>
+                </div>
+                <div class="empty-state hidden" id="pd-users-empty">لا يوجد مستخدمون مسندون لهذه المنشأة بعد.</div>
+              </div>
+            </div>
+
+            <div data-tab-panel="operations" class="hidden space-y-4">
+              <div class="panel p-5 sm:p-6 grid sm:grid-cols-2 gap-4">
+                <div><label class="field-label">وقت تسجيل الدخول</label><input id="op-checkin" type="time" class="field-input" /></div>
+                <div><label class="field-label">وقت تسجيل المغادرة</label><input id="op-checkout" type="time" class="field-input" /></div>
+                <div class="sm:col-span-2"><label class="field-label">عطلة نهاية الأسبوع</label><div class="text-sm font-bold text-slate-700" id="op-weekend">—</div></div>
+              </div>
+              <div class="panel p-5 sm:p-6 grid sm:grid-cols-2 gap-3">
+                <label class="room-pick !py-3"><span class="font-bold text-sm">تسجيل مغادرة تلقائي</span><input type="checkbox" id="op-autocheckout" class="w-5 h-5 accent-primary" /></label>
+                <label class="room-pick !py-3"><span class="font-bold text-sm">جدولة تنظيف تلقائية</span><input type="checkbox" id="op-autocleaning" class="w-5 h-5 accent-primary" /></label>
+                <label class="room-pick !py-3"><span class="font-bold text-sm">صيانة تلقائية للغرف المعطّلة</span><input type="checkbox" id="op-automaintenance" class="w-5 h-5 accent-primary" /></label>
+              </div>
+            </div>
+
+            <div data-tab-panel="financial" class="hidden space-y-4">
+              <div class="panel p-5 sm:p-6 grid sm:grid-cols-2 gap-4">
+                <div class="prop-card-meta"><div class="prop-card-meta-label">العملة</div><div class="prop-card-meta-value" id="fin-currency">—</div></div>
+                <div class="prop-card-meta"><div class="prop-card-meta-label">البريد المالي</div><div class="prop-card-meta-value" id="fin-email">—</div></div>
+                <label class="room-pick !py-3 sm:col-span-2"><span class="font-bold text-sm">الضريبة مشمولة بالسعر</span><input type="checkbox" id="fin-tax" class="w-5 h-5 accent-primary" /></label>
+              </div>
+            </div>
+
+            <div data-tab-panel="documents" class="hidden space-y-4">
+              <div class="panel overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+                  <h3 class="font-extrabold">المستندات</h3>
+                  <button type="button" class="btn btn-secondary btn-sm" id="pd-upload-btn">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0-12 4 4m-4-4-4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round"/></svg>
+                    رفع مستند
+                  </button>
+                  <input type="file" id="pd-upload-input" class="hidden" />
+                </div>
+                <ul class="divide-y divide-slate-100" id="pd-docs-list"></ul>
+                <div class="empty-state" id="pd-docs-empty">لا توجد مستندات مرفوعة بعد.</div>
+              </div>
+            </div>
+
+            <div data-tab-panel="settings" class="hidden space-y-4">
+              <div class="panel p-5 sm:p-6">
+                <h3 class="font-extrabold mb-1">إعدادات عامة</h3>
+                <p class="text-sm text-slate-500 font-semibold mb-4">لتعديل بيانات المنشأة الأساسية والسعة والتواصل، استخدم معالج التعديل.</p>
+                <a href="#" id="pd-edit-link-2" class="btn btn-secondary">فتح معالج التعديل</a>
+              </div>
+              <div class="panel p-5 sm:p-6 border-red-100">
+                <h3 class="font-extrabold text-red-600 mb-1">منطقة الخطر</h3>
+                <p class="text-sm text-slate-500 font-semibold mb-4">تعطيل المنشأة يخفيها من مبدّل المنشآت لجميع المستخدمين.</p>
+                <button type="button" class="btn btn-danger" id="pd-disable-btn">تعطيل المنشأة</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="add-room-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">إضافة غرفة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="add-room-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">رقم الغرفة *</label><input id="new-room-number" class="field-input" placeholder="مثال: 204" /></div>
+      <div>
+        <label class="field-label">الحالة</label>
+        <select id="new-room-status" class="field-select">
+          <option value="vacant">شاغرة</option>
+          <option value="occupied">مشغولة</option>
+          <option value="dirty">تحتاج تنظيف</option>
+          <option value="maintenance">صيانة</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="add-room-modal">إلغاء</button>
+      <button class="btn btn-primary" id="add-room-confirm">إضافة</button>
+    </div>
+  </div>
+
+  <div id="pd-disable-confirm" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تعطيل المنشأة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="pd-disable-confirm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5"><p class="text-sm text-slate-600 font-semibold" id="pd-disable-text"></p></div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="pd-disable-confirm">إلغاء</button>
+      <button class="btn btn-danger hidden" id="pd-disable-confirm-btn">تعطيل المنشأة</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const PD = PMSData;
+      const params = new URLSearchParams(location.search);
+      const id = params.get("id") || PD.getSelectedPropertyId();
+      const initialTab = params.get("tab");
+      const property = PD.getPropertyById(id);
+      const TYPE_LABELS = { Hotel: "فندق", "Serviced Apartment": "شقق مخدومة", "Furnished Apartment": "شقق مفروشة", Resort: "منتجع" };
+      const ROOM_STATUS_LABELS = { vacant: "شاغرة", occupied: "مشغولة", dirty: "تحتاج تنظيف", maintenance: "صيانة" };
+      const ROOM_STATUS_BADGE = { vacant: "badge-success", occupied: "badge-primary", dirty: "badge-warning", maintenance: "badge-danger" };
+      const DAY_LABELS = { Friday: "الجمعة", Saturday: "السبت", Sunday: "الأحد" };
+      const uploadedDocs = [];
+
+      if (!property || !PD.canAccessProperty(PD.getCurrentUser(), property.id)) {
+        document.getElementById("not-found-state").classList.remove("hidden");
+      } else {
+        document.getElementById("detail-root").classList.remove("hidden");
+        renderHeaderBlock();
+        renderOverview();
+        renderRooms();
+        renderRates();
+        renderUsers();
+        renderOperations();
+        renderFinancial();
+        renderDocs();
+        if (initialTab) {
+          const btn = document.querySelector('[data-tab="' + initialTab + '"]');
+          if (btn) btn.click();
+        }
+      }
+
+      function renderHeaderBlock() {
+        document.body.dataset.title = property.name;
+        document.body.dataset.crumbs = JSON.stringify([
+          { label: "PMS", href: "dashboard.html" },
+          { label: "المنشآت", href: "properties.html" },
+          { label: property.name },
+        ]);
+        document.getElementById("pd-name").textContent = property.name;
+        document.getElementById("pd-code").textContent = property.code;
+        document.getElementById("pd-sub").textContent = property.arabicName + " · " + property.city + "، " + property.country;
+        document.getElementById("pd-status-badge").innerHTML =
+          property.status === "active" ? '<span class="badge badge-success">نشطة</span>' : '<span class="badge badge-neutral">معطّلة</span>';
+        document.getElementById("pd-edit-link").href = "property-new.html?id=" + property.id;
+        document.getElementById("pd-edit-link-2").href = "property-new.html?id=" + property.id;
+        document.getElementById("pd-assign-user").href = "users.html?property=" + property.id;
+      }
+
+      function statTile(label, value, tone) {
+        return (
+          '<article class="stat-card"' + (tone ? ' data-tone="' + tone + '"' : "") + ">" +
+          '<div class="stat-label">' + label + "</div>" +
+          '<div class="stat-value">' + value + "</div>" +
+          "</article>"
+        );
+      }
+
+      function renderOverview() {
+        const s = PD.getPropertyStats(property.id);
+        document.getElementById("pd-stats").innerHTML =
+          statTile("إجمالي الغرف", s.totalRooms, "primary") +
+          statTile("غرف مشغولة", s.occupiedRooms, "danger") +
+          statTile("غرف متاحة", s.availableRooms, "success") +
+          statTile("وصول اليوم", s.arrivalsToday, "secondary") +
+          statTile("مغادرة اليوم", s.departuresToday, "warning") +
+          statTile("نسبة الإشغال", s.occupancy + "%", "primary") +
+          statTile("إيراد اليوم", s.revenueToday.toLocaleString("en-US"), "success");
+
+        const info = [
+          ["النوع", TYPE_LABELS[property.type] || property.type],
+          ["العنوان", property.address || "—"],
+          ["العملة", property.currency],
+          ["المنطقة الزمنية", property.timezone],
+          ["الطوابق", property.floors],
+          ["الأسرّة", property.beds],
+        ];
+        document.getElementById("pd-info-grid").innerHTML = info.map(function (r) {
+          return '<div class="prop-card-meta"><div class="prop-card-meta-label">' + r[0] + '</div><div class="prop-card-meta-value">' + r[1] + "</div></div>";
+        }).join("");
+      }
+
+      function roomRowHtml(r) {
+        return (
+          "<tr>" +
+          '<td class="font-extrabold">' + r.number + "</td>" +
+          '<td><span class="badge ' + (ROOM_STATUS_BADGE[r.status] || "badge-neutral") + '">' + (ROOM_STATUS_LABELS[r.status] || r.status) + "</span></td>" +
+          '<td><div class="flex justify-center"><button type="button" class="icon-btn" data-action="delete-room" data-id="' + r.id + '" title="حذف" aria-label="حذف">' +
+          '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0 1 12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          "</button></div></td>" +
+          "</tr>"
+        );
+      }
+
+      function renderRooms() {
+        const rooms = PD.getRoomsByProperty(property.id);
+        document.getElementById("pd-room-count").textContent = rooms.length;
+        document.getElementById("pd-rooms-body").innerHTML = rooms.map(roomRowHtml).join("");
+        document.getElementById("pd-rooms-empty").classList.toggle("hidden", rooms.length > 0);
+      }
+
+      function renderRates() {
+        const base = [
+          ["Double Room", 600],
+          ["Twin Room", 850],
+          ["Single Room", 350],
+        ];
+        document.getElementById("pd-rates-body").innerHTML = base.map(function (r, i) {
+          return (
+            "<tr>" +
+            '<td class="font-extrabold">' + r[0] + "</td>" +
+            '<td><input type="number" class="field-input w-28" data-rate-input value="' + r[1] + '" /></td>' +
+            '<td><input type="number" class="field-input w-28" data-rate-input value="' + Math.round(r[1] * 1.15) + '" /></td>' +
+            "</tr>"
+          );
+        }).join("");
+        document.getElementById("pd-rates-body").addEventListener("change", function (e) {
+          if (e.target.matches("[data-rate-input]")) PMS.toast("تم تحديث السعر (تجريبي)");
+        });
+      }
+
+      function renderUsers() {
+        const users = PD.getUsers().filter(function (u) { return u.assignedPropertyIds.indexOf(property.id) !== -1; });
+        document.getElementById("pd-user-count").textContent = users.length;
+        document.getElementById("pd-users-body").innerHTML = users.map(function (u) {
+          const isDefault = u.defaultPropertyId === property.id;
+          return (
+            "<tr>" +
+            '<td><div class="font-extrabold text-slate-800">' + u.firstName + " " + u.lastName + '</div><div class="text-xs text-slate-500 font-semibold">' + u.email + "</div></td>" +
+            "<td>" + (u.roleLabel || "—") + "</td>" +
+            "<td>" + (isDefault ? '<span class="badge badge-warning">افتراضية</span>' : "—") + "</td>" +
+            "<td>" + (u.status === "active" ? '<span class="badge badge-success">نشط</span>' : u.status === "invited" ? '<span class="badge badge-info">مدعو</span>' : '<span class="badge badge-neutral">معطّل</span>') + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+        document.getElementById("pd-users-empty").classList.toggle("hidden", users.length > 0);
+      }
+
+      function renderOperations() {
+        document.getElementById("op-checkin").value = property.checkInTime;
+        document.getElementById("op-checkout").value = property.checkOutTime;
+        document.getElementById("op-weekend").textContent = property.weekendDays.map(function (d) { return DAY_LABELS[d] || d; }).join("، ") || "—";
+        document.getElementById("op-autocheckout").checked = !!property.autoCheckout;
+        document.getElementById("op-autocleaning").checked = !!property.autoCleaning;
+        document.getElementById("op-automaintenance").checked = !!property.autoMaintenance;
+
+        ["op-checkin", "op-checkout"].forEach(function (id2) {
+          document.getElementById(id2).addEventListener("change", function (e) {
+            const patch = {};
+            patch[id2 === "op-checkin" ? "checkInTime" : "checkOutTime"] = e.target.value;
+            PD.updateProperty(property.id, patch);
+            PMS.toast("تم تحديث إعدادات التشغيل");
+          });
+        });
+        [["op-autocheckout", "autoCheckout"], ["op-autocleaning", "autoCleaning"], ["op-automaintenance", "autoMaintenance"]].forEach(function (pair) {
+          document.getElementById(pair[0]).addEventListener("change", function (e) {
+            const patch = {};
+            patch[pair[1]] = e.target.checked;
+            PD.updateProperty(property.id, patch);
+            PMS.toast("تم تحديث إعدادات التشغيل");
+          });
+        });
+      }
+
+      function renderFinancial() {
+        document.getElementById("fin-currency").textContent = property.currency;
+        document.getElementById("fin-email").textContent = property.mainEmail || "—";
+        document.getElementById("fin-tax").checked = !!property.taxIncluded;
+        document.getElementById("fin-tax").addEventListener("change", function (e) {
+          PD.updateProperty(property.id, { taxIncluded: e.target.checked });
+          PMS.toast("تم تحديث الإعدادات المالية");
+        });
+      }
+
+      function renderDocs() {
+        document.getElementById("pd-docs-list").innerHTML = uploadedDocs.map(function (d, i) {
+          return (
+            '<li class="px-5 py-3 flex items-center justify-between gap-3">' +
+            '<div class="min-w-0"><div class="font-extrabold text-slate-800 truncate">' + d.name + '</div><div class="text-xs text-slate-500 font-semibold">' + d.size + " · " + d.date + "</div></div>" +
+            '<button type="button" class="icon-btn" data-action="remove-doc" data-idx="' + i + '" title="حذف" aria-label="حذف"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg></button>' +
+            "</li>"
+          );
+        }).join("");
+        document.getElementById("pd-docs-empty").classList.toggle("hidden", uploadedDocs.length > 0);
+      }
+
+      document.getElementById("pd-upload-btn")?.addEventListener("click", function () {
+        document.getElementById("pd-upload-input").click();
+      });
+      document.getElementById("pd-upload-input")?.addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        uploadedDocs.push({ name: file.name, size: Math.round(file.size / 1024) + " كيلوبايت", date: new Date().toISOString().slice(0, 10) });
+        renderDocs();
+        PMS.toast("تم رفع \"" + file.name + "\" (للعرض فقط)");
+        e.target.value = "";
+      });
+
+      document.getElementById("add-room-confirm")?.addEventListener("click", function () {
+        const number = document.getElementById("new-room-number").value.trim();
+        if (!number) { PMS.toast("يرجى إدخال رقم الغرفة"); return; }
+        const status = document.getElementById("new-room-status").value;
+        PD.addRoom({ id: "R-" + property.id + "-" + Date.now(), propertyId: property.id, number: number, status: status });
+        document.getElementById("new-room-number").value = "";
+        renderRooms();
+        renderOverview();
+        PMS.toast("تمت إضافة الغرفة " + number);
+        PMS.closeModal("add-room-modal");
+      });
+
+      document.getElementById("pd-disable-btn")?.addEventListener("click", function () {
+        const currentUser = PD.getCurrentUser();
+        if (property.id === currentUser.defaultPropertyId) {
+          document.getElementById("pd-disable-text").textContent =
+            "لا يمكن تعطيل \"" + property.name + "\" لأنها منشأتك الافتراضية الحالية. عيّن منشأة افتراضية أخرى من صفحة المنشآت أولاً.";
+          document.getElementById("pd-disable-confirm-btn").classList.add("hidden");
+        } else {
+          document.getElementById("pd-disable-text").textContent =
+            "هل أنت متأكد من تعطيل \"" + property.name + "\"؟ لن تظهر بعد الآن في مبدّل المنشآت.";
+          document.getElementById("pd-disable-confirm-btn").classList.remove("hidden");
+        }
+        PMS.openModal("pd-disable-confirm");
+      });
+      document.getElementById("pd-disable-confirm-btn")?.addEventListener("click", function () {
+        PD.updateProperty(property.id, { status: "disabled" });
+        PMS.toast("تم تعطيل " + property.name);
+        location.href = "properties.html";
+      });
+
+      document.body.addEventListener("click", function (e) {
+        const delBtn = e.target.closest('[data-action="delete-room"]');
+        if (delBtn) {
+          PD.deleteRoom(delBtn.dataset.id);
+          renderRooms();
+          renderOverview();
+          PMS.toast("تم حذف الغرفة");
+          return;
+        }
+        const docBtn = e.target.closest('[data-action="remove-doc"]');
+        if (docBtn) {
+          uploadedDocs.splice(Number(docBtn.dataset.idx), 1);
+          renderDocs();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

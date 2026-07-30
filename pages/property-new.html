@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>إضافة منشأة — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="properties" data-title="إضافة منشأة"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المنشآت","href":"properties.html"},{"label":"إضافة منشأة"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+        <div class="wizard-shell space-y-5">
+          <div class="page-hero">
+            <div>
+              <p class="page-kicker">إنشاء منشأة جديدة خطوة بخطوة</p>
+              <p class="text-slate-800 font-extrabold mt-1 text-lg" id="step-headline">المعلومات الأساسية</p>
+            </div>
+            <a href="properties.html" class="btn btn-ghost btn-sm">إلغاء</a>
+          </div>
+
+          <div class="wizard-progress" id="wizard-progress">
+            <div class="wizard-progress-top">
+              <span class="wizard-progress-label" id="step-label">الخطوة 1 من 5</span>
+              <span class="wizard-progress-pct" id="step-pct">20%</span>
+            </div>
+            <div class="wizard-bar" aria-hidden="true"><span id="step-bar" style="width:20%"></span></div>
+            <div class="wizard-steps" id="wizard-steps">
+              <div class="wizard-step is-active" data-step-label="1">
+                <div class="wizard-step-num">1</div>
+                <div class="wizard-step-title">أساسية</div>
+                <div class="wizard-step-desc">الهوية والموقع</div>
+              </div>
+              <div class="wizard-step" data-step-label="2">
+                <div class="wizard-step-num">2</div>
+                <div class="wizard-step-title">السعة</div>
+                <div class="wizard-step-desc">الغرف والأسرّة</div>
+              </div>
+              <div class="wizard-step" data-step-label="3">
+                <div class="wizard-step-num">3</div>
+                <div class="wizard-step-title">التشغيل</div>
+                <div class="wizard-step-desc">أوقات وإعدادات</div>
+              </div>
+              <div class="wizard-step" data-step-label="4">
+                <div class="wizard-step-num">4</div>
+                <div class="wizard-step-title">التواصل</div>
+                <div class="wizard-step-desc">جهات الاتصال</div>
+              </div>
+              <div class="wizard-step" data-step-label="5">
+                <div class="wizard-step-num">5</div>
+                <div class="wizard-step-title">المراجعة</div>
+                <div class="wizard-step-desc">تأكيد الإنشاء</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-panel" id="wizard">
+            <div class="wizard-panel-head">
+              <h2 class="font-extrabold text-lg text-slate-800" id="panel-title">المعلومات الأساسية</h2>
+              <p class="text-sm text-slate-500 font-semibold mt-1" id="panel-desc">اسم المنشأة ورمزها الفريد وموقعها.</p>
+            </div>
+
+            <div class="wizard-panel-body">
+              <section data-step="1" class="grid sm:grid-cols-2 gap-4">
+                <div><label class="field-label">اسم المنشأة *</label><input id="f-name" class="field-input" placeholder="مثال: Homs" /></div>
+                <div><label class="field-label">اسم المنشأة بالعربية *</label><input id="f-arabicName" class="field-input" placeholder="مثال: فندق حمص" /></div>
+                <div>
+                  <label class="field-label">رمز المنشأة (فريد) *</label>
+                  <input id="f-code" class="field-input" placeholder="مثال: HOMS2" style="text-transform:uppercase" />
+                  <p class="text-xs text-slate-400 font-semibold mt-1">أحرف إنجليزية وأرقام فقط، وسيتحول تلقائياً لأحرف كبيرة.</p>
+                </div>
+                <div>
+                  <label class="field-label">نوع المنشأة *</label>
+                  <select id="f-type" class="field-select">
+                    <option value="Hotel">فندق</option>
+                    <option value="Serviced Apartment">شقق مخدومة</option>
+                    <option value="Furnished Apartment">شقق مفروشة</option>
+                    <option value="Resort">منتجع</option>
+                  </select>
+                </div>
+                <div><label class="field-label">الدولة *</label><input id="f-country" class="field-input" placeholder="مثال: Syria" /></div>
+                <div><label class="field-label">المدينة *</label><input id="f-city" class="field-input" placeholder="مثال: Homs" /></div>
+                <div class="sm:col-span-2"><label class="field-label">العنوان</label><input id="f-address" class="field-input" placeholder="العنوان التفصيلي" /></div>
+                <div>
+                  <label class="field-label">المنطقة الزمنية</label>
+                  <select id="f-timezone" class="field-select">
+                    <option value="Asia/Damascus">Asia/Damascus</option>
+                    <option value="Asia/Riyadh">Asia/Riyadh</option>
+                    <option value="Asia/Dubai">Asia/Dubai</option>
+                    <option value="Europe/Istanbul">Europe/Istanbul</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label">العملة</label>
+                  <select id="f-currency" class="field-select">
+                    <option value="SYP">SYP — ليرة سورية</option>
+                    <option value="SAR">SAR — ريال سعودي</option>
+                    <option value="USD">USD — دولار أمريكي</option>
+                    <option value="TRY">TRY — ليرة تركية</option>
+                  </select>
+                </div>
+              </section>
+
+              <section data-step="2" class="hidden grid sm:grid-cols-2 gap-4">
+                <div><label class="field-label">عدد الغرف *</label><input id="f-rooms" type="number" min="1" class="field-input" value="10" /></div>
+                <div><label class="field-label">عدد الأسرّة</label><input id="f-beds" type="number" min="1" class="field-input" value="16" /></div>
+                <div><label class="field-label">عدد الطوابق</label><input id="f-floors" type="number" min="1" class="field-input" value="3" /></div>
+                <div>
+                  <label class="field-label">نمط ترقيم الغرف</label>
+                  <select id="f-numbering" class="field-select">
+                    <option value="Floor + Sequence (101, 102…)">الطابق + التسلسل (101، 102…)</option>
+                    <option value="Sequential (1, 2, 3…)">تسلسلي (1، 2، 3…)</option>
+                    <option value="Custom">مخصّص</option>
+                  </select>
+                </div>
+              </section>
+
+              <section data-step="3" class="hidden space-y-5">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div><label class="field-label">وقت تسجيل الدخول</label><input id="f-checkin" type="time" class="field-input" value="14:00" /></div>
+                  <div><label class="field-label">وقت تسجيل المغادرة</label><input id="f-checkout" type="time" class="field-input" value="12:00" /></div>
+                </div>
+                <div>
+                  <label class="field-label">أيام العطلة الأسبوعية</label>
+                  <div class="flex flex-wrap gap-2" id="f-weekend" data-chip-group="multi">
+                    <button type="button" class="chip is-active" data-day="Friday">الجمعة</button>
+                    <button type="button" class="chip is-active" data-day="Saturday">السبت</button>
+                    <button type="button" class="chip" data-day="Sunday">الأحد</button>
+                  </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                  <label class="room-pick !py-3"><span class="font-bold text-sm">الضريبة مشمولة بالسعر</span><input type="checkbox" id="f-tax" class="w-5 h-5 accent-primary" checked /></label>
+                  <label class="room-pick !py-3"><span class="font-bold text-sm">تسجيل مغادرة تلقائي</span><input type="checkbox" id="f-autocheckout" class="w-5 h-5 accent-primary" checked /></label>
+                  <label class="room-pick !py-3"><span class="font-bold text-sm">جدولة تنظيف تلقائية</span><input type="checkbox" id="f-autocleaning" class="w-5 h-5 accent-primary" /></label>
+                  <label class="room-pick !py-3"><span class="font-bold text-sm">صيانة تلقائية للغرف المعطّلة</span><input type="checkbox" id="f-automaintenance" class="w-5 h-5 accent-primary" /></label>
+                </div>
+              </section>
+
+              <section data-step="4" class="hidden grid sm:grid-cols-2 gap-4">
+                <div><label class="field-label">اسم المالك</label><input id="f-ownerName" class="field-input" placeholder="اسم مالك المنشأة" /></div>
+                <div><label class="field-label">هاتف المالك</label><input id="f-ownerPhone" class="field-input" placeholder="+963…" /></div>
+                <div><label class="field-label">اسم المشرف</label><input id="f-supervisorName" class="field-input" placeholder="اسم مشرف التشغيل" /></div>
+                <div><label class="field-label">هاتف المشرف</label><input id="f-supervisorPhone" class="field-input" placeholder="+963…" /></div>
+                <div><label class="field-label">البريد الرئيسي</label><input id="f-mainEmail" type="email" class="field-input" placeholder="info@example.com" /></div>
+                <div><label class="field-label">بريد الحجوزات</label><input id="f-reservationsEmail" type="email" class="field-input" placeholder="reservations@example.com" /></div>
+                <div><label class="field-label">رقم الاستقبال</label><input id="f-receptionNumber" class="field-input" placeholder="+963…" /></div>
+                <div><label class="field-label">الموقع الإلكتروني</label><input id="f-website" class="field-input" placeholder="https://" /></div>
+              </section>
+
+              <section data-step="5" class="hidden space-y-4">
+                <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-extrabold shrink-0">✓</div>
+                  <div>
+                    <div class="font-extrabold text-emerald-900">جاهزة للمراجعة</div>
+                    <div class="text-sm text-emerald-800 font-semibold mt-0.5">راجع بيانات المنشأة قبل الإنشاء.</div>
+                  </div>
+                </div>
+                <dl class="grid sm:grid-cols-2 gap-3" id="review-grid"></dl>
+                <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3">نسخة تجريبية — تُحفظ المنشأة محلياً في هذا المتصفح فقط.</p>
+              </section>
+            </div>
+
+            <div class="wizard-panel-foot flex-wrap gap-2">
+              <button type="button" class="btn btn-ghost" id="wizard-prev">السابق</button>
+              <div class="flex gap-2">
+                <button type="button" class="btn btn-ghost" id="wizard-draft">حفظ كمسودة</button>
+                <button type="button" class="btn btn-primary min-w-[9rem]" id="wizard-next">التالي</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="success-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تم إنشاء المنشأة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="success-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-extrabold shrink-0">✓</div>
+        <div>
+          <div class="font-extrabold text-emerald-900" id="success-name">تم إنشاء المنشأة بنجاح</div>
+          <div class="text-sm text-emerald-800 font-semibold mt-0.5">ماذا تريد أن تفعل بعد ذلك؟</div>
+        </div>
+      </div>
+      <div class="grid gap-2">
+        <a href="#" id="success-rooms" class="btn btn-secondary justify-between">تهيئة الغرف <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" id="success-users" class="btn btn-secondary justify-between">إسناد المستخدمين <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" id="success-dashboard" class="btn btn-primary justify-between">الذهاب للوحة تحكم المنشأة <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const PD = PMSData;
+      let step = 1;
+      const max = 5;
+      const params = new URLSearchParams(location.search);
+      const editId = params.get("id");
+      const editing = !!editId;
+
+      const meta = {
+        1: { title: "المعلومات الأساسية", desc: "اسم المنشأة ورمزها الفريد وموقعها.", headline: "المعلومات الأساسية" },
+        2: { title: "السعة", desc: "عدد الغرف والأسرّة والطوابق.", headline: "سعة المنشأة" },
+        3: { title: "إعدادات التشغيل", desc: "أوقات الدخول والمغادرة وقواعد التشغيل التلقائي.", headline: "إعدادات التشغيل" },
+        4: { title: "معلومات التواصل", desc: "جهات الاتصال الخاصة بالمالك والمشرف والمنشأة.", headline: "معلومات التواصل" },
+        5: { title: "المراجعة والإنشاء", desc: "راجع كل البيانات ثم أنشئ المنشأة.", headline: "مراجعة وتأكيد" },
+      };
+      const TYPE_LABELS = { Hotel: "فندق", "Serviced Apartment": "شقق مخدومة", "Furnished Apartment": "شقق مفروشة", Resort: "منتجع" };
+      const DAY_LABELS = { Friday: "الجمعة", Saturday: "السبت", Sunday: "الأحد" };
+
+      const sections = [...document.querySelectorAll("#wizard [data-step]")];
+      const labels = [...document.querySelectorAll("#wizard-steps .wizard-step")];
+
+      let existing = null;
+      if (editing) {
+        existing = PD.getPropertyById(editId);
+        if (existing) {
+          document.title = "تعديل منشأة — Solvfast PMS";
+          document.getElementById("panel-desc").textContent = "";
+          document.querySelector(".page-kicker").textContent = "تعديل بيانات المنشأة";
+          document.getElementById("f-name").value = existing.name;
+          document.getElementById("f-arabicName").value = existing.arabicName;
+          document.getElementById("f-code").value = existing.code;
+          document.getElementById("f-code").disabled = true;
+          document.getElementById("f-type").value = existing.type;
+          document.getElementById("f-country").value = existing.country;
+          document.getElementById("f-city").value = existing.city;
+          document.getElementById("f-address").value = existing.address || "";
+          document.getElementById("f-timezone").value = existing.timezone;
+          document.getElementById("f-currency").value = existing.currency;
+          document.getElementById("f-rooms").value = existing.rooms;
+          document.getElementById("f-beds").value = existing.beds;
+          document.getElementById("f-floors").value = existing.floors;
+          document.getElementById("f-numbering").value = existing.roomNumberingStyle;
+          document.getElementById("f-checkin").value = existing.checkInTime;
+          document.getElementById("f-checkout").value = existing.checkOutTime;
+          document.querySelectorAll("#f-weekend .chip").forEach(function (c) {
+            c.classList.toggle("is-active", existing.weekendDays.indexOf(c.dataset.day) !== -1);
+          });
+          document.getElementById("f-tax").checked = !!existing.taxIncluded;
+          document.getElementById("f-autocheckout").checked = !!existing.autoCheckout;
+          document.getElementById("f-autocleaning").checked = !!existing.autoCleaning;
+          document.getElementById("f-automaintenance").checked = !!existing.autoMaintenance;
+          document.getElementById("f-ownerName").value = existing.ownerName || "";
+          document.getElementById("f-ownerPhone").value = existing.ownerPhone || "";
+          document.getElementById("f-supervisorName").value = existing.supervisorName || "";
+          document.getElementById("f-supervisorPhone").value = existing.supervisorPhone || "";
+          document.getElementById("f-mainEmail").value = existing.mainEmail || "";
+          document.getElementById("f-reservationsEmail").value = existing.reservationsEmail || "";
+          document.getElementById("f-receptionNumber").value = existing.receptionNumber || "";
+          document.getElementById("f-website").value = existing.website || "";
+        }
+      }
+
+      function val(id) { return document.getElementById(id).value.trim(); }
+      function num(id) { return Number(document.getElementById(id).value) || 0; }
+
+      function collect() {
+        const weekendDays = Array.from(document.querySelectorAll("#f-weekend .chip.is-active")).map(function (c) { return c.dataset.day; });
+        return {
+          name: val("f-name"),
+          arabicName: val("f-arabicName"),
+          code: val("f-code").toUpperCase().replace(/[^A-Z0-9]/g, ""),
+          type: val("f-type"),
+          country: val("f-country"),
+          city: val("f-city"),
+          address: val("f-address"),
+          timezone: val("f-timezone"),
+          currency: val("f-currency"),
+          rooms: num("f-rooms"),
+          beds: num("f-beds"),
+          floors: num("f-floors"),
+          roomNumberingStyle: val("f-numbering"),
+          checkInTime: val("f-checkin"),
+          checkOutTime: val("f-checkout"),
+          weekendDays: weekendDays,
+          taxIncluded: document.getElementById("f-tax").checked,
+          autoCheckout: document.getElementById("f-autocheckout").checked,
+          autoCleaning: document.getElementById("f-autocleaning").checked,
+          autoMaintenance: document.getElementById("f-automaintenance").checked,
+          ownerName: val("f-ownerName"),
+          ownerPhone: val("f-ownerPhone"),
+          supervisorName: val("f-supervisorName"),
+          supervisorPhone: val("f-supervisorPhone"),
+          mainEmail: val("f-mainEmail"),
+          reservationsEmail: val("f-reservationsEmail"),
+          receptionNumber: val("f-receptionNumber"),
+          website: val("f-website"),
+        };
+      }
+
+      function validateStep(n) {
+        if (n === 1) {
+          if (!val("f-name") || !val("f-arabicName") || !val("f-country") || !val("f-city")) {
+            PMS.toast("يرجى تعبئة كل الحقول الإلزامية (*)");
+            return false;
+          }
+          const code = val("f-code").toUpperCase().replace(/[^A-Z0-9]/g, "");
+          if (!code) {
+            PMS.toast("يرجى إدخال رمز صالح للمنشأة (أحرف وأرقام فقط)");
+            return false;
+          }
+          if (!editing) {
+            const exists = PD.getProperties().some(function (p) { return p.code === code; });
+            if (exists) {
+              PMS.toast("رمز المنشأة \"" + code + "\" مستخدم بالفعل — اختر رمزاً آخر");
+              return false;
+            }
+          }
+          document.getElementById("f-code").value = code;
+        }
+        if (n === 2 && num("f-rooms") < 1) {
+          PMS.toast("يجب أن يكون عدد الغرف واحداً على الأقل");
+          return false;
+        }
+        return true;
+      }
+
+      function renderReview() {
+        const d = collect();
+        const rows = [
+          ["اسم المنشأة", d.name + " · " + d.arabicName],
+          ["الرمز", d.code],
+          ["النوع", TYPE_LABELS[d.type] || d.type],
+          ["الموقع", d.city + "، " + d.country],
+          ["العملة / المنطقة الزمنية", d.currency + " · " + d.timezone],
+          ["السعة", d.rooms + " غرفة · " + d.beds + " سرير · " + d.floors + " طوابق"],
+          ["أوقات التشغيل", "دخول " + (d.checkInTime || "—") + " · مغادرة " + (d.checkOutTime || "—")],
+          ["عطلة نهاية الأسبوع", d.weekendDays.map(function (x) { return DAY_LABELS[x] || x; }).join("، ") || "—"],
+          ["المالك", (d.ownerName || "—") + (d.ownerPhone ? " · " + d.ownerPhone : "")],
+          ["البريد الرئيسي", d.mainEmail || "—"],
+        ];
+        document.getElementById("review-grid").innerHTML = rows.map(function (r) {
+          return '<div class="summary-tile"><dt>' + r[0] + "</dt><dd>" + r[1] + "</dd></div>";
+        }).join("");
+      }
+
+      function render() {
+        const pct = Math.round((step / max) * 100);
+        sections.forEach(function (s) { s.classList.toggle("hidden", Number(s.dataset.step) !== step); });
+        labels.forEach(function (l, i) {
+          const n = i + 1;
+          l.classList.toggle("is-active", n === step);
+          l.classList.toggle("is-done", n < step);
+          const numEl = l.querySelector(".wizard-step-num");
+          if (numEl) numEl.innerHTML = n < step ? "✓" : String(n);
+        });
+        document.getElementById("step-bar").style.width = pct + "%";
+        document.getElementById("step-pct").textContent = pct + "%";
+        document.getElementById("step-label").textContent = "الخطوة " + step + " من " + max;
+        document.getElementById("panel-title").textContent = meta[step].title;
+        document.getElementById("panel-desc").textContent = meta[step].desc;
+        document.getElementById("step-headline").textContent = meta[step].headline;
+        const prev = document.getElementById("wizard-prev");
+        prev.disabled = step === 1;
+        prev.classList.toggle("opacity-40", step === 1);
+        document.getElementById("wizard-next").textContent = step === max ? (editing ? "حفظ التعديلات" : "إنشاء المنشأة") : "التالي";
+        if (step === max) renderReview();
+      }
+
+      function finish(status) {
+        const d = collect();
+        if (editing) {
+          PD.updateProperty(editId, d);
+          PMS.toast("تم حفظ تعديلات " + d.name);
+          location.href = "property-detail.html?id=" + editId;
+          return;
+        }
+        d.id = d.code;
+        d.status = status === "draft" ? "draft" : "active";
+        d.createdAt = new Date().toISOString().slice(0, 10);
+        PD.addProperty(d);
+        if (status === "draft") {
+          PMS.toast("تم حفظ \"" + d.name + "\" كمسودة");
+          location.href = "properties.html";
+          return;
+        }
+        document.getElementById("success-name").textContent = "تم إنشاء \"" + d.name + "\" بنجاح";
+        document.getElementById("success-rooms").href = "property-detail.html?id=" + d.id + "&tab=rooms";
+        document.getElementById("success-users").href = "users.html?property=" + d.id;
+        document.getElementById("success-dashboard").href = "property-detail.html?id=" + d.id;
+        PMS.openModal("success-modal");
+      }
+
+      document.getElementById("wizard-next").addEventListener("click", function () {
+        if (!validateStep(step)) return;
+        if (step < max) { step += 1; render(); return; }
+        finish("active");
+      });
+      document.getElementById("wizard-prev").addEventListener("click", function () {
+        if (step > 1) { step -= 1; render(); }
+      });
+      document.getElementById("wizard-draft").addEventListener("click", function () {
+        if (!validateStep(1)) { step = 1; render(); return; }
+        finish("draft");
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

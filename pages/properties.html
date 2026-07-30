@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>المنشآت — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="properties" data-title="المنشآت"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المنشآت"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">المنشآت</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">إدارة الفنادق والمنشآت السكنية</p>
+          </div>
+          <a href="property-new.html" class="btn btn-primary">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            إضافة منشأة
+          </a>
+        </div>
+
+        <section class="panel p-4">
+          <div class="prop-toolbar">
+            <div class="search-input flex-1 min-w-[12rem]">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" id="prop-search" class="field-input" placeholder="ابحث بالاسم أو الرمز أو المدينة…" />
+            </div>
+            <select id="prop-status-filter" class="field-select w-auto">
+              <option value="all">كل الحالات</option>
+              <option value="active">نشطة</option>
+              <option value="disabled">معطّلة</option>
+            </select>
+            <select id="prop-type-filter" class="field-select w-auto">
+              <option value="all">كل الأنواع</option>
+              <option value="Hotel">فندق</option>
+              <option value="Serviced Apartment">شقق مخدومة</option>
+              <option value="Furnished Apartment">شقق مفروشة</option>
+              <option value="Resort">منتجع</option>
+            </select>
+            <div class="view-toggle">
+              <button type="button" class="view-toggle-btn is-active" id="prop-view-grid" title="عرض شبكي" aria-label="عرض شبكي">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              </button>
+              <button type="button" class="view-toggle-btn" id="prop-view-list" title="عرض قائمة" aria-label="عرض قائمة">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="prop-grid" id="properties-grid"></div>
+
+        <div class="panel overflow-hidden prop-list is-hidden" id="properties-list">
+          <div class="table-wrap">
+            <table class="data-table" data-no-pager>
+              <thead>
+                <tr>
+                  <th>المنشأة</th>
+                  <th>الرمز</th>
+                  <th>النوع</th>
+                  <th>الموقع</th>
+                  <th>الغرف</th>
+                  <th>الحالة</th>
+                  <th class="text-center">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="properties-list-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="empty-state hidden" id="properties-empty">
+          <div class="state-block-icon" style="margin:0 auto 1rem;">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="font-extrabold text-slate-700" id="properties-empty-title">لا توجد نتائج مطابقة</p>
+          <p class="text-sm text-slate-500 font-semibold mt-1" id="properties-empty-desc">جرّب تعديل كلمات البحث أو الفلاتر المستخدمة.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="disable-confirm" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تعطيل المنشأة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="disable-confirm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5">
+      <p class="text-sm text-slate-600 font-semibold" id="disable-confirm-text">هل أنت متأكد من تعطيل هذه المنشأة؟ لن تظهر بعد الآن في مبدّل المنشآت.</p>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="disable-confirm">إلغاء</button>
+      <button class="btn btn-danger" id="disable-confirm-btn">تعطيل المنشأة</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const PD = PMSData;
+      let view = "grid";
+      let pendingDisableId = null;
+
+      const TYPE_LABELS = {
+        Hotel: "فندق",
+        "Serviced Apartment": "شقق مخدومة",
+        "Furnished Apartment": "شقق مفروشة",
+        Resort: "منتجع",
+      };
+
+      function currentUserDefaultId() {
+        return PD.getCurrentUser().defaultPropertyId;
+      }
+
+      function filteredProperties() {
+        const q = (document.getElementById("prop-search").value || "").trim().toLowerCase();
+        const status = document.getElementById("prop-status-filter").value;
+        const type = document.getElementById("prop-type-filter").value;
+        return PD.getProperties().filter(function (p) {
+          if (status !== "all" && p.status !== status) return false;
+          if (type !== "all" && p.type !== type) return false;
+          if (q) {
+            const hay = (p.name + " " + p.arabicName + " " + p.code + " " + p.city + " " + p.country).toLowerCase();
+            if (hay.indexOf(q) === -1) return false;
+          }
+          return true;
+        });
+      }
+
+      function statusBadge(p) {
+        return p.status === "active"
+          ? '<span class="badge badge-success">نشطة</span>'
+          : '<span class="badge badge-neutral">معطّلة</span>';
+      }
+
+      function kebabMenuHtml(p) {
+        return (
+          '<div class="relative" data-kebab-root>' +
+          '<button type="button" class="kebab-btn" data-action="toggle-kebab" aria-label="إجراءات إضافية" aria-expanded="false">' +
+          '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>' +
+          "</button>" +
+          '<div class="kebab-menu" data-kebab-menu>' +
+          '<a class="kebab-menu-item" href="property-detail.html?id=' + p.id + '">فتح المنشأة</a>' +
+          '<a class="kebab-menu-item" href="property-new.html?id=' + p.id + '">تعديل المنشأة</a>' +
+          '<button type="button" class="kebab-menu-item" data-action="set-default-property" data-id="' + p.id + '">تعيين كافتراضية</button>' +
+          '<a class="kebab-menu-item" href="property-detail.html?id=' + p.id + '&tab=rooms">تهيئة الغرف</a>' +
+          '<a class="kebab-menu-item" href="property-detail.html?id=' + p.id + '&tab=users">إدارة المستخدمين</a>' +
+          '<div class="kebab-menu-sep"></div>' +
+          '<button type="button" class="kebab-menu-item is-danger" data-action="disable-property" data-id="' + p.id + '">' +
+          (p.status === "active" ? "تعطيل المنشأة" : "تفعيل المنشأة") +
+          "</button>" +
+          "</div>" +
+          "</div>"
+        );
+      }
+
+      function cardHtml(p) {
+        const isDefault = p.id === currentUserDefaultId();
+        return (
+          '<article class="prop-card" data-status="' + p.status + '">' +
+          '<div class="prop-card-top">' +
+          '<div class="flex items-center gap-3 min-w-0">' +
+          '<div class="prop-card-icon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" stroke-linejoin="round"/></svg></div>' +
+          '<div class="min-w-0">' +
+          '<div class="font-extrabold text-slate-800 truncate">' + p.name + '</div>' +
+          '<div class="text-xs text-slate-500 font-semibold truncate">' + p.arabicName + ' · ' + p.code + "</div>" +
+          "</div>" +
+          "</div>" +
+          kebabMenuHtml(p) +
+          "</div>" +
+          '<div class="prop-card-body">' +
+          '<div class="flex items-center gap-2 flex-wrap">' +
+          '<span class="badge badge-primary">' + (TYPE_LABELS[p.type] || p.type) + "</span>" +
+          statusBadge(p) +
+          (isDefault ? '<span class="prop-default-badge"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>افتراضية</span>' : "") +
+          "</div>" +
+          '<div class="prop-card-meta-grid">' +
+          '<div class="prop-card-meta"><div class="prop-card-meta-label">الموقع</div><div class="prop-card-meta-value">' + p.city + "، " + p.country + "</div></div>" +
+          '<div class="prop-card-meta"><div class="prop-card-meta-label">عدد الغرف</div><div class="prop-card-meta-value">' + p.rooms + " غرفة</div></div>" +
+          "</div>" +
+          '<div class="prop-card-actions">' +
+          '<a href="property-detail.html?id=' + p.id + '" class="btn btn-secondary btn-sm flex-1 justify-center">إدارة</a>' +
+          '<a href="property-detail.html?id=' + p.id + '" class="btn btn-ghost btn-sm">لوحة التحكم</a>' +
+          "</div>" +
+          "</div>" +
+          "</article>"
+        );
+      }
+
+      function rowHtml(p) {
+        const isDefault = p.id === currentUserDefaultId();
+        return (
+          "<tr>" +
+          "<td><div class=\"font-extrabold text-slate-800\">" + p.name + (isDefault ? ' <span class="prop-default-badge">افتراضية</span>' : "") + "</div><div class=\"text-xs text-slate-500 font-semibold\">" + p.arabicName + "</div></td>" +
+          '<td class="font-bold text-primary">' + p.code + "</td>" +
+          "<td>" + (TYPE_LABELS[p.type] || p.type) + "</td>" +
+          "<td>" + p.city + "، " + p.country + "</td>" +
+          "<td>" + p.rooms + "</td>" +
+          "<td>" + statusBadge(p) + "</td>" +
+          '<td><div class="flex justify-center">' + kebabMenuHtml(p) + "</div></td>" +
+          "</tr>"
+        );
+      }
+
+      function render() {
+        const list = filteredProperties();
+        const total = PD.getProperties().length;
+        document.getElementById("properties-grid").innerHTML = list.map(cardHtml).join("");
+        document.getElementById("properties-list-body").innerHTML = list.map(rowHtml).join("");
+
+        const emptyEl = document.getElementById("properties-empty");
+        emptyEl.classList.toggle("hidden", list.length > 0);
+        if (list.length === 0) {
+          document.getElementById("properties-empty-title").textContent =
+            total === 0 ? "لا توجد منشآت بعد" : "لا توجد نتائج مطابقة";
+          document.getElementById("properties-empty-desc").textContent =
+            total === 0 ? "ابدأ بإضافة أول منشأة لإدارتها هنا." : "جرّب تعديل كلمات البحث أو الفلاتر المستخدمة.";
+        }
+        document.getElementById("properties-grid").classList.toggle("is-hidden", view !== "grid");
+        document.getElementById("properties-list").classList.toggle("is-hidden", view !== "list");
+      }
+
+      function setView(next) {
+        view = next;
+        document.getElementById("prop-view-grid").classList.toggle("is-active", next === "grid");
+        document.getElementById("prop-view-list").classList.toggle("is-active", next === "list");
+        render();
+      }
+
+      function closeAllKebabs(except) {
+        document.querySelectorAll("[data-kebab-menu].is-open").forEach(function (m) {
+          if (m === except) return;
+          m.classList.remove("is-open");
+        });
+      }
+
+      document.getElementById("prop-search").addEventListener("input", render);
+      document.getElementById("prop-status-filter").addEventListener("change", render);
+      document.getElementById("prop-type-filter").addEventListener("change", render);
+      document.getElementById("prop-view-grid").addEventListener("click", function () { setView("grid"); });
+      document.getElementById("prop-view-list").addEventListener("click", function () { setView("list"); });
+
+      document.body.addEventListener("click", function (e) {
+        const actionEl = e.target.closest("[data-action]");
+        if (!actionEl) {
+          if (!e.target.closest("[data-kebab-root]")) closeAllKebabs();
+          return;
+        }
+        const action = actionEl.dataset.action;
+
+        if (action === "toggle-kebab") {
+          e.preventDefault();
+          e.stopPropagation();
+          const menu = actionEl.closest("[data-kebab-root]").querySelector("[data-kebab-menu]");
+          const willOpen = !menu.classList.contains("is-open");
+          closeAllKebabs();
+          menu.classList.toggle("is-open", willOpen);
+          return;
+        }
+
+        if (action === "set-default-property") {
+          e.preventDefault();
+          const id = actionEl.dataset.id;
+          const prop = PD.getPropertyById(id);
+          PD.updateUser(PD.getCurrentUser().id, { defaultPropertyId: id });
+          closeAllKebabs();
+          PMS.toast("تم تعيين " + prop.name + " كمنشأة افتراضية");
+          render();
+          return;
+        }
+
+        if (action === "disable-property") {
+          e.preventDefault();
+          const id = actionEl.dataset.id;
+          const prop = PD.getPropertyById(id);
+          closeAllKebabs();
+          if (prop.status === "active") {
+            if (id === currentUserDefaultId()) {
+              PMS.openModal("disable-confirm");
+              document.getElementById("disable-confirm-text").textContent =
+                "لا يمكن تعطيل “" + prop.name + "” لأنها منشأتك الافتراضية الحالية. عيّن منشأة افتراضية أخرى أولاً من قائمة الإجراءات، ثم أعد المحاولة.";
+              document.getElementById("disable-confirm-btn").classList.add("hidden");
+              pendingDisableId = null;
+              return;
+            }
+            pendingDisableId = id;
+            document.getElementById("disable-confirm-text").textContent =
+              "هل أنت متأكد من تعطيل “" + prop.name + "”؟ لن تظهر بعد الآن في مبدّل المنشآت لأي مستخدم.";
+            document.getElementById("disable-confirm-btn").classList.remove("hidden");
+            PMS.openModal("disable-confirm");
+          } else {
+            PD.updateProperty(id, { status: "active" });
+            PMS.toast("تم إعادة تفعيل " + prop.name);
+            render();
+          }
+          return;
+        }
+      });
+
+      document.getElementById("disable-confirm-btn").addEventListener("click", function () {
+        if (!pendingDisableId) return;
+        const prop = PD.getPropertyById(pendingDisableId);
+        PD.updateProperty(pendingDisableId, { status: "disabled" });
+        PMS.toast("تم تعطيل " + prop.name);
+        pendingDisableId = null;
+        PMS.closeModal("disable-confirm");
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

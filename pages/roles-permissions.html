@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الأدوار والصلاحيات — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="roles" data-title="الأدوار والصلاحيات"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الأدوار والصلاحيات"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الأدوار والصلاحيات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">مصفوفة الصلاحيات الوظيفية لكل دور</p>
+          </div>
+        </div>
+
+        <section class="grid lg:grid-cols-[18rem_1fr] gap-4 items-start">
+          <div class="panel p-3 space-y-1.5" id="role-preset-list"></div>
+
+          <div class="space-y-4 min-w-0">
+            <div class="panel p-5 sm:p-6">
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <h3 class="font-extrabold text-lg" id="matrix-title">—</h3>
+                  <p class="text-sm text-slate-500 font-semibold mt-1" id="matrix-desc">—</p>
+                </div>
+                <span class="badge badge-primary shrink-0">صلاحيات وظيفية</span>
+              </div>
+              <div class="perm-matrix-wrap">
+                <table class="perm-matrix" id="perm-table">
+                  <thead>
+                    <tr>
+                      <th class="text-start">الوحدة</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel p-5 sm:p-6">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div>
+                  <h3 class="font-extrabold">صلاحيات المنشآت</h3>
+                  <p class="text-sm text-slate-500 font-semibold mt-1">مستقلة عن الدور — تُدار لكل مستخدم من صفحة المستخدمين، وتحدد أي المنشآت يمكنه رؤيتها بغض النظر عن دوره الوظيفي.</p>
+                </div>
+                <span class="badge badge-neutral shrink-0">صلاحيات المنشآت</span>
+              </div>
+              <div id="role-users-list" class="space-y-2"></div>
+              <div class="empty-state hidden" id="role-users-empty">لا يوجد مستخدمون بهذا الدور حالياً.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      const PD = PMSData;
+      let activePreset = "Hotel Manager";
+
+      function renderPresetList() {
+        document.getElementById("role-preset-list").innerHTML = Object.keys(PD.ROLE_PRESETS).map(function (key) {
+          const active = key === activePreset ? " is-active" : "";
+          return (
+            '<button type="button" class="role-preset-item' + active + '" data-preset="' + key + '">' +
+            '<div class="title">' + PD.ROLE_PRESETS[key].label + " (" + key + ")</div>" +
+            '<div class="desc">' + PD.ROLE_PRESETS[key].description + "</div>" +
+            "</button>"
+          );
+        }).join("");
+      }
+
+      function renderMatrix() {
+        document.getElementById("matrix-title").textContent = PD.ROLE_PRESETS[activePreset].label + " · " + activePreset;
+        document.getElementById("matrix-desc").textContent = PD.ROLE_PRESETS[activePreset].description;
+
+        const thead = document.querySelector("#perm-table thead tr");
+        thead.innerHTML = '<th class="text-start">الوحدة</th>' + PD.PERMISSION_ACTIONS.map(function (a) {
+          return "<th>" + a.label + "</th>";
+        }).join("");
+
+        const grid = PD.PERMISSION_MATRIX[activePreset];
+        document.querySelector("#perm-table tbody").innerHTML = PD.PERMISSION_MODULES.map(function (m) {
+          const allowed = grid[m.id] || [];
+          const cells = PD.PERMISSION_ACTIONS.map(function (a) {
+            const on = allowed.indexOf(a.id) !== -1;
+            return '<td><span class="perm-check' + (on ? " is-on" : "") + '">' +
+              (on
+                ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+                : '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>') +
+              "</span></td>";
+          }).join("");
+          return "<tr><th>" + m.label + "</th>" + cells + "</tr>";
+        }).join("");
+      }
+
+      function renderRoleUsers() {
+        const users = PD.getUsers().filter(function (u) { return u.rolePreset === activePreset; });
+        document.getElementById("role-users-list").innerHTML = users.map(function (u) {
+          const props = PD.getAssignedProperties(u).map(function (p) { return '<span class="mini-chip">' + p.code + "</span>"; }).join(" ");
+          return (
+            '<div class="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50/60 px-3.5 py-2.5">' +
+            '<div class="flex items-center gap-2.5 min-w-0"><div class="res-avatar !w-8 !h-8 !text-xs">' + u.firstName.charAt(0) + '</div>' +
+            '<div class="min-w-0"><div class="font-extrabold text-sm text-slate-800 truncate">' + u.firstName + " " + u.lastName + '</div><div class="text-xs text-slate-500 font-semibold truncate">' + u.email + "</div></div></div>" +
+            '<div class="flex flex-wrap gap-1 justify-end shrink-0">' + props + "</div>" +
+            "</div>"
+          );
+        }).join("");
+        document.getElementById("role-users-empty").classList.toggle("hidden", users.length > 0);
+      }
+
+      function render() {
+        renderPresetList();
+        renderMatrix();
+        renderRoleUsers();
+      }
+
+      document.getElementById("role-preset-list").addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-preset]");
+        if (!btn) return;
+        activePreset = btn.dataset.preset;
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>

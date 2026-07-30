@@ -33,7 +33,7 @@
         <div class="page-hero">
           <div>
             <p class="page-kicker">تصفّح وابحث وأدِر الحجوزات</p>
-            <p class="text-slate-800 font-extrabold mt-1">8 حجوزات نشطة اليوم</p>
+            <p class="text-slate-800 font-extrabold mt-1"><span id="res-total">8</span> حجوزات نشطة اليوم</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <div class="view-toggle" data-tabs data-tabs-target="res-views" id="view-switcher">
@@ -52,21 +52,21 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-2" data-chip-group="single">
-          <button type="button" class="chip is-active">الكل <span class="count">8</span></button>
-          <button type="button" class="chip" data-tone="arrivals">وصول اليوم <span class="count">2</span></button>
-          <button type="button" class="chip" data-tone="departures">مغادرة اليوم <span class="count">2</span></button>
-          <button type="button" class="chip" data-tone="inhouse">مقيمون <span class="count">5</span></button>
-          <button type="button" class="chip" data-tone="warning">غير مؤكد <span class="count">1</span></button>
-          <button type="button" class="chip" data-tone="due">رصيد مستحق <span class="count">4</span></button>
-          <button type="button" class="chip">منتهٍ <span class="count">0</span></button>
-          <button type="button" class="chip">ملغى <span class="count">0</span></button>
+        <div class="flex flex-wrap gap-2" data-chip-group="single" id="res-chips">
+          <button type="button" class="chip is-active" data-tone="all">الكل <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="arrivals">وصول اليوم <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="departures">مغادرة اليوم <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="inhouse">مقيمون <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="warning">غير مؤكد <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="due">رصيد مستحق <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="ended">منتهٍ <span class="count">0</span></button>
+          <button type="button" class="chip" data-tone="cancelled">ملغى <span class="count">0</span></button>
         </div>
 
         <div class="panel p-3 sm:p-4 bg-gradient-to-l from-primary-soft/40 to-white">
           <div class="search-input">
             <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
-            <input type="search" class="field-input" placeholder="بحث بالاسم / الهاتف / الهوية / الغرفة / رقم الحجز" />
+            <input type="search" id="res-search" class="field-input" placeholder="بحث بالاسم / الهاتف / الهوية / الغرفة / رقم الحجز" />
           </div>
         </div>
 
@@ -87,7 +87,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr data-res="RES-2026-00049" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="credit">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00049</a></td>
                       <td class="font-semibold">ابراهيم<br/><span class="text-xs text-slate-400 font-medium">966•••297</span></td>
                       <td><span class="badge badge-info">Double ×5</span></td>
@@ -104,7 +104,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr data-res="RES-2026-00046" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-29" data-checkout="2026-07-30" data-status="unconfirmed" data-balance="due">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00046</a></td>
                       <td class="font-semibold">ابراهيم<br/><span class="text-xs text-slate-400 font-medium">966•••297</span></td>
                       <td><span class="badge badge-neutral">Double</span></td>
@@ -121,7 +121,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr data-res="RES-2026-00043" data-guest="Ebrahim Al-desouki" data-phone="685657" data-room="Twin" data-checkin="2026-07-27" data-checkout="2026-07-29" data-status="confirmed" data-balance="credit">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00043</a></td>
                       <td class="font-semibold">Ebrahim Al-desouki<br/><span class="text-xs text-slate-400 font-medium">685•••657</span></td>
                       <td><span class="badge badge-info">Twin</span></td>
@@ -138,7 +138,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr data-res="RES-2026-00041" data-guest="ابرهيم" data-phone="051421" data-room="Single" data-checkin="2026-08-03" data-checkout="2026-08-05" data-status="confirmed" data-balance="due">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00041</a></td>
                       <td class="font-semibold">ابرهيم<br/><span class="text-xs text-slate-400 font-medium">051•••421</span></td>
                       <td><span class="badge badge-neutral">Single</span></td>
@@ -155,7 +155,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr data-res="RES-2026-00037" data-guest="عمر خالد الغامدي" data-phone="055009" data-room="Twin" data-checkin="2026-07-29" data-checkout="2026-08-01" data-status="inhouse" data-balance="due">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00037</a></td>
                       <td class="font-semibold">عمر خالد الغامدي<br/><span class="text-xs text-slate-400 font-medium">055•••009</span></td>
                       <td><span class="badge badge-info">Twin</span></td>
@@ -172,7 +172,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <tr data-res="RES-2026-00039" data-guest="LISTFIX GUEST" data-phone="050111" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="due">
                       <td class="font-extrabold text-primary"><a href="reservation-detail.html">RES-2026-00039</a></td>
                       <td class="font-semibold">LISTFIX GUEST<br/><span class="text-xs text-slate-400 font-medium">050•••111</span></td>
                       <td><span class="badge badge-neutral">Double</span></td>
@@ -197,7 +197,7 @@
 
           <div class="hidden" data-tab-panel="cards">
             <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-              <article class="res-card" data-tone="success">
+              <article class="res-card" data-tone="success" data-res="RES-2026-00049" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">ا</div>
@@ -222,7 +222,7 @@
                 </div>
               </article>
 
-              <article class="res-card" data-tone="warning">
+              <article class="res-card" data-tone="warning" data-res="RES-2026-00046" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-29" data-checkout="2026-07-30" data-status="unconfirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">ا</div>
@@ -247,7 +247,7 @@
                 </div>
               </article>
 
-              <article class="res-card" data-tone="primary">
+              <article class="res-card" data-tone="primary" data-res="RES-2026-00043" data-guest="Ebrahim Al-desouki" data-phone="685657" data-room="Twin" data-checkin="2026-07-27" data-checkout="2026-07-29" data-status="confirmed" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">E</div>
@@ -272,7 +272,7 @@
                 </div>
               </article>
 
-              <article class="res-card" data-tone="info">
+              <article class="res-card" data-tone="info" data-res="RES-2026-00041" data-guest="ابرهيم" data-phone="051421" data-room="Single" data-checkin="2026-08-03" data-checkout="2026-08-05" data-status="confirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">ا</div>
@@ -297,7 +297,7 @@
                 </div>
               </article>
 
-              <article class="res-card" data-tone="danger">
+              <article class="res-card" data-tone="danger" data-res="RES-2026-00037" data-guest="عمر خالد الغامدي" data-phone="055009" data-room="Twin" data-checkin="2026-07-29" data-checkout="2026-08-01" data-status="inhouse" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">ع</div>
@@ -322,7 +322,7 @@
                 </div>
               </article>
 
-              <article class="res-card" data-tone="success">
+              <article class="res-card" data-tone="success" data-res="RES-2026-00039" data-guest="LISTFIX GUEST" data-phone="050111" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="res-avatar">L</div>
@@ -385,17 +385,17 @@
     <div class="space-y-4">
       <div>
         <label class="field-label">الحالة</label>
-        <select class="field-select"><option>الكل</option><option>مؤكد</option><option>تم الدخول</option><option>غير مؤكد</option></select>
+        <select id="drawer-status" class="field-select"><option value="all">الكل</option><option value="confirmed">مؤكد</option><option value="inhouse">تم الدخول</option><option value="unconfirmed">غير مؤكد</option><option value="cancelled">ملغى</option></select>
       </div>
       <div>
         <label class="field-label">من تاريخ</label>
-        <input type="date" class="field-input" value="2026-07-30" />
+        <input type="date" id="drawer-from" class="field-input" value="2026-07-30" />
       </div>
       <div>
         <label class="field-label">إلى تاريخ</label>
-        <input type="date" class="field-input" value="2026-08-05" />
+        <input type="date" id="drawer-to" class="field-input" value="2026-08-05" />
       </div>
-      <button class="btn btn-primary w-full" data-action="close-drawer">تطبيق</button>
+      <button class="btn btn-primary w-full" data-action="close-drawer" id="drawer-apply">تطبيق</button>
     </div>
   </div>
 
@@ -431,6 +431,23 @@
     </div>
   </div>
 
+  <script src="../assets/js/pms-data.js"></script>
+  <script>
+    (function () {
+      var RES_PROPERTY_MAP = {
+        "RES-2026-00049": "HOMS1",
+        "RES-2026-00046": "HOMS1",
+        "RES-2026-00041": "HOMS1",
+        "RES-2026-00043": "HALEP1",
+        "RES-2026-00037": "HALEP1",
+        "RES-2026-00039": "HALEP1",
+      };
+      document.querySelectorAll("[data-res]").forEach(function (el) {
+        var pid = RES_PROPERTY_MAP[el.getAttribute("data-res")];
+        if (pid) el.setAttribute("data-record-property", pid);
+      });
+    })();
+  </script>
   <script src="../assets/js/app.js"></script>
   <script>
     // Sync icon view switcher with panels (switcher is outside the panels root)
@@ -447,6 +464,134 @@
           });
         });
       });
+    })();
+
+    // ---- Filters: chips + search + drawer (status / date range) ----
+    (function () {
+      const TODAY = '2026-07-30';
+      const root = document.getElementById('res-views');
+      if (!root) return;
+      const items = Array.from(root.querySelectorAll('tr[data-res], article.res-card[data-res]'));
+      const tableBody = root.querySelector('tbody');
+      const cardsGrid = root.querySelector('[data-tab-panel="cards"] .grid');
+      const chips = document.getElementById('res-chips');
+      const searchInput = document.getElementById('res-search');
+      const totalEl = document.getElementById('res-total');
+      const drawerStatus = document.getElementById('drawer-status');
+      const drawerFrom = document.getElementById('drawer-from');
+      const drawerTo = document.getElementById('drawer-to');
+
+      const state = { chip: 'all', query: '', status: 'all', from: '', to: '' };
+
+      const matchChip = {
+        all: () => true,
+        arrivals: (d) => d.checkin === TODAY,
+        departures: (d) => d.checkout === TODAY,
+        inhouse: (d) => d.status === 'inhouse',
+        warning: (d) => d.status === 'unconfirmed',
+        due: (d) => d.balance === 'due',
+        ended: (d) => d.checkout < TODAY,
+        cancelled: (d) => d.status === 'cancelled',
+      };
+
+      const readItem = (el) => ({
+        res: (el.dataset.res || '').toLowerCase(),
+        guest: (el.dataset.guest || '').toLowerCase(),
+        phone: (el.dataset.phone || '').toLowerCase(),
+        room: (el.dataset.room || '').toLowerCase(),
+        checkin: el.dataset.checkin || '',
+        checkout: el.dataset.checkout || '',
+        status: el.dataset.status || '',
+        balance: el.dataset.balance || '',
+      });
+
+      const passes = (d) => {
+        if (!matchChip[state.chip](d)) return false;
+        if (state.status !== 'all' && d.status !== state.status) return false;
+        if (state.from && d.checkout < state.from) return false;
+        if (state.to && d.checkin > state.to) return false;
+        if (state.query) {
+          const hay = d.res + ' ' + d.guest + ' ' + d.phone + ' ' + d.room;
+          if (!hay.includes(state.query)) return false;
+        }
+        return true;
+      };
+
+      const MSG = 'لا توجد حجوزات مطابقة للفلاتر الحالية.';
+      let emptyTable, emptyCards;
+      (function ensureEmpty() {
+        if (tableBody) {
+          emptyTable = document.createElement('tr');
+          emptyTable.className = 'hidden';
+          emptyTable.innerHTML = '<td colspan="7" class="text-center text-slate-400 font-semibold py-10">' + MSG + '</td>';
+          tableBody.appendChild(emptyTable);
+        }
+        if (cardsGrid) {
+          emptyCards = document.createElement('div');
+          emptyCards.className = 'hidden col-span-full text-center text-slate-400 font-semibold py-10';
+          emptyCards.textContent = MSG;
+          cardsGrid.appendChild(emptyCards);
+        }
+      })();
+
+      const toggleEmpty = (isEmpty) => {
+        if (emptyTable) emptyTable.classList.toggle('hidden', !isEmpty);
+        if (emptyCards) emptyCards.classList.toggle('hidden', !isEmpty);
+      };
+
+      function applyFilters() {
+        let visible = 0;
+        for (const el of items) {
+          const show = passes(readItem(el));
+          el.classList.toggle('hidden', !show);
+          if (show) visible++;
+        }
+        toggleEmpty(visible === 0);
+        if (totalEl) totalEl.textContent = String(visible);
+      }
+
+      function updateCounts() {
+        const counts = { all: 0, arrivals: 0, departures: 0, inhouse: 0, warning: 0, due: 0, ended: 0, cancelled: 0 };
+        for (const el of items) {
+          const d = readItem(el);
+          for (const key of Object.keys(matchChip)) if (matchChip[key](d)) counts[key]++;
+        }
+        chips.querySelectorAll('.chip').forEach((c) => {
+          const span = c.querySelector('.count');
+          if (span) span.textContent = counts[c.dataset.tone || 'all'] || 0;
+        });
+      }
+
+      if (chips) {
+        chips.addEventListener('click', (e) => {
+          const chip = e.target.closest('.chip');
+          if (!chip || !chips.contains(chip)) return;
+          chips.querySelectorAll('.chip').forEach((c) => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          state.chip = chip.dataset.tone || 'all';
+          applyFilters();
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          state.query = searchInput.value.trim().toLowerCase();
+          applyFilters();
+        });
+      }
+
+      [drawerStatus, drawerFrom, drawerTo].forEach((el) => {
+        if (!el) return;
+        el.addEventListener('change', () => {
+          state.status = drawerStatus ? drawerStatus.value : state.status;
+          state.from = drawerFrom ? drawerFrom.value : state.from;
+          state.to = drawerTo ? drawerTo.value : state.to;
+          applyFilters();
+        });
+      });
+
+      updateCounts();
+      applyFilters();
     })();
   </script>
 </body>

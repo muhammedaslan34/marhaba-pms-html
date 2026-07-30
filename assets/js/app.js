@@ -12,17 +12,21 @@
     { group: "المالية", id: "payments", href: "payments.html", label: "الدفعات", icon: "wallet" },
     { group: null, id: "cashier", href: "cashier.html", label: "الصندوق والورديات", icon: "cash" },
     { group: null, id: "reports", href: "reports.html", label: "التقارير", icon: "chart" },
+    { group: "إدارة المنشآت", id: "properties", href: "properties.html", label: "المنشآت", icon: "building" },
+    { group: null, id: "users", href: "users.html", label: "المستخدمون", icon: "userCog" },
+    { group: null, id: "roles", href: "roles-permissions.html", label: "الأدوار والصلاحيات", icon: "shield" },
     { group: "الإدارة", id: "settings", href: "settings.html", label: "الإعدادات", icon: "settings" },
   ];
 
-  const USER = { name: "محمد العبدالله", role: "مدير عام", email: "manager@solvfast.com", initial: "م" };
-
-  const PROPERTIES = [
-    { id: "madinah1", name: "فندق المدينة بلازا", code: "MADINAH1" },
-    { id: "riyadh1", name: "فندق الرياض جراند", code: "RIYADH1" },
-    { id: "jeddah1", name: "فندق جدة رويال", code: "JEDDAH1" },
-    { id: "makkah1", name: "فندق مكة السلام", code: "MAKKAH1" },
-  ];
+  // Multi-property identity/data lives in pms-data.js (loaded before this file).
+  const PD = window.PMSData;
+  const CURRENT_USER = PD.getCurrentUser();
+  const USER = {
+    name: CURRENT_USER.firstName + " " + CURRENT_USER.lastName,
+    role: CURRENT_USER.roleLabel || "مستخدم",
+    email: CURRENT_USER.email,
+    initial: CURRENT_USER.firstName.charAt(0).toUpperCase(),
+  };
 
   // Combined country data: dial code (for phone) + demonym nat/natEn (for nationality)
   const COUNTRIES = [
@@ -643,6 +647,9 @@
     cash: '<rect x="2" y="6" width="20" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/>',
     chart: '<path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M8 15v-4M12 15V8M16 15v-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
     settings: '<circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    building: '<path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 8h2M7 11h2M7 14h2M7 17h2M17 14h1M17 17h1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    userCog: '<circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 19c0-2.8 2.7-5 6-5s6 2.2 6 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="18" cy="17" r="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M18 13.3v.9M18 19.8v.9M21.2 17h-.9M15.7 17h-.9M20.3 14.7l-.6.6M16.3 18.7l-.6.6M20.3 19.3l-.6-.6M16.3 15.3l-.6-.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+    shield: '<path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
   };
 
   function icon(name) {
@@ -724,10 +731,7 @@
           <input id="global-search" type="search" placeholder="بحث…" aria-label="بحث عام" />
           <kbd class="search-kbd" aria-hidden="true">${shortcutLabel()}</kbd>
         </label>
-        <button type="button" class="hidden sm:flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 font-semibold" data-action="toggle-user-menu" aria-label="المنشأة الحالية" title="المنشأة الحالية — لتبديلها افتح قائمة الحساب">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-          <span class="truncate max-w-[9rem]" data-property-badge>${currentProperty().name}</span>
-        </button>
+        ${renderPropertySwitcher()}
         <div class="header-switchers">
           <button type="button" class="header-icon-btn" data-action="toggle-lang" aria-label="${lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}" title="${lang === "en" ? "English → العربية" : "العربية → English"}">
             ${langIcon}
@@ -757,20 +761,6 @@
               </div>
               <div class="text-xs text-slate-400 truncate font-semibold mt-1.5">${USER.email}</div>
             </div>
-            <div class="px-1 pt-1.5 pb-1">
-              <div class="px-2 text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-1">المنشأة</div>
-              <div class="property-select" data-property-select>
-                <button type="button" class="ss-select-btn property-select-trigger" data-action="toggle-property-select" aria-expanded="false" aria-haspopup="listbox">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0" aria-hidden="true"></span>
-                  <span class="ss-select-text" data-property-select-label>${currentProperty().name}</span>
-                  <span class="property-select-code" data-property-select-code>${currentProperty().code}</span>
-                  <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="property-select-menu" data-property-select-menu role="listbox" hidden>
-                  ${propertyOptionsHtml()}
-                </div>
-              </div>
-            </div>
             <div class="border-t border-slate-100 mt-1 pt-1">
               <a href="settings.html" class="block px-3 py-2 text-sm rounded-lg hover:bg-primary-soft font-semibold text-slate-700">الإعدادات</a>
               <a href="login.html" class="block px-3 py-2 text-sm rounded-lg hover:bg-red-50 font-semibold text-red-600">تسجيل الخروج</a>
@@ -778,6 +768,122 @@
           </div>
         </div>
       </div>`;
+  }
+
+  const PSWITCH_BUILDING_ICON =
+    '<svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" stroke-linejoin="round"/><path d="M7 8h2M7 11h2M7 14h2M7 17h2M17 14h1M17 17h1" stroke-linecap="round"/></svg>';
+
+  function propertySwitcherOptionHtml(p, selectedId) {
+    const sel = p.id === selectedId;
+    return (
+      '<button type="button" class="pswitch-option' +
+      (sel ? " is-selected" : "") +
+      '" data-action="select-property-switcher" data-property-id="' +
+      p.id +
+      '" role="option" aria-selected="' +
+      (sel ? "true" : "false") +
+      '" data-search="' +
+      (p.name + " " + p.arabicName + " " + p.code + " " + p.city).toLowerCase() +
+      '">' +
+      '<span class="pswitch-option-dot" aria-hidden="true"></span>' +
+      '<span class="min-w-0 flex-1 text-start">' +
+      '<span class="block truncate font-extrabold text-sm">' + p.name + '</span>' +
+      '<span class="block truncate text-xs text-slate-400 font-semibold">' + p.arabicName + '</span>' +
+      '</span>' +
+      '<span class="pswitch-option-code">' + p.code + '</span>' +
+      (sel
+        ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : "") +
+      "</button>"
+    );
+  }
+
+  function propertySwitcherMenuHtml() {
+    const user = CURRENT_USER;
+    const selectedId = PD.getSelectedPropertyId();
+    const options = PD.getAssignedProperties(user).map(function (p) {
+      return propertySwitcherOptionHtml(p, selectedId);
+    }).join("");
+    const allOption = PD.hasMultiPropertyAccess(user)
+      ? '<button type="button" class="pswitch-option pswitch-option-all' +
+        (selectedId === "all" ? " is-selected" : "") +
+        '" data-action="select-property-switcher" data-property-id="all" role="option" aria-selected="' +
+        (selectedId === "all" ? "true" : "false") +
+        '" data-search="جميع المنشآت all properties">' +
+        '<span class="pswitch-option-dot is-all" aria-hidden="true"></span>' +
+        '<span class="min-w-0 flex-1 text-start"><span class="block truncate font-extrabold text-sm">جميع المنشآت</span><span class="block truncate text-xs text-slate-400 font-semibold">تقرير موحّد عبر كل المنشآت المتاحة لك</span></span>' +
+        (selectedId === "all"
+          ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          : "") +
+        "</button>"
+      : "";
+    return (
+      '<div class="pswitch-search search-input">' +
+      '<svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>' +
+      '<input type="search" placeholder="ابحث عن منشأة…" data-pswitch-search aria-label="بحث عن منشأة" />' +
+      "</div>" +
+      '<div class="pswitch-list" data-pswitch-list role="listbox">' + allOption + options + "</div>" +
+      '<a href="properties.html" class="pswitch-manage">' +
+      '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>' +
+      "إدارة المنشآت</a>"
+    );
+  }
+
+  function propertySwitcherTriggerLabel(selectedId) {
+    if (selectedId === "all") return { name: "جميع المنشآت", code: String(CURRENT_USER.assignedPropertyIds.length) + " منشآت" };
+    const p = PD.getPropertyById(selectedId);
+    if (!p) return { name: "—", code: "" };
+    return { name: p.name, code: p.code };
+  }
+
+  function renderPropertySwitcher() {
+    const selectedId = PD.getSelectedPropertyId();
+    const label = propertySwitcherTriggerLabel(selectedId);
+    return (
+      '<div class="relative" data-property-switcher>' +
+      '<button type="button" class="pswitch-trigger" data-action="toggle-property-switcher" aria-haspopup="listbox" aria-expanded="false" title="المنشأة الحالية — لتبديلها اضغط هنا">' +
+      PSWITCH_BUILDING_ICON +
+      '<span class="pswitch-trigger-name hidden sm:inline" data-pswitch-name>' + label.name + "</span>" +
+      '<span class="pswitch-trigger-code" data-pswitch-code>' + label.code + "</span>" +
+      '<svg class="chevron w-3.5 h-3.5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>' +
+      "</button>" +
+      '<div class="pswitch-menu" data-pswitch-menu hidden role="listbox">' + propertySwitcherMenuHtml() + "</div>" +
+      "</div>"
+    );
+  }
+
+  function closePropertySwitcher() {
+    const menu = document.querySelector("[data-pswitch-menu]");
+    const trigger = document.querySelector('[data-action="toggle-property-switcher"]');
+    if (menu) { menu.hidden = true; menu.classList.remove("is-open"); }
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+  }
+
+  function filterPropertySwitcherList(query) {
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll("[data-pswitch-list] [data-search]").forEach(function (opt) {
+      const match = !q || opt.getAttribute("data-search").indexOf(q) !== -1;
+      opt.classList.toggle("hidden", !match);
+    });
+  }
+
+  function selectPropertySwitcher(id) {
+    if (id !== "all" && !PD.canAccessProperty(CURRENT_USER, id)) return;
+    if (id === "all" && !PD.hasMultiPropertyAccess(CURRENT_USER)) return;
+    closePropertySwitcher();
+
+    const main = document.querySelector("main");
+    if (main) main.classList.add("pms-loading");
+
+    window.setTimeout(function () {
+      PD.setSelectedPropertyId(id);
+      const label = propertySwitcherTriggerLabel(id);
+      document.querySelectorAll("[data-pswitch-name]").forEach(function (el) { el.textContent = label.name; });
+      document.querySelectorAll("[data-pswitch-code]").forEach(function (el) { el.textContent = label.code; });
+      document.querySelectorAll("[data-pswitch-menu]").forEach(function (el) { el.innerHTML = propertySwitcherMenuHtml(); });
+      if (main) main.classList.remove("pms-loading");
+      toast(id === "all" ? "تم التبديل إلى جميع المنشآت" : "تم التبديل إلى " + label.name);
+    }, 320 + Math.round(Math.random() * 160));
   }
 
   function getStoredTheme() {
@@ -794,78 +900,6 @@
     } catch (_) {
       return "ar";
     }
-  }
-
-  function currentProperty() {
-    let id = null;
-    try {
-      id = localStorage.getItem("pms-property");
-    } catch (_) {}
-    return PROPERTIES.find(function (p) { return p.id === id; }) || PROPERTIES[0];
-  }
-
-  function propertyOptionsHtml() {
-    const currentId = currentProperty().id;
-    return PROPERTIES.map(function (p) {
-      const sel = p.id === currentId;
-      return (
-        '<button type="button" class="property-select-option' +
-        (sel ? " is-selected" : "") +
-        '" data-action="select-property" data-property-id="' +
-        p.id +
-        '" role="option" aria-selected="' +
-        (sel ? "true" : "false") +
-        '">' +
-        '<span class="w-2 h-2 rounded-full ' +
-        (sel ? "bg-emerald-500" : "bg-slate-300") +
-        ' shrink-0"></span>' +
-        '<span class="flex-1 text-start truncate">' +
-        p.name +
-        "</span>" +
-        '<span class="property-select-code">' +
-        p.code +
-        "</span>" +
-        (sel
-          ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-          : "") +
-        "</button>"
-      );
-    }).join("");
-  }
-
-  function closePropertySelect() {
-    document.querySelectorAll("[data-property-select]").forEach(function (root) {
-      const menu = root.querySelector("[data-property-select-menu]");
-      const trigger = root.querySelector("[data-action='toggle-property-select']");
-      if (menu) {
-        menu.hidden = true;
-        menu.classList.remove("is-open");
-      }
-      if (trigger) trigger.setAttribute("aria-expanded", "false");
-    });
-  }
-
-  function selectProperty(id) {
-    const exists = PROPERTIES.some(function (p) { return p.id === id; });
-    if (!exists) return;
-    try {
-      localStorage.setItem("pms-property", id);
-    } catch (_) {}
-    const prop = PROPERTIES.find(function (p) { return p.id === id; });
-    document.querySelectorAll("[data-property-badge]").forEach(function (el) {
-      el.textContent = prop.name;
-    });
-    document.querySelectorAll("[data-property-select-label]").forEach(function (el) {
-      el.textContent = prop.name;
-    });
-    document.querySelectorAll("[data-property-select-code]").forEach(function (el) {
-      el.textContent = prop.code;
-    });
-    document.querySelectorAll("[data-property-select-menu]").forEach(function (el) {
-      el.innerHTML = propertyOptionsHtml();
-    });
-    closePropertySelect();
-    toast("تم التبديل إلى " + prop.name);
   }
 
   function applyTheme(theme) {
@@ -1436,7 +1470,50 @@
     });
   }
 
+  function applyPropertyFilterToDom() {
+    const user = PD.getCurrentUser();
+    const selected = PD.getSelectedPropertyId();
+    document.querySelectorAll("[data-record-property]").forEach(function (el) {
+      const pid = el.getAttribute("data-record-property");
+      const visible = selected === "all" ? PD.canAccessProperty(user, pid) : pid === selected;
+      el.classList.toggle("is-hidden-by-property", !visible);
+    });
+    document.querySelectorAll("[data-property-filter-scope]").forEach(function (scope) {
+      const items = scope.querySelectorAll("[data-record-property]");
+      if (!items.length) return;
+      const anyVisible = Array.prototype.some.call(items, function (el) {
+        return !el.classList.contains("is-hidden-by-property");
+      });
+      const emptyEl = scope.querySelector("[data-property-filter-empty]");
+      if (emptyEl) emptyEl.classList.toggle("hidden", anyVisible);
+    });
+    document.querySelectorAll("[data-property-scope-label]").forEach(function (el) {
+      if (selected === "all") {
+        el.textContent = "جميع المنشآت";
+      } else {
+        const p = PD.getPropertyById(selected);
+        el.textContent = p ? p.name : "—";
+      }
+    });
+  }
+
+  function checkPropertyAccessOnLoad() {
+    const user = PD.getCurrentUser();
+    let raw = null;
+    try {
+      raw = localStorage.getItem("selectedPropertyId");
+    } catch (_) {}
+    const invalid =
+      raw && ((raw === "all" && !PD.hasMultiPropertyAccess(user)) || (raw !== "all" && !PD.canAccessProperty(user, raw)));
+    // getSelectedPropertyId() self-heals (and persists) an invalid selection.
+    PD.getSelectedPropertyId();
+    if (invalid) {
+      toast("لا تملك صلاحية الوصول لهذه المنشأة — تم إرجاعك إلى منشأتك الافتراضية");
+    }
+  }
+
   function initShell() {
+    checkPropertyAccessOnLoad();
     const page = document.body.dataset.page || "dashboard";
     const title = document.body.dataset.title || "";
     const crumbs = JSON.parse(document.body.dataset.crumbs || "[]");
@@ -1474,9 +1551,9 @@
       if (!actionEl) {
         if (!e.target.closest("#user-menu") && !e.target.closest('[data-action="toggle-user-menu"]')) {
           document.getElementById("user-menu")?.classList.add("hidden");
-          closePropertySelect();
-        } else if (!e.target.closest("[data-property-select]")) {
-          closePropertySelect();
+        }
+        if (!e.target.closest("[data-property-switcher]")) {
+          closePropertySwitcher();
         }
         return;
       }
@@ -1488,27 +1565,29 @@
         const menu = document.getElementById("user-menu");
         const willOpen = menu?.classList.contains("hidden");
         menu?.classList.toggle("hidden");
-        if (!willOpen) closePropertySelect();
+        if (!willOpen) closePropertySwitcher();
       }
-      if (action === "toggle-property-select") {
+      if (action === "toggle-property-switcher") {
         e.preventDefault();
         e.stopPropagation();
-        const root = actionEl.closest("[data-property-select]");
-        const submenu = root && root.querySelector("[data-property-select-menu]");
-        if (!submenu) return;
-        const open = submenu.hidden;
-        closePropertySelect();
+        const menu = document.querySelector("[data-pswitch-menu]");
+        if (!menu) return;
+        const open = menu.hidden;
+        closePropertySwitcher();
+        document.getElementById("user-menu")?.classList.add("hidden");
         if (open) {
-          submenu.hidden = false;
-          submenu.classList.add("is-open");
+          menu.hidden = false;
+          menu.classList.add("is-open");
           actionEl.setAttribute("aria-expanded", "true");
+          const search = menu.querySelector("[data-pswitch-search]");
+          if (search) { search.value = ""; filterPropertySwitcherList(""); window.setTimeout(function () { search.focus(); }, 20); }
         }
         return;
       }
-      if (action === "select-property") {
+      if (action === "select-property-switcher") {
         e.preventDefault();
         e.stopPropagation();
-        selectProperty(actionEl.dataset.propertyId);
+        selectPropertySwitcher(actionEl.dataset.propertyId);
         return;
       }
       if (action === "toggle-notifications") toast("لا توجد إشعارات جديدة");
@@ -1522,12 +1601,18 @@
       if (action === "prevent") e.preventDefault();
     });
 
+    document.body.addEventListener("input", (e) => {
+      if (e.target.matches("[data-pswitch-search]")) {
+        filterPropertySwitcherList(e.target.value);
+      }
+    });
+
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeSidebar();
         closeAllModals();
         closeDrawer();
-        closePropertySelect();
+        closePropertySwitcher();
         document.getElementById("user-menu")?.classList.add("hidden");
         document.getElementById("global-search")?.blur();
       }
@@ -1536,6 +1621,9 @@
         focusGlobalSearch();
       }
     });
+
+    applyPropertyFilterToDom();
+    window.addEventListener("pms:property-changed", applyPropertyFilterToDom);
 
     enhanceSearchFields();
   }
