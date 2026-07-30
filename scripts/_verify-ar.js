@@ -1,0 +1,10 @@
+const fs = require("fs");
+const c = fs.readFileSync("D:/Projects/html/PMSDEMO/pages/reservation-detail.html", "utf8");
+console.log("???? clusters:", (c.match(/\?{3,}/g) || []).length);
+console.log("U+FFFD count:", (c.match(/\uFFFD/g) || []).length);
+const t = c.match(/data-title="([^"]+)"/);
+console.log("title:", t && t[1]);
+const g = c.match(/<h2[^>]*>([^<]+)<\/h2>/);
+console.log("h2:", g && g[1]);
+console.log("تم الدخول present:", c.includes("\u062A\u0645 \u0627\u0644\u062F\u062E\u0648\u0644"));
+console.log("الحجوزات present:", c.includes("\u0627\u0644\u062D\u062C\u0648\u0632\u0627\u062A"));

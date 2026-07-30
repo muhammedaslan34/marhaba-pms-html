@@ -21,7 +21,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=prop1" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=res1" />
 </head>
 <body class="app-bg font-sans" data-page="reservations" data-title="الحجوزات"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الحجوزات"}]'>
@@ -313,11 +313,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">30 → 31 Jul · ليلة</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double ×5</div></div>
                   </div>
-                  <div class="res-balance is-credit"><span>رصيد دائن</span><span>11,099.35</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">2,400</div></div><div class="res-money-item is-paid"><div class="res-money-label">المستلم</div><div class="res-money-value">6,000</div></div><div class="res-money-item is-credit"><div class="res-money-label">المتبقي</div><div class="res-money-value">دائن 11,099.35</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -338,11 +338,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">29 → 30 Jul · ليلة</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>600</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">600</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">600</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول">دخول</button>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3" stroke-linecap="round"/></svg><span>دخول</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
                   </div>
                 </div>
               </article>
@@ -363,11 +363,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">27 → 29 Jul · ليلتان</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Twin Room</div></div>
                   </div>
-                  <div class="res-balance is-credit"><span>رصيد دائن</span><span>2,049.59</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">1,700</div></div><div class="res-money-item is-paid"><div class="res-money-label">المستلم</div><div class="res-money-value">3,749.59</div></div><div class="res-money-item is-credit"><div class="res-money-label">المتبقي</div><div class="res-money-value">دائن 2,049.59</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول">دخول</button>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3" stroke-linecap="round"/></svg><span>دخول</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
                   </div>
                 </div>
               </article>
@@ -388,11 +388,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">03 → 05 Aug · ليلتان</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Single Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>700</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">700</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">700</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -413,11 +413,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">29 Jul → 01 Aug · 3 ليالٍ</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Twin Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>2,550</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">2,550</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">2,550</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
                     <button class="btn btn-primary btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -438,11 +438,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">30 → 31 Jul · ليلة</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>600</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">600</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">600</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -463,11 +463,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">30 Jul → 02 Aug · 3 ليالٍ</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>1,800</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">2,400</div></div><div class="res-money-item is-paid"><div class="res-money-label">المستلم</div><div class="res-money-value">600</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">1,800</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
                     <button class="btn btn-primary btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -488,11 +488,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">30 → 31 Jul · ليلة</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Twin Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>850</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">850</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">850</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول">دخول</button>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3" stroke-linecap="round"/></svg><span>دخول</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
                   </div>
                 </div>
               </article>
@@ -513,11 +513,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">28 → 30 Jul · ليلتان</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Single Room</div></div>
                   </div>
-                  <div class="res-balance is-credit"><span>رصيد دائن</span><span>120</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">1,200</div></div><div class="res-money-item is-paid"><div class="res-money-label">المستلم</div><div class="res-money-value">1,320</div></div><div class="res-money-item is-credit"><div class="res-money-label">المتبقي</div><div class="res-money-value">دائن 120</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول">دخول</button>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-primary btn-sm" data-action="toast" data-message="جاهز لتسجيل الدخول"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3" stroke-linecap="round"/></svg><span>دخول</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
                   </div>
                 </div>
               </article>
@@ -538,10 +538,10 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">25 → 28 Jul · 3 ليالٍ</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double Room</div></div>
                   </div>
-                  <div class="res-balance is-credit"><span>رصيد دائن</span><span>0</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">2,100</div></div><div class="res-money-item is-paid"><div class="res-money-label">المستلم</div><div class="res-money-value">2,100</div></div><div class="res-money-item is-settled"><div class="res-money-label">المتبقي</div><div class="res-money-value">0</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -562,11 +562,11 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">01 → 04 Aug · 3 ليالٍ</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Twin Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>المتبقي</span><span>2,100</span></div>
+                  <div class="res-money"><div class="res-money-item"><div class="res-money-label">الإجمالي</div><div class="res-money-value">2,100</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-due"><div class="res-money-label">المتبقي</div><div class="res-money-value">2,100</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
-                    <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">دفعة</button>
-                    <button class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد">العقد</button>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>دفعة</span></button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="toast" data-message="فتح العقد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round"/></svg><span>العقد</span></button>
                   </div>
                 </div>
               </article>
@@ -587,9 +587,9 @@
                     <div class="res-meta"><div class="res-meta-label">الإقامة</div><div class="res-meta-value">20 → 22 Jul · ليلتان</div></div>
                     <div class="res-meta"><div class="res-meta-label">الغرفة</div><div class="res-meta-value">Double Room</div></div>
                   </div>
-                  <div class="res-balance is-due"><span>ملغى</span><span>—</span></div>
+                  <div class="res-money"><div class="res-money-item is-muted"><div class="res-money-label">الإجمالي</div><div class="res-money-value">—</div></div><div class="res-money-item is-muted"><div class="res-money-label">المستلم</div><div class="res-money-value">—</div></div><div class="res-money-item is-muted"><div class="res-money-label">المتبقي</div><div class="res-money-value">—</div></div></div>
                   <div class="res-card-actions">
-                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm">عرض</a>
+                    <a href="reservation-detail.html" class="btn btn-secondary btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span>عرض</span></a>
                   </div>
                 </div>
               </article>

@@ -2937,7 +2937,7 @@ html.dark .fin-filters {
 .res-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
-  border-color: #c7d2fe;
+  border-color: rgba(0, 39, 183, 0.28);
 }
 .res-card-top {
   display: flex;
@@ -3011,12 +3011,61 @@ html.dark .fin-filters {
   color: #B91C1C;
   border: 1px solid #FECACA;
 }
+.res-money {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  border-radius: 0.9rem;
+  padding: 0.55rem;
+  background: #F8FAFC;
+  border: 1px solid #EEF2F7;
+}
+.res-money-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.45rem 0.4rem;
+  border-radius: 0.65rem;
+  background: #fff;
+  border: 1px solid #F1F5F9;
+  text-align: center;
+}
+.res-money-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-muted);
+  letter-spacing: 0;
+}
+.res-money-value {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.2;
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+.res-money-item.is-paid .res-money-value { color: #15803d; }
+.res-money-item.is-due .res-money-value { color: #B91C1C; }
+.res-money-item.is-credit .res-money-value { color: #15803d; }
+.res-money-item.is-settled .res-money-value { color: #475569; }
+.res-money-item.is-muted .res-money-value { color: #94a3b8; }
 .res-card-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
   margin-top: auto;
   padding-top: 0.25rem;
+}
+.res-card-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.res-card-actions .btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
 }
 
 /* Colored filter chips accents */
