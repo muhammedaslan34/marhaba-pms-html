@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>التقارير — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="reports" data-title="التقارير"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التقارير"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <p class="text-sm text-slate-500">تقارير تشغيلية ومالية</p>
+
+        <div class="panel p-4 flex flex-col lg:flex-row lg:items-end gap-3">
+          <div class="flex-1"><label class="field-label">من تاريخ</label><input type="date" class="field-input" value="2026-07-01" /></div>
+          <div class="flex-1"><label class="field-label">إلى تاريخ</label><input type="date" class="field-input" value="2026-07-30" /></div>
+          <div class="flex-1"><label class="field-label">العملة</label><select class="field-select"><option>الافتراضية</option><option>SYP</option><option>USD</option></select></div>
+          <button class="btn btn-secondary">تطبيق</button>
+        </div>
+
+        <section>
+          <h2 class="font-bold mb-3">تقارير تفصيلية</h2>
+          <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3" id="report-list">
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn is-active border-primary/40 bg-primary-soft/30" data-report="arrivals">وصول اليوم</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="departures">مغادرة اليوم</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="occupancy">الإشغال الحالي</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="revenue">الإيراد اليومي</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="monthly">تقرير الإشغال الشهري</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="types">إشغال أنواع الوحدات</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="inhouse">النزلاء الحاليون</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="noshow">تقرير عدم الحضور</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="cancel">تقرير الإلغاءات</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="methods">تقرير طرق الدفع</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="balances">الأرصدة المستحقة</button>
+            <button type="button" class="panel p-4 text-start hover:border-primary/40 transition report-btn" data-report="rooms">ملخّص حالة الوحدات</button>
+          </div>
+        </section>
+
+        <section class="panel overflow-hidden" id="report-panel">
+          <div class="px-5 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="font-bold" id="report-title">وصول اليوم — 2026-07-30</h3>
+            <div class="flex gap-2">
+              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تصدير Excel">Excel</button>
+              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تصدير PDF">PDF</button>
+              <button class="btn btn-ghost btn-sm" data-action="toast" data-message="طباعة">طباعة</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>النزيل</th><th>الفندق</th><th>نوع الغرفة</th><th>تسجيل الدخول</th><th>تسجيل الخروج</th><th>الحالة</th></tr></thead>
+              <tbody id="report-body">
+                <tr><td>LISTFIX GUEST</td><td>MADINAH1</td><td>Double · Kaaba</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">تم الدخول</span></td></tr>
+                <tr><td>ابراهيم</td><td>MADINAH1</td><td>Double · Haram</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">تم الدخول</span></td></tr>
+                <tr><td>ابراهيم</td><td>MADINAH1</td><td>Double · Haram</td><td>2026-07-30</td><td>2026-07-31</td><td><span class="badge badge-success">تم الدخول</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="font-bold text-slate-600">نظرة سريعة (ملخّص)</h2>
+            <button class="btn btn-ghost btn-sm" data-action="toast" data-message="PDF">PDF</button>
+          </div>
+          <div class="grid md:grid-cols-3 gap-4 text-sm">
+            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">حجوزات نشطة</div><div class="text-2xl font-bold mt-1">8</div></div>
+            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">إيراد معروض</div><div class="text-2xl font-bold mt-1">10,350</div></div>
+            <div class="rounded-xl bg-slate-50 p-4"><div class="text-slate-500">إشغال اليوم</div><div class="text-2xl font-bold mt-1">14.3%</div></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    const titles = {
+      arrivals: 'وصول اليوم — 2026-07-30',
+      departures: 'مغادرة اليوم — 2026-07-30',
+      occupancy: 'الإشغال الحالي',
+      revenue: 'الإيراد اليومي',
+      monthly: 'تقرير الإشغال الشهري',
+      types: 'إشغال أنواع الوحدات',
+      inhouse: 'النزلاء الحاليون',
+      noshow: 'تقرير عدم الحضور',
+      cancel: 'تقرير الإلغاءات',
+      methods: 'تقرير طرق الدفع',
+      balances: 'الأرصدة المستحقة',
+      rooms: 'ملخّص حالة الوحدات',
+    };
+    document.querySelectorAll('.report-btn').forEach((btn) => {
+      btn.addEventListener('click',  => {
+        document.querySelectorAll('.report-btn').forEach((b) => {
+          b.classList.remove('is-active', 'border-primary/40', 'bg-primary-soft/30');
+        });
+        btn.classList.add('is-active', 'border-primary/40', 'bg-primary-soft/30');
+        document.getElementById('report-title').textContent = titles[btn.dataset.report] || btn.textContent;
+        PMS.toast('تم تحميل التقرير (تجريبي)');
+      });
+    });
+  </script>
+</body>
+</html>

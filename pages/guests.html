@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>النزلاء — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=pay2" />
+</head>
+<body class="app-bg font-sans" data-page="guests" data-title="النزلاء"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"النزلاء"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p class="text-sm text-slate-500"><span class="font-bold text-slate-800">18</span> نزيلاً</p>
+          <button class="btn btn-primary" data-action="open-modal" data-target="guest-modal">نزيل جديد</button>
+        </div>
+        <div class="panel p-3">
+          <div class="search-input">
+            <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+            <input type="search" class="field-input" placeholder="بحث بالاسم، الجوال، الهوية، البريد…" />
+          </div>
+        </div>
+        <div class="panel overflow-hidden">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>الاسم</th><th>الجوال</th><th>البريد</th><th>الجنسية</th><th>نوع الهوية</th><th>رقم الهوية</th><th>الحجوزات</th><th class="text-center">الإجراءات</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="font-semibold">ابراهيم</td><td>966564179297</td><td>—</td><td>—</td><td>إخراج قيد</td><td>—</td><td>3</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">لطيفة أحمد الزهراني</td><td>0551234010</td><td>—</td><td>Saudi Arabia</td><td>الهوية الوطنية/الإقامة</td><td>—</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">عمر خالد الغامدي</td><td>0551234009</td><td>—</td><td>Saudi Arabia</td><td>الهوية الوطنية/الإقامة</td><td>—</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">عبدالرحمن</td><td>966599035677</td><td>—</td><td>—</td><td>جواز سفر</td><td>021541</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">LISTFIX GUEST</td><td>0500222111</td><td>—</td><td>—</td><td>جواز سفر</td><td>—</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">Ebrahim Al-desouki</td><td>68534657</td><td>ebrahim@hotelswave.com</td><td>—</td><td>جواز سفر</td><td>63986534</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">محمد سعد العتيبي</td><td>0551234007</td><td>—</td><td>Saudi Arabia</td><td>الهوية الوطنية/الإقامة</td><td>—</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold">ريم فهد الدوسري</td><td>0551234008</td><td>—</td><td>Saudi Arabia</td><td>الهوية الوطنية/الإقامة</td><td>—</td><td>1</td><td><div class="action-cell justify-center w-full"><a href="guest-detail.html" class="icon-btn" title="فتح الملف" aria-label="فتح الملف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="guest-modal" class="modal" style="width:min(36rem, calc(100% - 2rem))">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-bold">نزيل جديد</h3>
+      <button class="btn btn-ghost btn-sm" data-action="close-modal" data-target="guest-modal">إغلاق</button>
+    </div>
+    <div class="p-5 grid sm:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+      <div class="sm:col-span-2"><label class="field-label">الاسم الكامل *</label><input class="field-input" /></div>
+      <div>
+        <label class="field-label">الجوال</label>
+        <div class="phone-field" data-phone-field>
+          <button type="button" class="phone-code-btn" data-phone-code-btn aria-expanded="false" aria-haspopup="listbox">
+            <span class="flag-emoji" data-flag>🇸🇦</span>
+            <span data-code-text>+966</span>
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <input type="tel" class="phone-input" placeholder="5xxxxxxxx" inputmode="numeric" data-phone-input />
+          <div class="phone-dropdown" data-phone-dropdown role="listbox">
+            <div class="phone-dropdown-search search-input">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" placeholder="ابحث عن دولة أو رمز…" data-phone-search />
+            </div>
+            <div class="phone-dropdown-list" data-phone-list></div>
+          </div>
+        </div>
+      </div>
+      <div><label class="field-label">البريد</label><input type="email" class="field-input" /></div>
+      <div><label class="field-label">الجنسية</label><input class="field-input" /></div>
+      <div><label class="field-label">نوع الهوية</label><select class="field-select"><option>جواز سفر</option><option>الهوية الوطنية/الإقامة</option><option>هوية خليجية</option><option>إخراج قيد</option></select></div>
+      <div><label class="field-label">رقم الهوية</label><input class="field-input" /></div>
+      <div><label class="field-label">الجنس</label><select class="field-select"><option>—</option><option>ذكر</option><option>أنثى</option></select></div>
+      <div><label class="field-label">تاريخ الميلاد</label><input type="date" class="field-input" /></div>
+      <div class="sm:col-span-2"><label class="field-label">المهنة</label><input class="field-input" /></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="guest-modal">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="guest-modal" onclick="PMS.toast('تم حفظ النزيل (تجريبي)')">حفظ</button>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+  (function  {
+    const COUNTRIES = [
+      { iso: 'SA', name: 'السعودية', nameEn: 'Saudi Arabia', dial: '+966', flag: '🇸🇦' },
+      { iso: 'AE', name: 'الإمارات', nameEn: 'United Arab Emirates', dial: '+971', flag: '🇦🇪' },
+      { iso: 'KW', name: 'الكويت', nameEn: 'Kuwait', dial: '+965', flag: '🇰🇼' },
+      { iso: 'QA', name: 'قطر', nameEn: 'Qatar', dial: '+974', flag: '🇶🇦' },
+      { iso: 'BH', name: 'البحرين', nameEn: 'Bahrain', dial: '+973', flag: '🇧🇭' },
+      { iso: 'OM', name: 'عُمان', nameEn: 'Oman', dial: '+968', flag: '🇴🇲' },
+      { iso: 'EG', name: 'مصر', nameEn: 'Egypt', dial: '+20', flag: '🇪🇬' },
+      { iso: 'JO', name: 'الأردن', nameEn: 'Jordan', dial: '+962', flag: '🇯🇴' },
+      { iso: 'PS', name: 'فلسطين', nameEn: 'Palestine', dial: '+970', flag: '🇵🇸' },
+      { iso: 'LB', name: 'لبنان', nameEn: 'Lebanon', dial: '+961', flag: '🇱🇧' },
+      { iso: 'SY', name: 'سوريا', nameEn: 'Syria', dial: '+963', flag: '🇸🇾' },
+      { iso: 'IQ', name: 'العراق', nameEn: 'Iraq', dial: '+964', flag: '🇮🇶' },
+      { iso: 'YE', name: 'اليمن', nameEn: 'Yemen', dial: '+967', flag: '🇾🇪' },
+      { iso: 'SD', name: 'السودان', nameEn: 'Sudan', dial: '+249', flag: '🇸🇩' },
+      { iso: 'LY', name: 'ليبيا', nameEn: 'Libya', dial: '+218', flag: '🇱🇾' },
+      { iso: 'TN', name: 'تونس', nameEn: 'Tunisia', dial: '+216', flag: '🇹🇳' },
+      { iso: 'DZ', name: 'الجزائر', nameEn: 'Algeria', dial: '+213', flag: '🇩🇿' },
+      { iso: 'MA', name: 'المغرب', nameEn: 'Morocco', dial: '+212', flag: '🇲🇦' },
+      { iso: 'MR', name: 'موريتانيا', nameEn: 'Mauritania', dial: '+222', flag: '🇲🇷' },
+      { iso: 'SO', name: 'الصومال', nameEn: 'Somalia', dial: '+252', flag: '🇸🇴' },
+      { iso: 'DJ', name: 'جيبوتي', nameEn: 'Djibouti', dial: '+253', flag: '🇩🇯' },
+      { iso: 'KM', name: 'جزر القمر', nameEn: 'Comoros', dial: '+269', flag: '🇰🇲' },
+      { iso: 'TR', name: 'تركيا', nameEn: 'Turkey', dial: '+90', flag: '🇹🇷' },
+      { iso: 'IR', name: 'إيران', nameEn: 'Iran', dial: '+98', flag: '🇮🇷' },
+      { iso: 'US', name: 'الولايات المتحدة', nameEn: 'United States', dial: '+1', flag: '🇺🇸' },
+      { iso: 'GB', name: 'المملكة المتحدة', nameEn: 'United Kingdom', dial: '+44', flag: '🇬🇧' },
+      { iso: 'FR', name: 'فرنسا', nameEn: 'France', dial: '+33', flag: '🇫🇷' },
+      { iso: 'DE', name: 'ألمانيا', nameEn: 'Germany', dial: '+49', flag: '🇩🇪' },
+      { iso: 'IT', name: 'إيطاليا', nameEn: 'Italy', dial: '+39', flag: '🇮🇹' },
+      { iso: 'ES', name: 'إسبانيا', nameEn: 'Spain', dial: '+34', flag: '🇪🇸' },
+      { iso: 'NL', name: 'هولندا', nameEn: 'Netherlands', dial: '+31', flag: '🇳🇱' },
+      { iso: 'BE', name: 'بلجيكا', nameEn: 'Belgium', dial: '+32', flag: '🇧🇪' },
+      { iso: 'CH', name: 'سويسرا', nameEn: 'Switzerland', dial: '+41', flag: '🇨🇭' },
+      { iso: 'AT', name: 'النمسا', nameEn: 'Austria', dial: '+43', flag: '🇦🇹' },
+      { iso: 'SE', name: 'السويد', nameEn: 'Sweden', dial: '+46', flag: '🇸🇪' },
+      { iso: 'NO', name: 'النرويج', nameEn: 'Norway', dial: '+47', flag: '🇳🇴' },
+      { iso: 'DK', name: 'الدنمارك', nameEn: 'Denmark', dial: '+45', flag: '🇩🇰' },
+      { iso: 'FI', name: 'فنلندا', nameEn: 'Finland', dial: '+358', flag: '🇫🇮' },
+      { iso: 'IE', name: 'أيرلندا', nameEn: 'Ireland', dial: '+353', flag: '🇮🇪' },
+      { iso: 'PT', name: 'البرتغال', nameEn: 'Portugal', dial: '+351', flag: '🇵🇹' },
+      { iso: 'GR', name: 'اليونان', nameEn: 'Greece', dial: '+30', flag: '🇬🇷' },
+      { iso: 'PL', name: 'بولندا', nameEn: 'Poland', dial: '+48', flag: '🇵🇱' },
+      { iso: 'RU', name: 'روسيا', nameEn: 'Russia', dial: '+7', flag: '🇷🇺' },
+      { iso: 'UA', name: 'أوكرانيا', nameEn: 'Ukraine', dial: '+380', flag: '🇺🇦' },
+      { iso: 'RO', name: 'رومانيا', nameEn: 'Romania', dial: '+40', flag: '🇷🇴' },
+      { iso: 'CZ', name: 'التشيك', nameEn: 'Czech Republic', dial: '+420', flag: '🇨🇿' },
+      { iso: 'IN', name: 'الهند', nameEn: 'India', dial: '+91', flag: '🇮🇳' },
+      { iso: 'PK', name: 'باكستان', nameEn: 'Pakistan', dial: '+92', flag: '🇵🇰' },
+      { iso: 'BD', name: 'بنغلاديش', nameEn: 'Bangladesh', dial: '+880', flag: '🇧🇩' },
+      { iso: 'ID', name: 'إندونيسيا', nameEn: 'Indonesia', dial: '+62', flag: '🇮🇩' },
+      { iso: 'MY', name: 'ماليزيا', nameEn: 'Malaysia', dial: '+60', flag: '🇲🇾' },
+      { iso: 'TH', name: 'تايلاند', nameEn: 'Thailand', dial: '+66', flag: '🇹🇭' },
+      { iso: 'PH', name: 'الفلبين', nameEn: 'Philippines', dial: '+63', flag: '🇵🇭' },
+      { iso: 'VN', name: 'فيتنام', nameEn: 'Vietnam', dial: '+84', flag: '🇻🇳' },
+      { iso: 'CN', name: 'الصين', nameEn: 'China', dial: '+86', flag: '🇨🇳' },
+      { iso: 'JP', name: 'اليابان', nameEn: 'Japan', dial: '+81', flag: '🇯🇵' },
+      { iso: 'KR', name: 'كوريا الجنوبية', nameEn: 'South Korea', dial: '+82', flag: '🇰🇷' },
+      { iso: 'HK', name: 'هونغ كونغ', nameEn: 'Hong Kong', dial: '+852', flag: '🇭🇰' },
+      { iso: 'SG', name: 'سنغافورة', nameEn: 'Singapore', dial: '+65', flag: '🇸🇬' },
+      { iso: 'AU', name: 'أستراليا', nameEn: 'Australia', dial: '+61', flag: '🇦🇺' },
+      { iso: 'NZ', name: 'نيوزيلندا', nameEn: 'New Zealand', dial: '+64', flag: '🇳🇿' },
+      { iso: 'CA', name: 'كندا', nameEn: 'Canada', dial: '+1', flag: '🇨🇦' },
+      { iso: 'MX', name: 'المكسيك', nameEn: 'Mexico', dial: '+52', flag: '🇲🇽' },
+      { iso: 'BR', name: 'البرازيل', nameEn: 'Brazil', dial: '+55', flag: '🇧🇷' },
+      { iso: 'AR', name: 'الأرجنتين', nameEn: 'Argentina', dial: '+54', flag: '🇦🇷' },
+      { iso: 'ZA', name: 'جنوب أفريقيا', nameEn: 'South Africa', dial: '+27', flag: '🇿🇦' },
+      { iso: 'NG', name: 'نيجيريا', nameEn: 'Nigeria', dial: '+234', flag: '🇳🇬' },
+      { iso: 'KE', name: 'كينيا', nameEn: 'Kenya', dial: '+254', flag: '🇰🇪' },
+      { iso: 'ET', name: 'إثيوبيا', nameEn: 'Ethiopia', dial: '+251', flag: '🇪🇹' },
+      { iso: 'GH', name: 'غانا', nameEn: 'Ghana', dial: '+233', flag: '🇬🇭' },
+      { iso: 'SN', name: 'السنغال', nameEn: 'Senegal', dial: '+221', flag: '🇸🇳' },
+    ];
+
+    const DEFAULT = COUNTRIES[0]; // 🇸🇦 +966
+    const containers = document.querySelectorAll('[data-phone-field]');
+
+    containers.forEach(function (root) {
+      const codeBtn = root.querySelector('[data-phone-code-btn]');
+      const flagEl = root.querySelector('[data-flag]');
+      const codeTextEl = root.querySelector('[data-code-text]');
+      const dropdown = root.querySelector('[data-phone-dropdown]');
+      const searchInput = root.querySelector('[data-phone-search]');
+      const listEl = root.querySelector('[data-phone-list]');
+
+      // Portal the dropdown to <body> so `position: fixed` isn't trapped by
+      // the modal's `transform` (transform creates a new containing block for fixed elements).
+      document.body.appendChild(dropdown);
+
+      let selected = DEFAULT;
+      let query = '';
+
+      function render {
+        const q = query.trim.toLowerCase;
+        const items = COUNTRIES.filter(function (c) {
+          if (!q) return true;
+          return (
+            c.name.toLowerCase.includes(q) ||
+            c.nameEn.toLowerCase.includes(q) ||
+            c.dial.replace('+', '').includes(q.replace('+', '')) ||
+            c.iso.toLowerCase === q
+          );
+        });
+
+        if (!items.length) {
+          listEl.innerHTML = '<div class="phone-dropdown-empty">لا توجد نتائج مطابقة</div>';
+          return;
+        }
+
+        listEl.innerHTML = items.map(function (c) {
+          const sel = c.iso === selected.iso ? ' is-selected' : '';
+          return (
+            '<button type="button" class="phone-dropdown-item' + sel + '" data-iso="' + c.iso + '" role="option">' +
+              '<span class="flag-emoji">' + c.flag + '</span>' +
+              '<span class="country-name">' + c.name + '</span>' +
+              '<span class="dial-code">' + c.dial + '</span>' +
+            '</button>'
+          );
+        }).join('');
+      }
+
+      function apply(c) {
+        selected = c;
+        flagEl.textContent = c.flag;
+        codeTextEl.textContent = c.dial;
+        root.dataset.dialCode = c.dial;
+        root.dataset.iso = c.iso;
+        close;
+        render;
+      }
+
+      function getScrollParent(el) {
+        let node = el.parentElement;
+        while (node && node !== document.body) {
+          const ov = getComputedStyle(node).overflowY;
+          if (ov === 'auto' || ov === 'scroll') return node;
+          node = node.parentElement;
+        }
+        return null;
+      }
+
+      function open {
+        dropdown.classList.add('is-open');
+        codeBtn.setAttribute('aria-expanded', 'true');
+        query = '';
+        searchInput.value = '';
+        render;
+        ensureRoomBelow;
+        positionDropdown;
+        setTimeout(function  { searchInput.focus; }, 30);
+      }
+
+      // Scroll the modal body so the field sits high enough to fit the dropdown beneath it
+      function ensureRoomBelow {
+        const needed = 340; // approx dropdown height + gap
+        const rect = root.getBoundingClientRect;
+        const overflow = (rect.bottom + needed + 8) - window.innerHeight;
+        if (overflow > 0) {
+          const scroller = getScrollParent(root);
+          if (scroller) scroller.scrollTop += overflow + 8;
+        }
+      }
+
+      function positionDropdown {
+        const rect = root.getBoundingClientRect;
+        const fieldW = rect.width;
+
+        // Width: match the field, but never below 17rem
+        const minW = 272;
+        const ddW = Math.max(fieldW, minW);
+        dropdown.style.width = ddW + 'px';
+
+        const isRTL = document.documentElement.dir === 'rtl';
+        let left = isRTL ? rect.right - ddW : rect.left;
+        const top = rect.bottom + 6;
+
+        const margin = 8;
+        if (left < margin) left = margin;
+        if (left + ddW > window.innerWidth - margin) left = window.innerWidth - ddW - margin;
+
+        dropdown.style.top = top + 'px';
+        dropdown.style.left = left + 'px';
+      }
+
+      function close {
+        dropdown.classList.remove('is-open');
+        codeBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      function toggle {
+        if (dropdown.classList.contains('is-open')) close;
+        else open;
+      }
+
+      codeBtn.addEventListener('click', function (e) {
+        e.preventDefault;
+        toggle;
+      });
+
+      // Reposition on any scroll (capture catches nested scroll containers) + resize
+      document.addEventListener('scroll', function  {
+        if (dropdown.classList.contains('is-open')) positionDropdown;
+      }, true);
+      window.addEventListener('resize', function  {
+        if (dropdown.classList.contains('is-open')) positionDropdown;
+      });
+
+      searchInput.addEventListener('input', function  {
+        query = searchInput.value;
+        render;
+      });
+
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { close; codeBtn.focus; }
+      });
+
+      listEl.addEventListener('click', function (e) {
+        const item = e.target.closest('[data-iso]');
+        if (!item) return;
+        const c = COUNTRIES.find(function (x) { return x.iso === item.dataset.iso; });
+        if (c) apply(c);
+      });
+
+      listEl.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+        e.preventDefault;
+        const items = Array.from(listEl.querySelectorAll('[data-iso]'));
+        if (!items.length) return;
+        const idx = items.indexOf(listEl.querySelector('[data-iso].is-selected'));
+        let next = e.key === 'ArrowDown' ? idx + 1 : idx - 1;
+        if (next < 0) next = 0;
+        if (next > items.length - 1) next = items.length - 1;
+        const c = COUNTRIES.find(function (x) { return x.iso === items[next].dataset.iso; });
+        if (c) apply(c);
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!root.contains(e.target) && !dropdown.contains(e.target)) close;
+      });
+
+      apply(DEFAULT);
+    });
+  });
+  </script>
+</body>
+</html>

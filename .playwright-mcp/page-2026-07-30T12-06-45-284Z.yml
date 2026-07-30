@@ -1,0 +1,222 @@
+- generic [active] [ref=f47e1]:
+  - generic [ref=f47e2]:
+    - complementary [ref=f47e3]:
+      - generic [ref=f47e4]:
+        - generic [ref=f47e5]: S
+        - generic [ref=f47e6]:
+          - generic [ref=f47e7]: Solvfast PMS
+          - generic [ref=f47e8]: إدارة الفندق
+      - navigation "القائمة الرئيسية" [ref=f47e9]:
+        - link "الرئيسية" [ref=f47e10] [cursor=pointer]:
+          - /url: dashboard.html
+        - generic [ref=f47e14]: عمليات اليوم
+        - link "الحجوزات" [ref=f47e15] [cursor=pointer]:
+          - /url: reservations.html
+        - link "الوصول والمغادرة" [ref=f47e20] [cursor=pointer]:
+          - /url: checkin.html
+        - link "النزلاء" [ref=f47e25] [cursor=pointer]:
+          - /url: guests.html
+        - link "التوفر" [ref=f47e30] [cursor=pointer]:
+          - /url: availability.html
+        - link "التدبير الفندقي" [ref=f47e37] [cursor=pointer]:
+          - /url: housekeeping.html
+        - generic [ref=f47e42]: المالية
+        - link "الدفعات" [ref=f47e43] [cursor=pointer]:
+          - /url: payments.html
+        - link "الصندوق والورديات" [ref=f47e48] [cursor=pointer]:
+          - /url: cashier.html
+        - link "التقارير" [ref=f47e53] [cursor=pointer]:
+          - /url: reports.html
+        - generic [ref=f47e58]: الإدارة
+        - link "الإعدادات" [ref=f47e59] [cursor=pointer]:
+          - /url: settings.html
+      - generic [ref=f47e64]:
+        - generic [ref=f47e65]: فندق المدينة بلازا
+        - generic [ref=f47e66]: MADINAH1
+    - generic [ref=f47e67]:
+      - banner [ref=f47e68]:
+        - generic [ref=f47e70]:
+          - generic [ref=f47e71]:
+            - link "PMS" [ref=f47e72] [cursor=pointer]:
+              - /url: dashboard.html
+            - generic [ref=f47e73]: /
+            - generic [ref=f47e74]: الحجوزات
+          - heading "الحجوزات" [level=1] [ref=f47e75]
+        - generic [ref=f47e76]:
+          - searchbox "بحث عام" [ref=f47e81]
+          - generic [ref=f47e82]: فندق المدينة بلازا
+          - link "حجز جديد" [ref=f47e85] [cursor=pointer]:
+            - /url: reservation-new.html
+          - button "الإشعارات" [ref=f47e86] [cursor=pointer]
+          - button "حساب المستخدم" [ref=f47e92] [cursor=pointer]: M
+      - main [ref=f47e93]:
+        - generic [ref=f47e94]:
+          - paragraph [ref=f47e95]: تصفّح وابحث وأدِر الحجوزات
+          - link "حجز جديد" [ref=f47e97] [cursor=pointer]:
+            - /url: reservation-new.html
+        - generic [ref=f47e98]:
+          - button "الكل 8" [ref=f47e99] [cursor=pointer]:
+            - text: الكل
+            - generic [ref=f47e100]: "8"
+          - button "وصول اليوم 2" [ref=f47e101] [cursor=pointer]:
+            - text: وصول اليوم
+            - generic [ref=f47e102]: "2"
+          - button "مغادرة اليوم 2" [ref=f47e103] [cursor=pointer]:
+            - text: مغادرة اليوم
+            - generic [ref=f47e104]: "2"
+          - button "مقيمون 5" [ref=f47e105] [cursor=pointer]:
+            - text: مقيمون
+            - generic [ref=f47e106]: "5"
+          - button "غير مؤكد 1" [ref=f47e107] [cursor=pointer]:
+            - text: غير مؤكد
+            - generic [ref=f47e108]: "1"
+          - button "رصيد مستحق 4" [ref=f47e109] [cursor=pointer]:
+            - text: رصيد مستحق
+            - generic [ref=f47e110]: "4"
+          - button "منتهٍ 0" [ref=f47e111] [cursor=pointer]:
+            - text: منتهٍ
+            - generic [ref=f47e112]: "0"
+          - button "ملغى 0" [ref=f47e113] [cursor=pointer]:
+            - text: ملغى
+            - generic [ref=f47e114]: "0"
+        - searchbox "بحث بالاسم / الهاتف / الهوية / الغرفة / رقم الحجز" [ref=f47e116]
+        - generic [ref=f47e117]:
+          - generic [ref=f47e118]:
+            - button "جدول" [ref=f47e119] [cursor=pointer]
+            - button "بطاقات" [ref=f47e120] [cursor=pointer]
+            - button "تقويم" [ref=f47e121] [cursor=pointer]
+          - table [ref=f47e125]:
+            - rowgroup [ref=f47e126]:
+              - row [ref=f47e127]:
+                - columnheader "الحجز" [ref=f47e128]
+                - columnheader "النزيل" [ref=f47e129]
+                - columnheader "الغرفة" [ref=f47e130]
+                - columnheader "الإقامة" [ref=f47e131]
+                - columnheader "الحالة" [ref=f47e132]
+                - columnheader "المبالغ" [ref=f47e133]
+                - columnheader [ref=f47e134]
+            - rowgroup [ref=f47e135]:
+              - row [ref=f47e136]:
+                - cell [ref=f47e137]:
+                  - link "RES-2026-00049" [ref=f47e138] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                - cell "ابراهيم 966•••297" [ref=f47e139]: ابراهيم966•••297
+                - cell "Double Room ×5" [ref=f47e140]
+                - cell "30 Jul → 31 Jul 2026 1 ليلة" [ref=f47e141]: 30 Jul → 31 Jul 20261 ليلة
+                - cell "تم الدخول" [ref=f47e142]
+                - cell "رصيد دائن 11,099.35 SAR الإجمالي 2,400 · المستلم 6,000 SAR + عملات" [ref=f47e144]:
+                  - generic [ref=f47e145]: رصيد دائن 11,099.35 SAR
+                  - generic [ref=f47e146]: الإجمالي 2,400 · المستلم 6,000 SAR + عملات
+                - cell [ref=f47e147]:
+                  - link "عرض" [ref=f47e148] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                  - button "دفعة" [ref=f47e149] [cursor=pointer]
+                  - button "العقد" [ref=f47e150] [cursor=pointer]
+              - row [ref=f47e151]:
+                - cell [ref=f47e152]:
+                  - link "RES-2026-00046" [ref=f47e153] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                - cell "ابراهيم 966•••297" [ref=f47e154]: ابراهيم966•••297
+                - cell "Double Room" [ref=f47e155]
+                - cell "29 Jul → 30 Jul 2026 1 ليلة" [ref=f47e156]: 29 Jul → 30 Jul 20261 ليلة
+                - cell "غير مؤكد" [ref=f47e157]
+                - cell "المتبقي 600 SAR الإجمالي 600 · المستلم —" [ref=f47e159]:
+                  - generic [ref=f47e160]: المتبقي 600 SAR
+                  - generic [ref=f47e161]: الإجمالي 600 · المستلم —
+                - cell [ref=f47e162]:
+                  - link "عرض" [ref=f47e163] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                  - button "دخول" [ref=f47e164] [cursor=pointer]
+                  - button "دفعة" [ref=f47e165] [cursor=pointer]
+              - row [ref=f47e166]:
+                - cell [ref=f47e167]:
+                  - link "RES-2026-00043" [ref=f47e168] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                - cell "Ebrahim Al-desouki 685•••657" [ref=f47e169]: Ebrahim Al-desouki685•••657
+                - cell "Twin Room" [ref=f47e170]
+                - cell "27 Jul → 29 Jul 2026 2 ليلة" [ref=f47e171]: 27 Jul → 29 Jul 20262 ليلة
+                - cell "مؤكد" [ref=f47e172]
+                - cell "رصيد دائن 2,049.59 SAR الإجمالي 1,700 · عملات متعددة" [ref=f47e174]:
+                  - generic [ref=f47e175]: رصيد دائن 2,049.59 SAR
+                  - generic [ref=f47e176]: الإجمالي 1,700 · عملات متعددة
+                - cell [ref=f47e177]:
+                  - link "عرض" [ref=f47e178] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                  - button "دخول" [ref=f47e179] [cursor=pointer]
+                  - button "دفعة" [ref=f47e180] [cursor=pointer]
+              - row [ref=f47e181]:
+                - cell [ref=f47e182]:
+                  - link "RES-2026-00041" [ref=f47e183] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                - cell "ابرهيم 051•••421" [ref=f47e184]: ابرهيم051•••421
+                - cell "Single Room" [ref=f47e185]
+                - cell "03 Aug → 05 Aug 2026 2 ليلة" [ref=f47e186]: 03 Aug → 05 Aug 20262 ليلة
+                - cell "مؤكد" [ref=f47e187]
+                - cell "المتبقي 700 SAR الإجمالي 700 · المستلم —" [ref=f47e189]:
+                  - generic [ref=f47e190]: المتبقي 700 SAR
+                  - generic [ref=f47e191]: الإجمالي 700 · المستلم —
+                - cell [ref=f47e192]:
+                  - link "عرض" [ref=f47e193] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                  - button "دفعة" [ref=f47e194] [cursor=pointer]
+                  - button "العقد" [ref=f47e195] [cursor=pointer]
+              - row [ref=f47e196]:
+                - cell [ref=f47e197]:
+                  - link "RES-2026-00037" [ref=f47e198] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                - cell "عمر خالد الغامدي 055•••009" [ref=f47e199]: عمر خالد الغامدي055•••009
+                - cell "Twin Room" [ref=f47e200]
+                - cell "29 Jul → 01 Aug 2026 3 ليالٍ" [ref=f47e201]: 29 Jul → 01 Aug 20263 ليالٍ
+                - cell "تم الدخول" [ref=f47e202]
+                - cell "المتبقي 2,550 SAR الإجمالي 2,550 · المستلم —" [ref=f47e204]:
+                  - generic [ref=f47e205]: المتبقي 2,550 SAR
+                  - generic [ref=f47e206]: الإجمالي 2,550 · المستلم —
+                - cell [ref=f47e207]:
+                  - link "عرض" [ref=f47e208] [cursor=pointer]:
+                    - /url: reservation-detail.html
+                  - button "دفعة" [ref=f47e209] [cursor=pointer]
+  - generic [ref=f47e210]:
+    - generic [ref=f47e211]:
+      - heading "فلاتر متقدمة" [level=3] [ref=f47e212]
+      - button "إغلاق" [ref=f47e213] [cursor=pointer]
+    - generic [ref=f47e214]:
+      - generic [ref=f47e215]:
+        - generic [ref=f47e216]: الحالة
+        - combobox [ref=f47e217]:
+          - option "الكل" [selected]
+          - option "مؤكد"
+          - option "تم الدخول"
+          - option "غير مؤكد"
+      - generic [ref=f47e218]:
+        - generic [ref=f47e219]: من تاريخ
+        - textbox [ref=f47e220]: 2026-07-30
+      - generic [ref=f47e221]:
+        - generic [ref=f47e222]: إلى تاريخ
+        - textbox [ref=f47e223]: 2026-08-05
+      - button "تطبيق" [ref=f47e224] [cursor=pointer]
+  - generic:
+    - generic:
+      - heading "تسجيل دفعة" [level=3]
+      - button "إغلاق"
+    - generic:
+      - generic:
+        - generic: العملة
+        - combobox:
+          - option "SAR — أساسية" [selected]
+          - option "SYP"
+          - option "USD"
+      - generic:
+        - generic: المبلغ (SAR)
+        - spinbutton "0.00"
+      - generic:
+        - generic: طريقة الدفع
+        - combobox:
+          - option "تحويل بنكي" [selected]
+          - option "نقداً"
+          - option "شيك"
+          - option "بطاقة ائتمان"
+          - option "شام كاش"
+          - option "حوالة"
+    - generic:
+      - button "إلغاء"
+      - button "حفظ الدفعة"

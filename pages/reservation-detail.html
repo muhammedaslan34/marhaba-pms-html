@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RES-2026-00049 — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=pay2" />
+</head>
+<body class="app-bg font-sans" data-page="reservations" data-title="ابراهيم"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الحجوزات","href":"reservations.html"},{"label":"RES-2026-00049"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="text-xl font-bold">ابراهيم</h2>
+              <span class="badge badge-neutral">RES-2026-00049</span>
+              <span class="badge badge-success">تم الدخول</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">فندق المدينة بلازا · MADINAH1</p>
+          </div>
+          <div class="flex flex-wrap gap-2 relative">
+            <button class="btn btn-secondary" data-action="toast" data-message="تسجيل الخروج (تجريبي)">تسجيل الخروج</button>
+            <button class="btn btn-ghost" data-action="open-modal" data-target="payment-modal">دفعة</button>
+            <div class="relative">
+              <button class="btn btn-ghost" id="more-btn">المزيد</button>
+              <div id="more-menu" class="hidden absolute end-0 mt-2 w-56 panel p-2 z-20">
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="استرداد">استرداد</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="طباعة العقد">طباعة / تنزيل العقد</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="واتساب">إرسال العقد عبر واتساب</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="تمديد">تمديد</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="تغيير الغرفة">تغيير الغرفة</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm" data-action="toast" data-message="نسخة دون اتصال">حفظ نسخة دون اتصال</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <article class="panel p-4"><div class="text-xs text-slate-500">تسجيل الدخول</div><div class="font-bold mt-1">30 Jul 2026</div></article>
+          <article class="panel p-4"><div class="text-xs text-slate-500">تسجيل الخروج</div><div class="font-bold mt-1">31 Jul 2026</div></article>
+          <article class="panel p-4"><div class="text-xs text-slate-500">الليالي</div><div class="font-bold mt-1">1</div></article>
+          <article class="panel p-4"><div class="text-xs text-slate-500">النزلاء</div><div class="font-bold mt-1">1 بالغ · 0 أطفال</div></article>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-4">
+          <article class="panel p-5 space-y-3">
+            <h3 class="font-bold">النزيل</h3>
+            <dl class="text-sm space-y-2">
+              <div class="flex justify-between gap-2"><dt class="text-slate-500">الهاتف</dt><dd>966564179297</dd></div>
+              <div class="flex justify-between gap-2"><dt class="text-slate-500">البريد</dt><dd>—</dd></div>
+              <div class="flex justify-between gap-2"><dt class="text-slate-500">نوع الهوية</dt><dd>إخراج قيد</dd></div>
+              <div class="flex justify-between gap-2"><dt class="text-slate-500">الجنسية</dt><dd>—</dd></div>
+            </dl>
+            <a href="guest-detail.html" class="btn btn-ghost btn-sm">ملف النزيل</a>
+          </article>
+          <article class="panel p-5 lg:col-span-2">
+            <h3 class="font-bold mb-3">المالية</h3>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-500">الإجمالي</div><div class="text-xl font-bold">2,400</div></div>
+              <div class="rounded-xl bg-emerald-50 p-4"><div class="text-xs text-slate-500">مدفوع</div><div class="text-xl font-bold text-emerald-700">13,499.35</div></div>
+              <div class="rounded-xl bg-emerald-50 p-4"><div class="text-xs text-slate-500">الرصيد</div><div class="text-xl font-bold money-credit">-11,099.35</div><div class="text-xs text-emerald-700 mt-1">مدفوع زيادة</div></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200 flex justify-between items-center">
+            <h3 class="font-bold">الغرف (5)</h3>
+          </div>
+          <div class="divide-y divide-slate-100">
+            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="font-semibold">Double Room · غرفة MADINAH1-109</div>
+                <div class="text-sm text-slate-500">30 Jul 2026 → 30 Jul 2026</div>
+                <span class="badge badge-neutral mt-2">تم الخروج</span>
+              </div>
+              <div class="flex flex-wrap gap-2 items-center">
+                <span class="font-bold">0</span>
+                <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تغيير الغرفة">تغيير الغرفة</button>
+                <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تمديد">تمديد</button>
+              </div>
+            </div>
+            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="font-semibold">Double Room</div>
+                <div class="text-sm text-slate-500">30 Jul 2026 → 31 Jul 2026</div>
+                <span class="badge badge-warning mt-2">غير معيّنة</span>
+              </div>
+              <div class="flex flex-wrap gap-2 items-center">
+                <span class="font-bold">600</span>
+                <button class="btn btn-primary btn-sm" data-action="toast" data-message="تعيين وتسجيل دخول">تعيين وتسجيل دخول</button>
+              </div>
+            </div>
+            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="font-semibold">Double Room</div>
+                <div class="text-sm text-slate-500">30 Jul 2026 → 31 Jul 2026</div>
+                <span class="badge badge-warning mt-2">غير معيّنة</span>
+              </div>
+              <div class="flex flex-wrap gap-2 items-center">
+                <span class="font-bold">600</span>
+                <button class="btn btn-primary btn-sm" data-action="toast" data-message="تعيين وتسجيل دخول">تعيين وتسجيل دخول</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200"><h3 class="font-bold">سجل الدفعات</h3></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>التاريخ</th><th>النوع</th><th>الطريقة</th><th>المبلغ</th><th>الصندوق</th><th>سعر الصرف</th><th>القيمة الأساسية</th><th class="text-center">الإجراءات</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>30 Jul 2026</td><td>دفعة</td><td>تحويل بنكي</td><td>5,000</td><td>Cash</td><td>—</td><td>5,000</td><td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn" title="استرداد" aria-label="استرداد" data-action="toast" data-message="استرداد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td></tr>
+                <tr><td>30 Jul 2026</td><td>دفعة</td><td>شام كاش</td><td>1,000 SYP</td><td>PMS Cash SYP</td><td>1 : 3,500 SYP</td><td>0.29</td><td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn" title="استرداد" aria-label="استرداد" data-action="toast" data-message="استرداد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td></tr>
+                <tr><td>30 Jul 2026</td><td>دفعة</td><td>نقداً</td><td>2,000 USD</td><td>PMS Cash USD</td><td>1 : 0.27 USD</td><td>7,499.06</td><td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn" title="استرداد" aria-label="استرداد" data-action="toast" data-message="استرداد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td></tr>
+                <tr><td>30 Jul 2026</td><td>دفعة</td><td>تحويل بنكي</td><td>1,000</td><td>Cash</td><td>—</td><td>1,000</td><td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn" title="استرداد" aria-label="استرداد" data-action="toast" data-message="استرداد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel p-5">
+          <h3 class="font-bold mb-2">نسخة العقد دون اتصال</h3>
+          <p class="text-sm text-amber-800 bg-amber-50 rounded-xl p-3 mb-3">هذه نسخة محلية على هذا المتصفح فقط — وليست نسخة احتياطية على الخادم. تحتوي بيانات النزيل الشخصية.</p>
+          <button class="btn btn-secondary" data-action="toast" data-message="تم حفظ نسخة محلية">حفظ نسخة محلية</button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-bold">تسجيل دفعة</h3>
+      <button class="btn btn-ghost btn-sm" data-action="close-modal" data-target="payment-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">العملة</label><select class="field-select"><option>SYP</option><option>USD</option></select></div>
+      <div><label class="field-label">المبلغ</label><input type="number" class="field-input" /></div>
+      <div><label class="field-label">طريقة الدفع</label><select class="field-select"><option>تحويل بنكي</option><option>نقداً</option><option>بطاقة ائتمان</option><option>شام كاش</option></select></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="payment-modal" onclick="PMS.toast('تم حفظ الدفعة (تجريبي)')">حفظ الدفعة</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.getElementById('more-btn').addEventListener('click',  => {
+      document.getElementById('more-menu').classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

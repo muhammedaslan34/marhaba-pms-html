@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حجز جديد — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="reservations" data-title="حجز جديد"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الحجوزات","href":"reservations.html"},{"label":"حجز جديد"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+        <div class="wizard-shell space-y-5">
+          <div class="page-hero">
+            <div>
+              <p class="page-kicker">إنشاء حجز خطوة بخطوة</p>
+              <p class="text-slate-800 font-extrabold mt-1 text-lg" id="step-headline">اختيار النزيل</p>
+            </div>
+            <a href="reservations.html" class="btn btn-ghost btn-sm">إلغاء</a>
+          </div>
+
+          <div class="wizard-progress" id="wizard-progress">
+            <div class="wizard-progress-top">
+              <span class="wizard-progress-label" id="step-label">الخطوة 1 من 4</span>
+              <span class="wizard-progress-pct" id="step-pct">25%</span>
+            </div>
+            <div class="wizard-bar" aria-hidden="true"><span id="step-bar" style="width:25%"></span></div>
+            <div class="wizard-steps" id="wizard-steps">
+              <div class="wizard-step is-active" data-step-label="1">
+                <div class="wizard-step-num">1</div>
+                <div class="wizard-step-title">النزيل</div>
+                <div class="wizard-step-desc">بحث أو إضافة</div>
+              </div>
+              <div class="wizard-step" data-step-label="2">
+                <div class="wizard-step-num">2</div>
+                <div class="wizard-step-title">الإقامة</div>
+                <div class="wizard-step-desc">التواريخ والعدد</div>
+              </div>
+              <div class="wizard-step" data-step-label="3">
+                <div class="wizard-step-num">3</div>
+                <div class="wizard-step-title">الغرف</div>
+                <div class="wizard-step-desc">التوفر والأسعار</div>
+              </div>
+              <div class="wizard-step" data-step-label="4">
+                <div class="wizard-step-num">4</div>
+                <div class="wizard-step-title">المراجعة</div>
+                <div class="wizard-step-desc">تأكيد الحجز</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-panel" id="wizard">
+            <div class="wizard-panel-head">
+              <h2 class="font-extrabold text-lg text-slate-800" id="panel-title">النزيل</h2>
+              <p class="text-sm text-slate-500 font-semibold mt-1" id="panel-desc">ابحث عن نزيل موجود أو أضف نزيلاً جديداً لتجنّب التكرار.</p>
+            </div>
+
+            <div class="wizard-panel-body">
+              <section data-step="1" class="space-y-5">
+                <div>
+                  <label class="field-label" for="guest-search">بحث عن نزيل</label>
+                  <div class="search-input">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                    <input type="search" class="field-input" placeholder="الاسم أو الهاتف أو رقم الهوية" id="guest-search" />
+                  </div>
+                </div>
+
+                <div class="guest-result">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <div class="guest-avatar">ا</div>
+                    <div class="min-w-0">
+                      <div class="font-extrabold text-slate-800">ابراهيم</div>
+                      <div class="text-sm text-slate-500 font-semibold">••••9297 · 3 إقامات سابقة</div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="pick-guest">اختيار هذا النزيل</button>
+                </div>
+
+                <div id="selected-guest" class="hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                  <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                      <div class="guest-avatar !bg-emerald-600">ا</div>
+                      <div>
+                        <div class="text-xs font-bold text-emerald-700 mb-0.5">تم اختيار النزيل</div>
+                        <div class="font-extrabold text-slate-800">ابراهيم</div>
+                        <div class="text-sm text-slate-600 font-semibold">966564179297</div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm" id="change-guest">تغيير</button>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <div class="h-px flex-1 bg-slate-200"></div>
+                  <span class="text-xs font-bold text-slate-400">أو</span>
+                  <div class="h-px flex-1 bg-slate-200"></div>
+                </div>
+
+                <button type="button" class="btn btn-ghost w-full sm:w-auto" id="new-guest-toggle">+ إضافة نزيل جديد</button>
+                <div id="new-guest-form" class="hidden grid sm:grid-cols-2 gap-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                  <div class="sm:col-span-2"><label class="field-label">الاسم الكامل *</label><input class="field-input" placeholder="مثال: أحمد السالم" /></div>
+                  <div><label class="field-label">الهاتف</label><input type="tel" class="field-input" placeholder="9665xxxxxxxx" /></div>
+                  <div><label class="field-label">البريد الإلكتروني</label><input type="email" class="field-input" placeholder="name@example.com" /></div>
+                  <div><label class="field-label">الجنسية</label><input class="field-input" placeholder="سعودي" /></div>
+                  <div>
+                    <label class="field-label">نوع الهوية</label>
+                    <select class="field-select"><option>جواز سفر</option><option>هوية / إقامة</option><option>هوية خليجية</option><option>إخراج قيد</option></select>
+                  </div>
+                  <div class="sm:col-span-2"><label class="field-label">رقم الهوية</label><input class="field-input" placeholder="رقم الهوية / الإقامة / الجواز" /></div>
+                </div>
+              </section>
+
+              <section data-step="2" class="hidden space-y-5">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="field-label">الفندق</label>
+                    <div class="field-input bg-primary-soft/40 border-primary/15 font-bold text-primary">فندق المدينة بلازا</div>
+                  </div>
+                  <div>
+                    <label class="field-label">المصدر</label>
+                    <select class="field-select"><option>مباشر</option><option>بوكينج</option><option>إكسبيديا</option><option>وكيل</option></select>
+                  </div>
+                  <div>
+                    <label class="field-label">تاريخ الوصول</label>
+                    <input type="date" class="field-input" value="2026-08-10" />
+                  </div>
+                  <div>
+                    <label class="field-label">تاريخ المغادرة</label>
+                    <input type="date" class="field-input" value="2026-08-12" />
+                  </div>
+                  <div>
+                    <label class="field-label">البالغون</label>
+                    <input type="number" class="field-input" value="2" min="1" />
+                  </div>
+                  <div>
+                    <label class="field-label">الأطفال</label>
+                    <input type="number" class="field-input" value="0" min="0" />
+                  </div>
+                </div>
+                <div class="rounded-2xl bg-sky-50 border border-sky-100 p-4 text-sm font-semibold text-sky-800">
+                  مدة الإقامة المتوقعة: <strong>ليلتان</strong> · 10 → 12 أغسطس 2026
+                </div>
+              </section>
+
+              <section data-step="3" class="hidden space-y-4">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="text-sm text-slate-500 font-semibold">التوفر المباشر لمدة الإقامة</p>
+                  <span class="badge badge-primary">MADINAH1</span>
+                </div>
+                <div class="space-y-3">
+                  <label class="room-pick">
+                    <div>
+                      <div class="font-extrabold text-slate-800">Double Room · Haram View</div>
+                      <div class="text-sm text-slate-500 font-semibold mt-1">600 / ليلة · <span class="room-pick-badge">متاح 11</span></div>
+                    </div>
+                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="0" />
+                  </label>
+                  <label class="room-pick !border-primary/30 !bg-primary-soft/30">
+                    <div>
+                      <div class="font-extrabold text-slate-800">Single Room · Kaaba View</div>
+                      <div class="text-sm text-slate-500 font-semibold mt-1">350 / ليلة · <span class="room-pick-badge">متاح 3</span></div>
+                    </div>
+                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="1" />
+                  </label>
+                  <label class="room-pick">
+                    <div>
+                      <div class="font-extrabold text-slate-800">Twin Room · Haram View</div>
+                      <div class="text-sm text-slate-500 font-semibold mt-1">850 / ليلة · <span class="room-pick-badge">متاح 11</span></div>
+                    </div>
+                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="0" />
+                  </label>
+                </div>
+                <div class="rounded-2xl bg-primary text-white p-4 flex items-center justify-between gap-3">
+                  <span class="font-bold opacity-90">الإجمالي التقديري</span>
+                  <span class="text-2xl font-extrabold tracking-tight">700</span>
+                </div>
+              </section>
+
+              <section data-step="4" class="hidden space-y-4">
+                <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-extrabold shrink-0">✓</div>
+                  <div>
+                    <div class="font-extrabold text-emerald-900">جاهز للمراجعة</div>
+                    <div class="text-sm text-emerald-800 font-semibold mt-0.5">راجع التفاصيل قبل إنشاء الحجز.</div>
+                  </div>
+                </div>
+                <dl class="grid sm:grid-cols-2 gap-3">
+                  <div class="summary-tile"><dt>النزيل</dt><dd>ابراهيم</dd></div>
+                  <div class="summary-tile"><dt>المصدر</dt><dd>مباشر</dd></div>
+                  <div class="summary-tile"><dt>الإقامة</dt><dd>10 Aug → 12 Aug 2026</dd></div>
+                  <div class="summary-tile"><dt>الغرف</dt><dd>Single Room ×1</dd></div>
+                  <div class="summary-tile sm:col-span-2 !bg-primary-soft !border-primary/15">
+                    <dt>الإجمالي</dt>
+                    <dd class="text-primary text-xl">700</dd>
+                  </div>
+                </dl>
+                <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3">نسخة تجريبية — لن يُنشأ حجز حقيقي على الخادم.</p>
+              </section>
+            </div>
+
+            <div class="wizard-panel-foot">
+              <button type="button" class="btn btn-ghost" id="wizard-prev">السابق</button>
+              <button type="button" class="btn btn-primary min-w-[8.5rem]" id="wizard-next">التالي</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function  {
+      let step = 1;
+      const max = 4;
+      const meta = {
+        1: { title: 'النزيل', desc: 'ابحث عن نزيل موجود أو أضف نزيلاً جديداً لتجنّب التكرار.', headline: 'اختيار النزيل' },
+        2: { title: 'الإقامة', desc: 'حدد تواريخ الوصول والمغادرة وعدد الضيوف ومصدر الحجز.', headline: 'تفاصيل الإقامة' },
+        3: { title: 'الغرف', desc: 'اختر أنواع الغرف والكميات حسب التوفر الحالي.', headline: 'اختيار الغرف' },
+        4: { title: 'المراجعة', desc: 'راجع ملخص الحجز ثم أكّد الإنشاء.', headline: 'مراجعة وتأكيد' },
+      };
+      const sections = [...document.querySelectorAll('#wizard [data-step]')];
+      const labels = [...document.querySelectorAll('#wizard-steps .wizard-step')];
+
+      function render {
+        const pct = Math.round((step / max) * 100);
+        sections.forEach((s) => s.classList.toggle('hidden', Number(s.dataset.step) !== step));
+        labels.forEach((l, i) => {
+          const n = i + 1;
+          l.classList.toggle('is-active', n === step);
+          l.classList.toggle('is-done', n < step);
+          const num = l.querySelector('.wizard-step-num');
+          if (num) num.innerHTML = n < step ? '✓' : String(n);
+        });
+        document.getElementById('step-bar').style.width = pct + '%';
+        document.getElementById('step-pct').textContent = pct + '%';
+        document.getElementById('step-label').textContent = 'الخطوة ' + step + ' من ' + max;
+        document.getElementById('panel-title').textContent = meta[step].title;
+        document.getElementById('panel-desc').textContent = meta[step].desc;
+        document.getElementById('step-headline').textContent = meta[step].headline;
+        const prev = document.getElementById('wizard-prev');
+        prev.disabled = step === 1;
+        prev.classList.toggle('opacity-40', step === 1);
+        document.getElementById('wizard-next').textContent = step === max ? 'إنشاء الحجز' : 'التالي';
+      }
+
+      document.getElementById('wizard-next').addEventListener('click',  => {
+        if (step < max) { step += 1; render; }
+        else { PMS.toast('تم إنشاء الحجز (تجريبي)'); location.href = 'reservation-detail.html'; }
+      });
+      document.getElementById('wizard-prev').addEventListener('click',  => {
+        if (step > 1) { step -= 1; render; }
+      });
+      document.getElementById('pick-guest').addEventListener('click',  => {
+        document.getElementById('selected-guest').classList.remove('hidden');
+        PMS.toast('تم اختيار النزيل');
+      });
+      document.getElementById('change-guest').addEventListener('click',  => {
+        document.getElementById('selected-guest').classList.add('hidden');
+      });
+      document.getElementById('new-guest-toggle').addEventListener('click',  => {
+        document.getElementById('new-guest-form').classList.toggle('hidden');
+      });
+      render;
+    });
+  </script>
+</body>
+</html>

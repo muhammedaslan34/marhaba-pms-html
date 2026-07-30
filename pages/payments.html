@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الدفعات — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=pay3" />
+</head>
+<body class="app-bg font-sans" data-page="payments" data-title="الدفعات"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الدفعات"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الفواتير والأرصدة وتحصيل الدفعات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">11 فاتورة نشطة</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-action="open-modal" data-target="payment-modal" title="تسجيل دفعة">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+            دفعة جديدة
+          </button>
+        </div>
+
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <article class="stat-card" data-tone="primary">
+            <div class="stat-label">الفواتير النشطة</div>
+            <div class="stat-value text-primary">11</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">المستحقات (صافي)</div>
+            <div class="stat-value money-credit">-1,475</div>
+            </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">تسويات معلّقة</div>
+            <div class="stat-value text-amber-600">4</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="stat-label">إيراد اليوم</div>
+            <div class="stat-value text-secondary">9,000</div>
+            </article>
+        </section>
+
+        <section class="panel p-5">
+          <h2 class="font-extrabold mb-4">طرق الدفع</h2>
+          <div class="grid sm:grid-cols-3 gap-3 text-sm">
+            <div class="rounded-2xl bg-gradient-to-br from-primary-soft to-white border border-primary/10 p-4">
+              <div class="text-slate-500 font-bold">بطاقة ائتمان</div>
+              <div class="font-extrabold text-lg mt-1 text-primary">32,500</div>
+              <div class="text-xs text-slate-400 font-semibold mt-1">45 عملية</div>
+            </div>
+            <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 p-4">
+              <div class="text-slate-500 font-bold">نقداً</div>
+              <div class="font-extrabold text-lg mt-1 text-emerald-700">8,900</div>
+              <div class="text-xs text-slate-400 font-semibold mt-1">12 عملية</div>
+            </div>
+            <div class="rounded-2xl bg-gradient-to-br from-sky-50 to-white border border-sky-100 p-4">
+              <div class="text-slate-500 font-bold">تحويل بنكي</div>
+              <div class="font-extrabold text-lg mt-1 text-sky-700">2,800</div>
+              <div class="text-xs text-slate-400 font-semibold mt-1">3 عمليات</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 class="font-extrabold">الفواتير</h2>
+            <div class="search-input sm:max-w-xs w-full">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" class="field-input" placeholder="بحث برقم الفاتورة أو النزيل…" />
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>فاتورة</th>
+                  <th>النزيل</th>
+                  <th>الرصيد</th>
+                  <th class="text-center">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00049</td>
+                  <td class="font-semibold">ابراهيم</td>
+                  <td class="money-credit font-extrabold">-6,600</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn" title="تسجيل دفعة" aria-label="تسجيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00048</td>
+                  <td class="font-semibold">ابراهيم</td>
+                  <td class="money-credit font-extrabold">-3,000</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn" title="تسجيل دفعة" aria-label="تسجيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00044</td>
+                  <td class="font-semibold">ريم فهد الدوسري</td>
+                  <td class="money-due font-extrabold">1,500</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn is-primary" title="تحصيل دفعة" aria-label="تحصيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00041</td>
+                  <td class="font-semibold">ابرهيم</td>
+                  <td class="money-due font-extrabold">700</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn is-primary" title="تحصيل دفعة" aria-label="تحصيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00039</td>
+                  <td class="font-semibold">LISTFIX GUEST</td>
+                  <td class="money-due font-extrabold">600</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn is-primary" title="تحصيل دفعة" aria-label="تحصيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00037</td>
+                  <td class="font-semibold">عمر خالد الغامدي</td>
+                  <td class="money-due font-extrabold">2,550</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn is-primary" title="تحصيل دفعة" aria-label="تحصيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00045</td>
+                  <td class="font-semibold">محمد سعد العتيبي</td>
+                  <td class="money-credit font-extrabold">-450</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn" title="تسجيل دفعة" aria-label="تسجيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-extrabold text-primary">RES-2026-00043</td>
+                  <td class="font-semibold">Ebrahim Al-desouki</td>
+                  <td class="money-due font-extrabold">500</td>
+                  <td>
+                    <div class="action-cell justify-center w-full">
+                      <button type="button" class="icon-btn is-primary" title="تحصيل دفعة" aria-label="تحصيل دفعة" data-action="open-modal" data-target="payment-modal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                      </button>
+                      <a href="reservation-detail.html" class="icon-btn" title="فتح الحجز" aria-label="فتح الحجز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تسجيل دفعة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="payment-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">العملة</label><select class="field-select"><option>SYP</option><option>USD</option></select></div>
+      <div><label class="field-label">المبلغ</label><input type="number" class="field-input" placeholder="0.00" /></div>
+      <div><label class="field-label">طريقة الدفع</label><select class="field-select"><option>تحويل بنكي</option><option>نقداً</option><option>شيك</option><option>بطاقة ائتمان</option><option>شام كاش</option><option>حوالة</option></select></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="payment-modal" onclick="PMS.toast('تم حفظ الدفعة (تجريبي)')">حفظ الدفعة</button>
+    </div>
+  </div>
+  <script src="../assets/js/app.js?v=pay3"></script>
+</body>
+</html>

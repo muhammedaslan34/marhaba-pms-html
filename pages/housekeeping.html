@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>التدبير الفندقي — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=hk11" />
+  <style>
+    .hk-page { --vacant:#55A06F; --occupied:#C44755; --waiting:#7B4FC8; --checkout:#C9A227; --dirty:#B08900; --clean-gold:#C9A227; }
+    .hk-topbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; }
+    .hk-view-label { font-size:.75rem; font-weight:800; color:#94a3b8; margin-inline-end:.35rem; }
+    .hk-filter-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; }
+    .hk-toolbar {
+      display:flex; flex-wrap:wrap; align-items:center; gap:.75rem;
+      background:#fff; border:1px solid #E8ECF1; border-radius:14px; padding:.75rem 1rem;
+    }
+    .hk-toolbar .hk-search {
+      flex:1 1 200px; min-width:160px; max-width:360px;
+    }
+    .hk-toolbar .hk-pills { flex:1 1 auto; justify-content:flex-end; }
+    .hk-pager {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+      gap:.75rem; padding-top:.25rem;
+    }
+    .hk-pager .hk-range { font-size:.875rem; font-weight:700; color:#64748B; }
+    .hk-pills { display:flex; flex-wrap:wrap; gap:.45rem; }
+    .hk-pill {
+      display:inline-flex; align-items:center; gap:.4rem;
+      border:1px solid #E2E8F0; background:#fff; color:#64748B;
+      border-radius:999px; padding:.42rem .85rem; font:700 .8rem/1.2 Cairo,sans-serif;
+      cursor:pointer; transition:.15s;
+    }
+    .hk-pill:hover { border-color:#cbd5e1; color:#0f172a; }
+    .hk-pill.is-on { background:#0027B7; border-color:#0027B7; color:#fff; }
+    .hk-pill.is-on[data-f="vacant"] { background:var(--vacant); border-color:var(--vacant); }
+    .hk-pill.is-on[data-f="occupied"] { background:var(--occupied); border-color:var(--occupied); }
+    .hk-pill.is-on[data-f="waiting"] { background:var(--waiting); border-color:var(--waiting); }
+    .hk-pill.is-on[data-f="checkout"] { background:var(--checkout); border-color:var(--checkout); }
+    .hk-pill.is-on[data-f="dirty"], .hk-pill.is-on[data-f="rented-dirty"] { background:var(--dirty); border-color:var(--dirty); }
+    .hk-pill.is-on[data-f="clean"] { background:var(--clean-gold); border-color:var(--clean-gold); }
+    .hk-pill .n {
+      min-width:1.2rem; height:1.2rem; padding:0 .3rem; border-radius:999px;
+      background:#F1F5F9; color:#0f172a; font-size:.68rem; font-weight:800;
+      display:inline-flex; align-items:center; justify-content:center;
+    }
+    .hk-pill.is-on .n { background:rgba(255,255,255,.22); color:#fff; }
+    .hk-ico { width:14px; height:14px; flex-shrink:0; }
+
+    .room-grid {
+      display:grid; gap:12px; align-items:stretch;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    @media(min-width:640px){ .room-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media(min-width:900px){ .room-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); } }
+    @media(min-width:1100px){ .room-grid{ grid-template-columns:repeat(5,minmax(0,1fr)); } }
+    @media(min-width:1400px){ .room-grid{ grid-template-columns:repeat(7,minmax(0,1fr)); } }
+
+    .room-card {
+      display:flex; flex-direction:column;
+      height:188px;
+      background:#fff; border:1px solid #E8ECF1; border-radius:12px;
+      overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.04);
+      text-align:start; font-family:Cairo,sans-serif; cursor:pointer; padding:0;
+      transition:transform .15s, box-shadow .15s;
+    }
+    .room-card:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(15,23,42,.08); }
+    .room-card.hide { display:none !important; }
+    .room-card.dirty-bg { background:linear-gradient(180deg,#FFF6DE 0%,#fff 42%); }
+
+    .rc-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; padding:14px 14px 6px; }
+    .rc-num { font-size:22px; font-weight:800; color:#0f172a; line-height:1; letter-spacing:-.02em; }
+    .rc-type { margin-top:4px; font-size:11px; font-weight:700; color:#94A3B8; }
+
+    /* Property + mop badge (reference style) */
+    .rc-prop {
+      position: relative;
+      width: 34px;
+      height: 40px;
+      flex-shrink: 0;
+      --prop: #C9A227;
+      --prop-win: #FFF8E7;
+      --mop: #D9C79A;
+      color: var(--prop);
+    }
+    .rc-prop > .rc-building,
+    .rc-prop > svg:first-of-type {
+      width: 28px;
+      height: 36px;
+      display: block;
+      color: var(--prop);
+    }
+    .rc-mop {
+      position: absolute;
+      inset-inline-end: -4px;
+      bottom: -2px;
+      width: 20px;
+      height: 28px;
+      color: var(--mop) !important;
+      transform: rotate(-28deg);
+      transform-origin: 50% 10%;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,.08));
+      pointer-events: none;
+    }
+    .room-card[data-status="vacant"] .rc-prop { --prop: var(--vacant); --prop-win: #EAF6EE; --mop: #C9B27A; }
+    .room-card[data-status="occupied"] .rc-prop { --prop: var(--occupied); --prop-win: #FCECEE; --mop: #D9C79A; }
+    .room-card[data-status="waiting"] .rc-prop { --prop: var(--waiting); --prop-win: #F3ECFB; --mop: #D9C79A; }
+    .room-card[data-status="checkout"] .rc-prop { --prop: var(--checkout); --prop-win: #FFF8E7; --mop: #E8D9B0; }
+    .room-card[data-hk="dirty"] .rc-prop,
+    .room-card[data-hk="rented-dirty"] .rc-prop {
+      --prop: #C9A227;
+      --prop-win: #FFF8E7;
+      --mop: #E6D7B0;
+    }
+
+    .rc-mid {
+      flex:1; display:flex; flex-direction:column; justify-content:center;
+      padding:4px 14px 12px; min-height:0; gap:2px;
+    }
+    .rc-ready { color:var(--vacant); font-size:13px; font-weight:700; }
+    .rc-guest { color:#0f172a; font-size:14px; font-weight:800; }
+    .rc-bal { color:var(--occupied); font-size:12px; font-weight:800; }
+    .rc-wait { color:var(--waiting); font-size:12px; font-weight:700; }
+    .rc-dirty { color:#8A6A00; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:6px; }
+    .rc-out { display:inline-flex; align-items:center; gap:6px; background:#F1F5F9; color:#475569;
+      border-radius:999px; padding:4px 8px; font-size:11px; font-weight:700; width:fit-content; }
+
+    .rc-foot {
+      margin-top:auto; display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px; color:#fff; font-size:12px; font-weight:800; min-height:40px;
+    }
+    .rc-foot-l { display:inline-flex; align-items:center; gap:6px; }
+    .rc-foot svg { width:14px; height:14px; }
+    .room-card[data-status="vacant"] .rc-foot { background:var(--vacant); }
+    .room-card[data-status="occupied"] .rc-foot { background:var(--occupied); }
+    .room-card[data-status="waiting"] .rc-foot { background:var(--waiting); }
+    .room-card[data-status="checkout"] .rc-foot { background:var(--checkout); }
+    .room-card[data-status="vacant"][data-hk="dirty"] .rc-foot { background:var(--dirty); }
+
+        .hk-empty { display:none; grid-column:1/-1; text-align:center; padding:48px 16px; color:#64748B; font-weight:700; }
+    .hk-empty.show { display:block; }
+  </style>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <!-- Solid building with light windows -->
+    <symbol id="icon-property" viewBox="0 0 28 36">
+      <rect x="1" y="1" width="26" height="34" rx="4" fill="currentColor"/>
+      <rect x="6" y="7" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="16.5" y="7" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="6" y="15.5" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="16.5" y="15.5" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="6" y="24" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="16.5" y="24" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+    </symbol>
+    <!-- Soft cream broom / mop -->
+    <symbol id="icon-mop" viewBox="0 0 24 36" fill="none">
+      <path d="M12 2.5v18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M7.5 20.5h9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M6 22c.6 3.2 1.4 7.2 2.2 10.2M9.2 22c.4 3.5.9 8 1.4 11M12 22c.2 3.6.5 8.2.8 11.2M14.8 22c-.4 3.5-.9 8-1.4 11M18 22c-.6 3.2-1.4 7.2-2.2 10.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+      <ellipse cx="12" cy="21.2" rx="6.2" ry="2.2" fill="currentColor" opacity=".35"/>
+    </symbol>
+  </svg>
+</head>
+<body class="app-bg font-sans hk-page" data-page="housekeeping" data-title="التدبير الفندقي"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التدبير الفندقي"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-4" id="hk-main">
+
+        <div class="hk-topbar">
+          <div class="hk-pills" id="status-pills">
+            <button type="button" class="hk-pill is-on" data-group="status" data-f="all">الكل <span class="n" data-c="all">0</span></button>
+            <button type="button" class="hk-pill" data-group="status" data-f="vacant">
+              <svg class="hk-ico" viewBox="0 0 24 24" fill="none" stroke="#55A06F" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>
+              شاغرة <span class="n" data-c="vacant">0</span>
+            </button>
+            <button type="button" class="hk-pill" data-group="status" data-f="occupied">
+              <svg class="hk-ico" viewBox="0 0 24 24" fill="none" stroke="#C44755" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+              مشغولة <span class="n" data-c="occupied">0</span>
+            </button>
+            <button type="button" class="hk-pill" data-group="status" data-f="waiting">
+              <svg class="hk-ico" viewBox="0 0 24 24" fill="none" stroke="#7B4FC8" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>
+              بانتظار الدخول <span class="n" data-c="waiting">0</span>
+            </button>
+            <button type="button" class="hk-pill" data-group="status" data-f="checkout">
+              <svg class="hk-ico" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+              مغادرة <span class="n" data-c="checkout">0</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="hk-view-label">العرض</span>
+            <div class="view-toggle" id="hk-view-toggle">
+              <button type="button" class="view-toggle-btn" data-view="list" title="قائمة" aria-label="قائمة">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+              </button>
+              <button type="button" class="view-toggle-btn is-active" data-view="grid" title="شبكة" aria-label="شبكة">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              </button>
+              <button type="button" class="view-toggle-btn" data-view="calendar" title="تقويم" aria-label="تقويم">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hk-toolbar">
+          <label class="flex items-center gap-2 text-sm font-bold text-slate-500 shrink-0">
+            الصفوف
+            <select id="hk-rows" class="field-select w-auto py-1.5">
+              <option>12</option><option selected>20</option><option>32</option>
+            </select>
+          </label>
+          <div class="search-input hk-search">
+            <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+            <input id="hk-search" type="search" class="field-input" placeholder="بحث بالغرفة / النزيل / النوع…" />
+          </div>
+          <div class="hk-pills" id="hk-pills">
+            <button type="button" class="hk-pill" data-group="hk" data-f="clean">
+              <svg class="hk-ico" viewBox="0 0 28 36" style="color:#C9A227"><use href="#icon-property"/></svg>
+              نظيفة <span class="n" data-c="clean">0</span>
+            </button>
+            <button type="button" class="hk-pill" data-group="hk" data-f="dirty"><svg class="hk-ico" viewBox="0 0 24 36" style="color:#E6D7B0"><use href="#icon-mop"/></svg>تحتاج تنظيف <span class="n" data-c="dirty">0</span></button>
+            <button type="button" class="hk-pill" data-group="hk" data-f="rented-dirty">مشغولة · تحتاج تنظيف <span class="n" data-c="rented-dirty">0</span></button>
+            <button type="button" class="hk-pill is-on" data-group="hk" data-f="all-hk">الكل</button>
+          </div>
+        </div>
+
+                <div class="room-grid" id="room-grid">
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="101" data-type="ديلوكس توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">101</div><div class="rc-type">ديلوكس توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="102" data-type="ديلوكس توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">102</div><div class="rc-type">ديلوكس توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="103" data-type="ديلوكس توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">103</div><div class="rc-type">ديلوكس توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="104" data-type="ديلوكس توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">104</div><div class="rc-type">ديلوكس توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="clean" data-room="105" data-guest="سارة علي" data-type="سوبيريور كينج" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">105</div><div class="rc-type">سوبيريور كينج</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">سارة علي</div><div class="rc-bal">-100.000</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="clean" data-room="108" data-guest="ابراهيم" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">108</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">ابراهيم</div><div class="rc-bal">-600.00</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="rented-dirty" data-room="301" data-guest="ابراهيم" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">301</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">ابراهيم</div><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="rented-dirty" data-room="110" data-guest="محمد سعد العتيبي" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">110</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">محمد سعد العتيبي</div><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="rented-dirty" data-room="116" data-guest="LISTFIX GUEST" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">116</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">LISTFIX GUEST</div><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="clean" data-room="403" data-guest="سارة الشهري" data-type="غرفة توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">403</div><div class="rc-type">غرفة توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">سارة الشهري</div><div class="rc-bal">-450.00</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="201" data-guest="ريم فهد" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">201</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">ريم فهد</div><div class="rc-wait">حجز 2026-00041 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="202" data-guest="Ebrahim Al-desouki" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">202</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">Ebrahim Al-desouki</div><div class="rc-wait">حجز 2026-00043 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="203" data-guest="لطيفة أحمد" data-type="غرفة توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">203</div><div class="rc-type">غرفة توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">لطيفة أحمد</div><div class="rc-wait">حجز 2026-00036 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="302" data-guest="نورا سعد" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">302</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">نورا سعد</div><div class="rc-wait">حجز 2026-00038 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="303" data-guest="خالد الحربي" data-type="غرفة توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">303</div><div class="rc-type">غرفة توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">خالد الحربي</div><div class="rc-wait">حجز 2026-00040 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="waiting" data-hk="clean" data-room="502" data-guest="عبدالله الأحمد" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">502</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">عبدالله الأحمد</div><div class="rc-wait">حجز 2026-00042 · متوقع الدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>بانتظار الدخول</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="dirty" data-room="109" data-guest="ابراهيم" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">109</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">ابراهيم</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="clean" data-room="106" data-guest="عمر خالد الغامدي" data-type="غرفة كينج" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">106</div><div class="rc-type">غرفة كينج</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">عمر خالد الغامدي</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="dirty" data-room="117" data-guest="عبدالرحمن" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">117</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">عبدالرحمن</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="clean" data-room="401" data-guest="فاطمة السعد" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">401</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">فاطمة السعد</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="dirty" data-room="402" data-guest="أحمد المطيري" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">402</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">أحمد المطيري</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="checkout" data-hk="clean" data-room="503" data-guest="نورة القحطاني" data-type="غرفة توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">503</div><div class="rc-type">غرفة توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">نورة القحطاني</div><div class="rc-out">مغادرة 30/07</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>مغادرة اليوم</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+          </button>
+          <button type="button" class="room-card dirty-bg" data-status="vacant" data-hk="dirty" data-room="118" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">118</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card dirty-bg" data-status="vacant" data-hk="dirty" data-room="107" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">107</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card dirty-bg" data-status="vacant" data-hk="dirty" data-room="501" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">501</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg><svg class="rc-mop" viewBox="0 0 24 36"><use href="#icon-mop"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-dirty">تحتاج تنظيف</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="111" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">111</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="112" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">112</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="113" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">113</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="114" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">114</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="115" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">115</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="602" data-type="غرفة مفردة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">602</div><div class="rc-type">غرفة مفردة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="vacant" data-hk="clean" data-room="603" data-type="غرفة توأم" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">603</div><div class="rc-type">غرفة توأم</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-ready">جاهزة للدخول</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M5 12V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>شاغرة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="clean" data-room="601" data-guest="محمد سعد العتيبي" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">601</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">محمد سعد العتيبي</div><div class="rc-bal">رصيد دائن</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+          <button type="button" class="room-card" data-status="occupied" data-hk="clean" data-room="701" data-guest="ريم فهد الدوسري" data-type="غرفة مزدوجة" data-action="open-drawer" data-target="room-drawer">
+            <div class="rc-top"><div><div class="rc-num">701</div><div class="rc-type">غرفة مزدوجة</div></div><span class="rc-prop" aria-hidden="true"><svg class="rc-building" viewBox="0 0 28 36"><use href="#icon-property"/></svg></span></div>
+            <div class="rc-mid"><div class="rc-guest">ريم فهد الدوسري</div><div class="rc-bal">1,500.00</div></div>
+            <div class="rc-foot"><span class="rc-foot-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M5 19c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>مشغولة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          </button>
+
+          <div class="hk-empty" id="hk-empty">لا توجد غرف مطابقة للفلاتر الحالية</div>
+        </div>
+
+        <div class="hk-pager">
+          <button type="button" class="btn btn-ghost btn-sm" id="hk-prev">السابق</button>
+          <span class="hk-range" id="hk-range">1–20 من 20</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="hk-next">التالي</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="room-drawer" class="drawer p-5 overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-extrabold text-lg">الغرفة <span id="room-num">101</span></h3>
+      <button class="btn btn-ghost btn-sm" data-action="close-drawer">إغلاق</button>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="field-label">الحالة</label>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> شاغرة</label>
+          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> مشغولة</label>
+          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> بانتظار الدخول</label>
+          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> مغادرة اليوم</label>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">التدبير الفندقي</label>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <label class="chip justify-center"><input type="radio" name="hk" class="me-1" /> نظيفة</label>
+          <label class="chip justify-center"><input type="radio" name="hk" class="me-1" /> تحتاج تنظيف</label>
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button class="btn btn-ghost flex-1" data-action="close-drawer">إلغاء</button>
+        <button class="btn btn-primary flex-1" data-action="close-drawer" onclick="PMS.toast('تم تحديث الغرفة (تجريبي)')">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/app.js?v=hk11"></script>
+  <script>
+    (function  {
+      const grid = document.getElementById('room-grid');
+      const cards =  => [...grid.querySelectorAll('.room-card')];
+      const empty = document.getElementById('hk-empty');
+      const range = document.getElementById('hk-range');
+      const search = document.getElementById('hk-search');
+      let statusF = 'all';
+      let hkF = 'all-hk';
+
+      function setCounts {
+        const all = cards;
+        const map = {
+          all: all.length,
+          vacant: all.filter(c => c.dataset.status === 'vacant').length,
+          occupied: all.filter(c => c.dataset.status === 'occupied').length,
+          waiting: all.filter(c => c.dataset.status === 'waiting').length,
+          checkout: all.filter(c => c.dataset.status === 'checkout').length,
+          clean: all.filter(c => c.dataset.hk === 'clean').length,
+          dirty: all.filter(c => c.dataset.hk === 'dirty').length,
+          'rented-dirty': all.filter(c => c.dataset.hk === 'rented-dirty').length,
+        };
+        Object.keys(map).forEach(k => {
+          document.querySelectorAll('[data-c="' + k + '"]').forEach(el => { el.textContent = map[k]; });
+        });
+      }
+
+      function match(card) {
+        const q = (search.value || '').trim.toLowerCase;
+        const hay = [card.dataset.room, card.dataset.type, card.dataset.guest, card.textContent].join(' ').toLowerCase;
+        if (q && !hay.includes(q)) return false;
+        if (statusF !== 'all' && card.dataset.status !== statusF) return false;
+        if (hkF === 'clean' && card.dataset.hk !== 'clean') return false;
+        if (hkF === 'dirty' && card.dataset.hk !== 'dirty') return false;
+        if (hkF === 'rented-dirty' && card.dataset.hk !== 'rented-dirty') return false;
+        return true;
+      }
+
+      function apply {
+        let n = 0;
+        cards.forEach(card => {
+          const ok = match(card);
+          card.classList.toggle('hide', !ok);
+          if (ok) n += 1;
+        });
+        empty.classList.toggle('show', n === 0);
+        range.textContent = n ? ('1–' + n + ' من ' + n) : '0 من 0';
+      }
+
+      function bindPills(rootId, group) {
+        document.getElementById(rootId).addEventListener('click', (e) => {
+          const btn = e.target.closest('.hk-pill');
+          if (!btn) return;
+          document.querySelectorAll('#' + rootId + ' .hk-pill').forEach(b => b.classList.remove('is-on'));
+          btn.classList.add('is-on');
+          if (group === 'status') statusF = btn.dataset.f;
+          else hkF = btn.dataset.f;
+          apply;
+        });
+      }
+      bindPills('status-pills', 'status');
+      bindPills('hk-pills', 'hk');
+      search.addEventListener('input', apply);
+
+      grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.room-card');
+        if (card) document.getElementById('room-num').textContent = card.dataset.room;
+      });
+
+      setCounts;
+      apply;
+    });
+  </script>
+</body>
+</html>

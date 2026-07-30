@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الرئيسية — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' },
+            secondary: '#079DD8',
+          },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="dashboard" data-title="الرئيسية"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الرئيسية"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">نظرة عامة على اليوم</p>
+            <p class="text-slate-800 font-extrabold text-lg mt-1">30 يوليو 2026 · MADINAH1</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
+            <a href="checkin.html" class="btn btn-secondary">تسجيل الدخول</a>
+          </div>
+        </div>
+
+        <section class="grid grid-cols-2 xl:grid-cols-5 gap-3 sm:gap-4">
+          <article class="stat-card col-span-2 xl:col-span-1" data-tone="primary">
+            <div class="stat-label">الإشغال</div>
+            <div class="stat-value text-primary">14.3%</div>
+            <div class="text-xs text-slate-500 mt-2 font-semibold">6 من أصل 42 غرفة</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="stat-label">وصول اليوم</div>
+            <div class="stat-value text-secondary">6</div>
+            <div class="text-xs text-secondary mt-2 font-bold">جاهز للاستقبال</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">مغادرة اليوم</div>
+            <div class="stat-value text-amber-600">4</div>
+            <div class="text-xs text-amber-600 mt-2 font-bold">يتطلب متابعة</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">إيراد اليوم</div>
+            <div class="stat-value text-emerald-600">3,000</div>
+            </article>
+          <article class="stat-card" data-tone="danger">
+            <div class="stat-label">المستحقات</div>
+            <div class="stat-value money-due">4,350</div>
+            </article>
+        </section>
+
+        <section class="grid xl:grid-cols-3 gap-4">
+          <article class="panel p-5 sm:p-6 xl:col-span-2">
+            <div class="flex items-center justify-between mb-5">
+              <h2 class="font-extrabold text-lg">الإشغال — آخر ١٤ يوماً</h2>
+              <span class="badge badge-primary">MADINAH1</span>
+            </div>
+            <div class="h-44 flex items-end gap-2.5 px-1">
+              <div class="flex-1 rounded-t-xl bg-primary/15" style="height:22%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary/20" style="height:28%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary/25" style="height:18%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary/30" style="height:35%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary/40" style="height:40%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary/55" style="height:52%"></div>
+              <div class="flex-1 rounded-t-xl bg-primary shadow-lg shadow-primary/25" style="height:70%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-400 mt-3 font-bold">
+              <span>17</span><span>19</span><span>21</span><span>23</span><span>25</span><span>27</span><span>29</span>
+            </div>
+          </article>
+
+          <article class="panel p-5 sm:p-6">
+            <h2 class="font-extrabold text-lg mb-1">الحجوزات حسب الحالة</h2>
+            <div class="text-4xl font-extrabold text-primary mt-3 mb-5">8</div>
+            <ul class="space-y-4 text-sm font-semibold">
+              <li class="flex justify-between items-center">
+                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>تم الدخول</span>
+                <span>5 · 63%</span>
+              </li>
+              <li>
+                <div class="h-2 rounded-full bg-slate-100 mb-3"><div class="h-2 rounded-full bg-emerald-500" style="width:63%"></div></div>
+              </li>
+              <li class="flex justify-between items-center">
+                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-primary"></span>مؤكد</span>
+                <span>2 · 25%</span>
+              </li>
+              <li class="flex justify-between items-center">
+                <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>غير مؤكد</span>
+                <span>1 · 13%</span>
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-4">
+          <article class="panel p-5 sm:p-6">
+            <h2 class="font-extrabold text-lg">الإيراد</h2>
+            <div class="text-4xl font-extrabold mt-3 tracking-tight">10,350</div>
+            <div class="mt-5 grid grid-cols-3 gap-3 text-sm">
+              <div class="rounded-2xl bg-slate-50 p-3.5"><div class="text-slate-500 text-xs font-bold">الإجمالي</div><div class="font-extrabold mt-1">15,450</div></div>
+              <div class="rounded-2xl bg-emerald-50 p-3.5"><div class="text-slate-500 text-xs font-bold">مدفوع</div><div class="font-extrabold mt-1 text-emerald-700">0</div></div>
+              <div class="rounded-2xl bg-red-50 p-3.5"><div class="text-slate-500 text-xs font-bold">مستحق</div><div class="font-extrabold mt-1 text-red-600">—</div></div>
+            </div>
+          </article>
+          <article class="panel p-5 sm:p-6">
+            <h2 class="font-extrabold text-lg mb-5">الطلب على أنواع الغرف</h2>
+            <ul class="space-y-4">
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>Double Room</span><span>10</span></div>
+                <div class="h-2.5 rounded-full bg-slate-100"><div class="h-2.5 rounded-full bg-primary" style="width:100%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>Twin Room</span><span>2</span></div>
+                <div class="h-2.5 rounded-full bg-slate-100"><div class="h-2.5 rounded-full bg-secondary" style="width:20%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>Single Room</span><span>1</span></div>
+                <div class="h-2.5 rounded-full bg-slate-100"><div class="h-2.5 rounded-full bg-slate-400" style="width:10%"></div></div>
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <section>
+          <h2 class="font-extrabold text-lg mb-3">إجراءات سريعة</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="reservations.html" class="quick-tile">الحجوزات</a>
+            <a href="availability.html" class="quick-tile">التوفر</a>
+            <a href="housekeeping.html" class="quick-tile">التدبير الفندقي</a>
+            <a href="reports.html" class="quick-tile">التقارير</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

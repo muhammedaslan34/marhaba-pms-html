@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ملف النزيل — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=pay2" />
+</head>
+<body class="app-bg font-sans" data-page="guests" data-title="ابراهيم"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"النزلاء","href":"guests.html"},{"label":"ابراهيم"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p class="text-sm text-slate-500">ملف النزيل</p>
+          <div class="flex flex-wrap gap-2">
+            <button class="btn btn-ghost" data-action="toast" data-message="فتح واتساب">واتساب</button>
+            <button class="btn btn-secondary" data-action="open-modal" data-target="edit-guest">تعديل</button>
+            <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
+          </div>
+        </div>
+
+        <section class="grid md:grid-cols-2 gap-4">
+          <article class="panel p-5">
+            <h3 class="font-bold mb-3">البيانات الشخصية</h3>
+            <dl class="grid grid-cols-2 gap-3 text-sm">
+              <div><dt class="text-slate-500">الاسم</dt><dd class="font-semibold">ابراهيم</dd></div>
+              <div><dt class="text-slate-500">الجوال</dt><dd class="font-semibold">966564179297</dd></div>
+              <div><dt class="text-slate-500">البريد</dt><dd>—</dd></div>
+              <div><dt class="text-slate-500">الجنسية</dt><dd>—</dd></div>
+              <div><dt class="text-slate-500">الجنس</dt><dd>ذكر</dd></div>
+              <div><dt class="text-slate-500">المهنة</dt><dd>—</dd></div>
+            </dl>
+          </article>
+          <article class="panel p-5">
+            <h3 class="font-bold mb-3">الهوية</h3>
+            <dl class="grid grid-cols-2 gap-3 text-sm">
+              <div><dt class="text-slate-500">نوع الهوية</dt><dd class="font-semibold">إخراج قيد</dd></div>
+              <div><dt class="text-slate-500">رقم الهوية</dt><dd>—</dd></div>
+            </dl>
+          </article>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200"><h3 class="font-bold">الحجوزات (3)</h3></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>الحجز</th><th>الفندق</th><th>الوصول</th><th>المغادرة</th><th>الحالة</th><th>الرصيد</th><th class="text-center">الإجراءات</th></tr></thead>
+              <tbody>
+                <tr><td class="font-semibold text-primary">RES-2026-00049</td><td>MADINAH1</td><td>30 Jul 2026</td><td>31 Jul 2026</td><td><span class="badge badge-success">تم الدخول</span></td><td class="money-credit">-6,000</td><td><div class="action-cell justify-center w-full"><a href="reservation-detail.html" class="icon-btn" title="عرض الحجز" aria-label="عرض الحجز"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold text-primary">RES-2026-00046</td><td>MADINAH1</td><td>29 Jul 2026</td><td>30 Jul 2026</td><td><span class="badge badge-warning">غير مؤكد</span></td><td class="money-due">600</td><td><div class="action-cell justify-center w-full"><a href="reservation-detail.html" class="icon-btn" title="عرض الحجز" aria-label="عرض الحجز"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+                <tr><td class="font-semibold text-primary">RES-2026-00048</td><td>MADINAH1</td><td>29 Jul 2026</td><td>30 Jul 2026</td><td><span class="badge badge-success">تم الدخول</span></td><td class="money-credit">-3,000</td><td><div class="action-cell justify-center w-full"><a href="reservation-detail.html" class="icon-btn" title="عرض الحجز" aria-label="عرض الحجز"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></a></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200"><h3 class="font-bold">المدفوعات (10)</h3></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>التاريخ</th><th>الحجز</th><th>النوع</th><th>الطريقة</th><th>المبلغ</th></tr></thead>
+              <tbody>
+                <tr><td>30 Jul 2026</td><td>RES-2026-00049</td><td>دفعة</td><td>تحويل بنكي</td><td>5,000</td></tr>
+                <tr><td>30 Jul 2026</td><td>RES-2026-00049</td><td>دفعة</td><td>نقداً</td><td>7,499.06</td></tr>
+                <tr><td>29 Jul 2026</td><td>RES-2026-00048</td><td>دفعة</td><td>تحويل بنكي</td><td>1,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel p-5">
+          <h3 class="font-bold mb-4">العقود (2)</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="rounded-xl border border-slate-200 p-4 flex justify-between items-center gap-3">
+              <div><div class="font-semibold">RES-2026-00049</div><div class="text-xs text-slate-500">تم الدخول · 30→31 Jul</div></div>
+              <div class="flex gap-2"><button class="btn btn-ghost btn-sm" data-action="toast" data-message="واتساب">واتساب</button><button class="btn btn-secondary btn-sm" data-action="toast" data-message="فتح العقد">فتح العقد</button></div>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-4 flex justify-between items-center gap-3">
+              <div><div class="font-semibold">RES-2026-00048</div><div class="text-xs text-slate-500">تم الدخول · 29→30 Jul</div></div>
+              <div class="flex gap-2"><button class="btn btn-ghost btn-sm" data-action="toast" data-message="واتساب">واتساب</button><button class="btn btn-secondary btn-sm" data-action="toast" data-message="فتح العقد">فتح العقد</button></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="edit-guest" class="modal" style="width:min(36rem, calc(100% - 2rem))">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-bold">تعديل النزيل</h3>
+      <button class="btn btn-ghost btn-sm" data-action="close-modal" data-target="edit-guest">إغلاق</button>
+    </div>
+    <div class="p-5 grid sm:grid-cols-2 gap-4">
+      <div class="sm:col-span-2"><label class="field-label">الاسم الكامل *</label><input class="field-input" value="ابراهيم" /></div>
+      <div><label class="field-label">الجوال</label><input class="field-input" value="966564179297" /></div>
+      <div><label class="field-label">البريد</label><input class="field-input" /></div>
+      <div><label class="field-label">الجنسية</label><input class="field-input" /></div>
+      <div><label class="field-label">نوع الهوية</label><select class="field-select"><option>إخراج قيد</option><option>جواز سفر</option><option>الهوية الوطنية/الإقامة</option></select></div>
+      <div><label class="field-label">رقم الهوية</label><input class="field-input" /></div>
+      <div><label class="field-label">المهنة</label><input class="field-input" /></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="edit-guest">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="edit-guest" onclick="PMS.toast('تم الحفظ (تجريبي)')">حفظ</button>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

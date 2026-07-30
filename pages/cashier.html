@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصندوق والورديات — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="cashier" data-title="الصندوق والورديات"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الصندوق والورديات"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">ورديات الصندوق وتحصيل الدفعات</p>
+            <p class="text-slate-800 font-extrabold text-lg mt-1">SHIFT-2026-0004 · MADINAH1</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn btn-ghost" data-action="toast" data-message="تم إرسال التقرير للطباعة (تجريبي)">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V3h12v6" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="9" width="16" height="8" rx="1.5"/><path d="M7 15h10v6H7z"/></svg>
+              طباعة تقرير الوردية
+            </button>
+            <button type="button" class="btn btn-danger" data-action="open-modal" data-target="close-shift">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>
+              إغلاق الوردية
+            </button>
+          </div>
+        </div>
+
+        <section class="panel p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="res-avatar" style="--accent:#0027B7">ر</div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-extrabold text-slate-800">ريم فيصل</span>
+                  <span class="badge badge-success">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/></svg>
+                    وردية مفتوحة
+                  </span>
+                </div>
+                <div class="text-xs text-slate-500 font-semibold mt-0.5">HR-EMP-00004 · SDH</div>
+              </div>
+            </div>
+            <div class="sm:text-end text-sm">
+              <div class="text-slate-500 font-semibold">فُتحت في</div>
+              <div class="font-extrabold text-slate-800">2026-07-29 19:31</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <article class="stat-card">
+            <div class="stat-label">الرصيد الافتتاحي</div>
+            <div class="stat-value">100</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="stat-label">رصيد الدرج الحالي</div>
+            <div class="stat-value text-secondary">0</div>
+            <div class="text-xs text-slate-500 mt-2 font-semibold">بعد الترحيل للحسابات</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">إجمالي المقبوض</div>
+            <div class="stat-value text-emerald-600">19,249.22</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">المسترد / الحركات</div>
+            <div class="stat-value text-amber-600">0 / 9</div>
+            <div class="text-xs text-slate-500 mt-2 font-semibold">لا مبالغ مستردة</div>
+          </article>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-4">
+          <article class="panel p-5 sm:p-6">
+            <h3 class="font-extrabold mb-4">المقبوضات حسب العملة</h3>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="rounded-2xl bg-gradient-to-br from-amber-50 to-white border border-amber-100 p-3.5">
+                <div class="text-amber-600 font-extrabold text-xs tracking-wide">SYP</div>
+                <div class="font-extrabold text-base mt-1.5 text-amber-700">2,200</div>
+              </div>
+              <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 p-3.5">
+                <div class="text-emerald-600 font-extrabold text-xs tracking-wide">USD</div>
+                <div class="font-extrabold text-base mt-1.5 text-emerald-700">3,000</div>
+              </div>
+            </div>
+          </article>
+          <article class="panel p-5 sm:p-6">
+            <h3 class="font-extrabold mb-4">المقبوضات حسب الطريقة</h3>
+            <ul class="space-y-3.5">
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>تحويل بنكي</span><span>8,000.20 · 41.6%</span></div>
+                <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-primary" style="width:41.6%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>نقداً</span><span>7,499.06 · 39%</span></div>
+                <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-emerald-500" style="width:39%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>شام كاش</span><span>3,749.82 · 19.5%</span></div>
+                <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-secondary" style="width:19.5%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-bold mb-1.5"><span>شيك</span><span>0.14 · 0%</span></div>
+                <div class="h-2 rounded-full bg-slate-100"><div class="h-2 rounded-full bg-slate-400" style="width:1%"></div></div>
+              </li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="font-extrabold">تحصيل سريع من الحجوزات</h3>
+            <div class="search-input sm:max-w-xs w-full">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" class="field-input" placeholder="بحث في الحجوزات…" />
+            </div>
+          </div>
+          <ul class="divide-y divide-slate-100">
+            <li class="px-5 py-3.5 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="res-avatar !w-10 !h-10 !text-sm" style="--accent:#079DD8">ا</div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-800 truncate">ابراهيم</div>
+                  <div class="text-xs text-slate-500 font-semibold truncate">RES-2026-00049</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm shrink-0" data-action="open-modal" data-target="payment-modal">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                تسجيل دفعة
+              </button>
+            </li>
+            <li class="px-5 py-3.5 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="res-avatar !w-10 !h-10 !text-sm" style="--accent:#22C55E">م</div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-800 truncate">محمد سعد العتيبي</div>
+                  <div class="text-xs text-slate-500 font-semibold truncate">RES-2026-00045</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm shrink-0" data-action="open-modal" data-target="payment-modal">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                تسجيل دفعة
+              </button>
+            </li>
+            <li class="px-5 py-3.5 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="res-avatar !w-10 !h-10 !text-sm" style="--accent:#EF4444">ع</div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-800 truncate">عمر خالد الغامدي</div>
+                  <div class="text-xs font-semibold truncate money-due">RES-2026-00037 · متبقي 2,550</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm shrink-0" data-action="open-modal" data-target="payment-modal">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                تحصيل دفعة
+              </button>
+            </li>
+            <li class="px-5 py-3.5 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="res-avatar !w-10 !h-10 !text-sm" style="--accent:#F59E0B">L</div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-800 truncate">LISTFIX GUEST</div>
+                  <div class="text-xs font-semibold truncate money-due">RES-2026-00039 · متبقي 600</div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm shrink-0" data-action="open-modal" data-target="payment-modal">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                تحصيل دفعة
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-200">
+            <h3 class="font-extrabold">آخر حركات الوردية</h3>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>الوقت</th>
+                  <th>النزيل</th>
+                  <th>الطريقة</th>
+                  <th>المبلغ</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-slate-500 font-semibold">19:52</td>
+                  <td class="font-extrabold text-primary">RES-2026-00049 · ابراهيم</td>
+                  <td class="font-semibold">تحويل بنكي</td>
+                  <td class="font-extrabold">6,000.20</td>
+                  <td><span class="badge badge-success">مقبوضة</span></td>
+                </tr>
+                <tr>
+                  <td class="text-slate-500 font-semibold">20:14</td>
+                  <td class="font-extrabold text-primary">RES-2026-00043 · Ebrahim Al-desouki</td>
+                  <td class="font-semibold">نقداً</td>
+                  <td class="font-extrabold">3,000 USD</td>
+                  <td><span class="badge badge-success">مقبوضة</span></td>
+                </tr>
+                <tr>
+                  <td class="text-slate-500 font-semibold">21:03</td>
+                  <td class="font-extrabold text-primary">RES-2026-00045 · محمد سعد العتيبي</td>
+                  <td class="font-semibold">شام كاش</td>
+                  <td class="font-extrabold">3,749.82</td>
+                  <td><span class="badge badge-success">مقبوضة</span></td>
+                </tr>
+                <tr>
+                  <td class="text-slate-500 font-semibold">21:41</td>
+                  <td class="font-extrabold text-primary">RES-2026-00039 · LISTFIX GUEST</td>
+                  <td class="font-semibold">نقداً</td>
+                  <td class="font-extrabold">2,200 SYP</td>
+                  <td><span class="badge badge-success">مقبوضة</span></td>
+                </tr>
+                <tr>
+                  <td class="text-slate-500 font-semibold">22:08</td>
+                  <td class="font-extrabold text-primary">RES-2026-00037 · عمر خالد الغامدي</td>
+                  <td class="font-semibold">تحويل بنكي</td>
+                  <td class="font-extrabold">2,000</td>
+                  <td><span class="badge badge-warning">قيد المطابقة</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="close-shift" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">إغلاق الوردية</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="close-shift">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div class="rounded-2xl bg-gradient-to-br from-primary-soft to-white border border-primary/10 p-4">
+        <div class="text-sm text-slate-500 font-semibold">المتوقّع في الصندوق</div>
+        <div class="text-2xl font-extrabold text-primary mt-1">19,349.22</div>
+      </div>
+      <div>
+        <label class="field-label">النقد المعدود فعلياً</label>
+        <input type="number" class="field-input" placeholder="0.00" />
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="close-shift">إلغاء</button>
+      <button class="btn btn-danger" data-action="close-modal" data-target="close-shift" onclick="PMS.toast('لم يُغلق فعلياً — نسخة تجريبية')">تأكيد الإغلاق</button>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تحصيل دفعة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="payment-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">العملة</label><select class="field-select"><option>SYP</option><option>USD</option></select></div>
+      <div><label class="field-label">المبلغ</label><input type="number" class="field-input" placeholder="0.00" /></div>
+      <div><label class="field-label">طريقة الدفع</label><select class="field-select"><option>نقداً</option><option>بطاقة ائتمان</option><option>تحويل بنكي</option></select></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="payment-modal" onclick="PMS.toast('تم التحصيل (تجريبي)')">حفظ</button>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

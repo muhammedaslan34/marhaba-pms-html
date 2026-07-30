@@ -1,0 +1,381 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - complementary [ref=f3e3]:
+      - generic [ref=f3e4]:
+        - generic [ref=f3e5]: S
+        - generic [ref=f3e6]:
+          - generic [ref=f3e7]: Solvfast PMS
+          - generic [ref=f3e8]: إدارة الفندق
+        - button "طي الشريط الجانبي" [ref=f3e9] [cursor=pointer]
+      - navigation "القائمة الرئيسية" [ref=f3e12]:
+        - link "الرئيسية" [ref=f3e13] [cursor=pointer]:
+          - /url: dashboard.html
+        - generic [ref=f3e17]: عمليات اليوم
+        - link "الحجوزات" [ref=f3e18] [cursor=pointer]:
+          - /url: reservations.html
+        - link "الوصول والمغادرة" [ref=f3e23] [cursor=pointer]:
+          - /url: checkin.html
+        - link "النزلاء" [ref=f3e28] [cursor=pointer]:
+          - /url: guests.html
+        - link "التوفر" [ref=f3e33] [cursor=pointer]:
+          - /url: availability.html
+        - link "التدبير الفندقي" [ref=f3e40] [cursor=pointer]:
+          - /url: housekeeping.html
+        - generic [ref=f3e45]: المالية
+        - link "الدفعات" [ref=f3e46] [cursor=pointer]:
+          - /url: payments.html
+        - link "الصندوق والورديات" [ref=f3e51] [cursor=pointer]:
+          - /url: cashier.html
+        - link "التقارير" [ref=f3e56] [cursor=pointer]:
+          - /url: reports.html
+        - generic [ref=f3e61]: الإدارة
+        - link "الإعدادات" [ref=f3e62] [cursor=pointer]:
+          - /url: settings.html
+      - generic [ref=f3e68]:
+        - generic [ref=f3e69]: فندق المدينة بلازا
+        - generic [ref=f3e70]: MADINAH1
+    - generic [ref=f3e71]:
+      - banner [ref=f3e72]:
+        - generic [ref=f3e73]:
+          - button "طي الشريط الجانبي" [ref=f3e74] [cursor=pointer]
+          - generic [ref=f3e78]:
+            - generic [ref=f3e79]:
+              - link "PMS" [ref=f3e80] [cursor=pointer]:
+                - /url: dashboard.html
+              - generic [ref=f3e81]: /
+              - generic [ref=f3e82]: التدبير الفندقي
+            - heading "التدبير الفندقي" [level=1] [ref=f3e83]
+        - generic [ref=f3e84]:
+          - generic [ref=f3e85]:
+            - searchbox "بحث عام" [ref=f3e89]
+            - generic [ref=f3e90]: Ctrl+K
+          - generic [ref=f3e91]: فندق المدينة بلازا
+          - link "حجز جديد" [ref=f3e94] [cursor=pointer]:
+            - /url: reservation-new.html
+          - button "الإشعارات" [ref=f3e95] [cursor=pointer]
+          - button "حساب المستخدم" [ref=f3e101] [cursor=pointer]: M
+      - main [ref=f3e102]:
+        - generic [ref=f3e103]:
+          - generic [ref=f3e104]:
+            - generic [ref=f3e105]:
+              - text: Rows
+              - combobox "Rows" [ref=f3e106]:
+                - option "12"
+                - option "20" [selected]
+                - option "32"
+            - generic [ref=f3e107]:
+              - generic [ref=f3e108]: VIEW
+              - generic [ref=f3e109]:
+                - button "List" [ref=f3e110] [cursor=pointer]
+                - button "Grid" [ref=f3e113] [cursor=pointer]
+                - button "Calendar" [ref=f3e119] [cursor=pointer]
+          - generic [ref=f3e123]:
+            - generic [ref=f3e124]: 1–34 of 34
+            - button "Previous" [ref=f3e125] [cursor=pointer]
+            - button "Next" [ref=f3e126] [cursor=pointer]
+        - generic [ref=f3e127]:
+          - generic [ref=f3e128]:
+            - button "All 34" [ref=f3e129] [cursor=pointer]:
+              - text: All
+              - generic [ref=f3e130]: "34"
+            - button "Vacant 14" [ref=f3e131] [cursor=pointer]:
+              - text: Vacant
+              - generic [ref=f3e134]: "14"
+            - button "Rented 8" [ref=f3e135] [cursor=pointer]:
+              - text: Rented
+              - generic [ref=f3e139]: "8"
+            - button "Waiting 6" [ref=f3e140] [cursor=pointer]:
+              - text: Waiting
+              - generic [ref=f3e144]: "6"
+            - button "Check-out 6" [ref=f3e145] [cursor=pointer]:
+              - text: Check-out
+              - generic [ref=f3e148]: "6"
+          - generic [ref=f3e149]:
+            - button "Clean 25" [ref=f3e150] [cursor=pointer]:
+              - text: Clean
+              - generic [ref=f3e151]: "25"
+            - button "Dirty 6" [ref=f3e152] [cursor=pointer]:
+              - text: Dirty
+              - generic [ref=f3e153]: "6"
+            - button "Rented - dirty 3" [ref=f3e154] [cursor=pointer]:
+              - text: Rented - dirty
+              - generic [ref=f3e155]: "3"
+            - button "All" [ref=f3e156] [cursor=pointer]
+        - searchbox "Search room / guest / type…" [ref=f3e158]
+        - generic [ref=f3e159]:
+          - button "101 Deluxe Twin Ready for check-in VACANT" [ref=f3e160] [cursor=pointer]:
+            - generic [ref=f3e162]:
+              - generic [ref=f3e163]: "101"
+              - generic [ref=f3e164]: Deluxe Twin
+            - generic [ref=f3e167]: Ready for check-in
+            - generic [ref=f3e169]: VACANT
+          - button "102 Deluxe Twin Ready for check-in VACANT" [ref=f3e175] [cursor=pointer]:
+            - generic [ref=f3e177]:
+              - generic [ref=f3e178]: "102"
+              - generic [ref=f3e179]: Deluxe Twin
+            - generic [ref=f3e182]: Ready for check-in
+            - generic [ref=f3e184]: VACANT
+          - button "103 Deluxe Twin Ready for check-in VACANT" [ref=f3e190] [cursor=pointer]:
+            - generic [ref=f3e192]:
+              - generic [ref=f3e193]: "103"
+              - generic [ref=f3e194]: Deluxe Twin
+            - generic [ref=f3e197]: Ready for check-in
+            - generic [ref=f3e199]: VACANT
+          - button "104 Deluxe Twin Ready for check-in VACANT" [ref=f3e203] [cursor=pointer]:
+            - generic [ref=f3e205]:
+              - generic [ref=f3e206]: "104"
+              - generic [ref=f3e207]: Deluxe Twin
+            - generic [ref=f3e210]: Ready for check-in
+            - generic [ref=f3e212]: VACANT
+          - button "105 Superior King Sara Ali -100.000 SAR OCCUPIED" [ref=f3e216] [cursor=pointer]:
+            - generic [ref=f3e218]:
+              - generic [ref=f3e219]: "105"
+              - generic [ref=f3e220]: Superior King
+            - generic [ref=f3e224]:
+              - generic [ref=f3e225]: Sara Ali
+              - generic [ref=f3e226]: "-100.000 SAR"
+            - generic [ref=f3e227]: OCCUPIED
+          - button "108 Double Room ابراهيم -600.00 SAR OCCUPIED" [ref=f3e235] [cursor=pointer]:
+            - generic [ref=f3e237]:
+              - generic [ref=f3e238]: "108"
+              - generic [ref=f3e239]: Double Room
+            - generic [ref=f3e243]:
+              - generic [ref=f3e244]: ابراهيم
+              - generic [ref=f3e245]: "-600.00 SAR"
+            - generic [ref=f3e246]: OCCUPIED
+          - button "301 Double Room ابراهيم Dirty · needs HK OCCUPIED" [ref=f3e251] [cursor=pointer]:
+            - generic [ref=f3e253]:
+              - generic [ref=f3e254]: "301"
+              - generic [ref=f3e255]: Double Room
+            - generic [ref=f3e259]:
+              - generic [ref=f3e260]: ابراهيم
+              - generic [ref=f3e261]: Dirty · needs HK
+            - generic [ref=f3e262]: OCCUPIED
+          - button "110 Double Room محمد سعد العتيبي Dirty · needs HK OCCUPIED" [ref=f3e267] [cursor=pointer]:
+            - generic [ref=f3e269]:
+              - generic [ref=f3e270]: "110"
+              - generic [ref=f3e271]: Double Room
+            - generic [ref=f3e275]:
+              - generic [ref=f3e276]: محمد سعد العتيبي
+              - generic [ref=f3e277]: Dirty · needs HK
+            - generic [ref=f3e278]: OCCUPIED
+          - button "116 Single Room LISTFIX GUEST Dirty · needs HK OCCUPIED" [ref=f3e283] [cursor=pointer]:
+            - generic [ref=f3e285]:
+              - generic [ref=f3e286]: "116"
+              - generic [ref=f3e287]: Single Room
+            - generic [ref=f3e291]:
+              - generic [ref=f3e292]: LISTFIX GUEST
+              - generic [ref=f3e293]: Dirty · needs HK
+            - generic [ref=f3e294]: OCCUPIED
+          - button "403 Twin Room سارة الشهري -450.00 SAR OCCUPIED" [ref=f3e299] [cursor=pointer]:
+            - generic [ref=f3e301]:
+              - generic [ref=f3e302]: "403"
+              - generic [ref=f3e303]: Twin Room
+            - generic [ref=f3e307]:
+              - generic [ref=f3e308]: سارة الشهري
+              - generic [ref=f3e309]: "-450.00 SAR"
+            - generic [ref=f3e310]: OCCUPIED
+          - button "201 Double Room ريم فهد Res. 2026-00041 · due in WAIT IN" [ref=f3e315] [cursor=pointer]:
+            - generic [ref=f3e317]:
+              - generic [ref=f3e318]: "201"
+              - generic [ref=f3e319]: Double Room
+            - generic [ref=f3e323]:
+              - generic [ref=f3e324]: ريم فهد
+              - generic [ref=f3e325]: Res. 2026-00041 · due in
+            - generic [ref=f3e326]: WAIT IN
+          - button "202 Single Room Ebrahim Al-desouki Res. 2026-00043 · due in WAIT IN" [ref=f3e333] [cursor=pointer]:
+            - generic [ref=f3e335]:
+              - generic [ref=f3e336]: "202"
+              - generic [ref=f3e337]: Single Room
+            - generic [ref=f3e341]:
+              - generic [ref=f3e342]: Ebrahim Al-desouki
+              - generic [ref=f3e343]: Res. 2026-00043 · due in
+            - generic [ref=f3e344]: WAIT IN
+          - button "203 Twin Room لطيفة أحمد Res. 2026-00036 · due in WAIT IN" [ref=f3e348] [cursor=pointer]:
+            - generic [ref=f3e350]:
+              - generic [ref=f3e351]: "203"
+              - generic [ref=f3e352]: Twin Room
+            - generic [ref=f3e356]:
+              - generic [ref=f3e357]: لطيفة أحمد
+              - generic [ref=f3e358]: Res. 2026-00036 · due in
+            - generic [ref=f3e359]: WAIT IN
+          - button "302 Single Room نورا سعد Res. 2026-00038 · due in WAIT IN" [ref=f3e363] [cursor=pointer]:
+            - generic [ref=f3e365]:
+              - generic [ref=f3e366]: "302"
+              - generic [ref=f3e367]: Single Room
+            - generic [ref=f3e371]:
+              - generic [ref=f3e372]: نورا سعد
+              - generic [ref=f3e373]: Res. 2026-00038 · due in
+            - generic [ref=f3e374]: WAIT IN
+          - button "303 Twin Room خالد الحربي Res. 2026-00040 · due in WAIT IN" [ref=f3e378] [cursor=pointer]:
+            - generic [ref=f3e380]:
+              - generic [ref=f3e381]: "303"
+              - generic [ref=f3e382]: Twin Room
+            - generic [ref=f3e386]:
+              - generic [ref=f3e387]: خالد الحربي
+              - generic [ref=f3e388]: Res. 2026-00040 · due in
+            - generic [ref=f3e389]: WAIT IN
+          - button "502 Single Room عبدالله الأحمد Res. 2026-00042 · due in WAIT IN" [ref=f3e393] [cursor=pointer]:
+            - generic [ref=f3e395]:
+              - generic [ref=f3e396]: "502"
+              - generic [ref=f3e397]: Single Room
+            - generic [ref=f3e401]:
+              - generic [ref=f3e402]: عبدالله الأحمد
+              - generic [ref=f3e403]: Res. 2026-00042 · due in
+            - generic [ref=f3e404]: WAIT IN
+          - button "109 Double Room ابراهيم Checkout 30/07 OUT TODAY" [ref=f3e408] [cursor=pointer]:
+            - generic [ref=f3e410]:
+              - generic [ref=f3e411]: "109"
+              - generic [ref=f3e412]: Double Room
+            - generic [ref=f3e415]:
+              - generic [ref=f3e416]: ابراهيم
+              - generic [ref=f3e417]: Checkout 30/07
+            - generic [ref=f3e418]: OUT TODAY
+          - button "106 King Room عمر خالد الغامدي Checkout 30/07 OUT TODAY" [ref=f3e424] [cursor=pointer]:
+            - generic [ref=f3e426]:
+              - generic [ref=f3e427]: "106"
+              - generic [ref=f3e428]: King Room
+            - generic [ref=f3e431]:
+              - generic [ref=f3e432]: عمر خالد الغامدي
+              - generic [ref=f3e433]: Checkout 30/07
+            - generic [ref=f3e434]: OUT TODAY
+          - button "117 Single Room عبدالرحمن Checkout 30/07 OUT TODAY" [ref=f3e438] [cursor=pointer]:
+            - generic [ref=f3e440]:
+              - generic [ref=f3e441]: "117"
+              - generic [ref=f3e442]: Single Room
+            - generic [ref=f3e445]:
+              - generic [ref=f3e446]: عبدالرحمن
+              - generic [ref=f3e447]: Checkout 30/07
+            - generic [ref=f3e448]: OUT TODAY
+          - button "401 Double Room فاطمة السعد Checkout 30/07 OUT TODAY" [ref=f3e452] [cursor=pointer]:
+            - generic [ref=f3e454]:
+              - generic [ref=f3e455]: "401"
+              - generic [ref=f3e456]: Double Room
+            - generic [ref=f3e459]:
+              - generic [ref=f3e460]: فاطمة السعد
+              - generic [ref=f3e461]: Checkout 30/07
+            - generic [ref=f3e462]: OUT TODAY
+          - button "402 Single Room أحمد المطيري Checkout 30/07 OUT TODAY" [ref=f3e466] [cursor=pointer]:
+            - generic [ref=f3e468]:
+              - generic [ref=f3e469]: "402"
+              - generic [ref=f3e470]: Single Room
+            - generic [ref=f3e473]:
+              - generic [ref=f3e474]: أحمد المطيري
+              - generic [ref=f3e475]: Checkout 30/07
+            - generic [ref=f3e476]: OUT TODAY
+          - button "503 Twin Room نورة القحطاني Checkout 30/07 OUT TODAY" [ref=f3e480] [cursor=pointer]:
+            - generic [ref=f3e482]:
+              - generic [ref=f3e483]: "503"
+              - generic [ref=f3e484]: Twin Room
+            - generic [ref=f3e487]:
+              - generic [ref=f3e488]: نورة القحطاني
+              - generic [ref=f3e489]: Checkout 30/07
+            - generic [ref=f3e490]: OUT TODAY
+          - button "118 Single Room Dirty · needs HK VACANT" [ref=f3e494] [cursor=pointer]:
+            - generic [ref=f3e496]:
+              - generic [ref=f3e497]: "118"
+              - generic [ref=f3e498]: Single Room
+            - generic [ref=f3e501]: Dirty · needs HK
+            - generic [ref=f3e505]: VACANT
+          - button "107 Double Room Dirty · needs HK VACANT" [ref=f3e512] [cursor=pointer]:
+            - generic [ref=f3e514]:
+              - generic [ref=f3e515]: "107"
+              - generic [ref=f3e516]: Double Room
+            - generic [ref=f3e519]: Dirty · needs HK
+            - generic [ref=f3e521]: VACANT
+          - button "501 Double Room Dirty · needs HK VACANT" [ref=f3e526] [cursor=pointer]:
+            - generic [ref=f3e528]:
+              - generic [ref=f3e529]: "501"
+              - generic [ref=f3e530]: Double Room
+            - generic [ref=f3e533]: Dirty · needs HK
+            - generic [ref=f3e535]: VACANT
+          - button "111 Double Room Ready for check-in VACANT" [ref=f3e540] [cursor=pointer]:
+            - generic [ref=f3e542]:
+              - generic [ref=f3e543]: "111"
+              - generic [ref=f3e544]: Double Room
+            - generic [ref=f3e547]: Ready for check-in
+            - generic [ref=f3e549]: VACANT
+          - button "112 Double Room Ready for check-in VACANT" [ref=f3e553] [cursor=pointer]:
+            - generic [ref=f3e555]:
+              - generic [ref=f3e556]: "112"
+              - generic [ref=f3e557]: Double Room
+            - generic [ref=f3e560]: Ready for check-in
+            - generic [ref=f3e562]: VACANT
+          - button "113 Single Room Ready for check-in VACANT" [ref=f3e566] [cursor=pointer]:
+            - generic [ref=f3e568]:
+              - generic [ref=f3e569]: "113"
+              - generic [ref=f3e570]: Single Room
+            - generic [ref=f3e573]: Ready for check-in
+            - generic [ref=f3e575]: VACANT
+          - button "114 Single Room Ready for check-in VACANT" [ref=f3e579] [cursor=pointer]:
+            - generic [ref=f3e581]:
+              - generic [ref=f3e582]: "114"
+              - generic [ref=f3e583]: Single Room
+            - generic [ref=f3e586]: Ready for check-in
+            - generic [ref=f3e588]: VACANT
+          - button "115 Single Room Ready for check-in VACANT" [ref=f3e592] [cursor=pointer]:
+            - generic [ref=f3e594]:
+              - generic [ref=f3e595]: "115"
+              - generic [ref=f3e596]: Single Room
+            - generic [ref=f3e599]: Ready for check-in
+            - generic [ref=f3e601]: VACANT
+          - button "602 Single Room Ready for check-in VACANT" [ref=f3e605] [cursor=pointer]:
+            - generic [ref=f3e607]:
+              - generic [ref=f3e608]: "602"
+              - generic [ref=f3e609]: Single Room
+            - generic [ref=f3e612]: Ready for check-in
+            - generic [ref=f3e614]: VACANT
+          - button "603 Twin Room Ready for check-in VACANT" [ref=f3e618] [cursor=pointer]:
+            - generic [ref=f3e620]:
+              - generic [ref=f3e621]: "603"
+              - generic [ref=f3e622]: Twin Room
+            - generic [ref=f3e625]: Ready for check-in
+            - generic [ref=f3e627]: VACANT
+          - button "601 Double Room محمد سعد العتيبي Credit balance OCCUPIED" [ref=f3e631] [cursor=pointer]:
+            - generic [ref=f3e633]:
+              - generic [ref=f3e634]: "601"
+              - generic [ref=f3e635]: Double Room
+            - generic [ref=f3e639]:
+              - generic [ref=f3e640]: محمد سعد العتيبي
+              - generic [ref=f3e641]: Credit balance
+            - generic [ref=f3e642]: OCCUPIED
+          - button "701 Double Room ريم فهد الدوسري 1,500.00 SAR OCCUPIED" [ref=f3e647] [cursor=pointer]:
+            - generic [ref=f3e649]:
+              - generic [ref=f3e650]: "701"
+              - generic [ref=f3e651]: Double Room
+            - generic [ref=f3e655]:
+              - generic [ref=f3e656]: ريم فهد الدوسري
+              - generic [ref=f3e657]: 1,500.00 SAR
+            - generic [ref=f3e658]: OCCUPIED
+  - generic [ref=f3e663]:
+    - generic [ref=f3e664]:
+      - heading "Room 101" [level=3] [ref=f3e665]
+      - button "Close" [ref=f3e666] [cursor=pointer]
+    - generic [ref=f3e667]:
+      - generic [ref=f3e668]:
+        - generic [ref=f3e669]: Status
+        - generic [ref=f3e670]:
+          - generic [ref=f3e671] [cursor=pointer]:
+            - radio "Vacant" [ref=f3e672]
+            - text: Vacant
+          - generic [ref=f3e673] [cursor=pointer]:
+            - radio "Occupied" [ref=f3e674]
+            - text: Occupied
+          - generic [ref=f3e675] [cursor=pointer]:
+            - radio "Wait in" [ref=f3e676]
+            - text: Wait in
+          - generic [ref=f3e677] [cursor=pointer]:
+            - radio "Out today" [ref=f3e678]
+            - text: Out today
+      - generic [ref=f3e679]:
+        - generic [ref=f3e680]: Housekeeping
+        - generic [ref=f3e681]:
+          - generic [ref=f3e682] [cursor=pointer]:
+            - radio "Clean" [ref=f3e683]
+            - text: Clean
+          - generic [ref=f3e684] [cursor=pointer]:
+            - radio "Dirty" [ref=f3e685]
+            - text: Dirty
+      - generic [ref=f3e686]:
+        - button "Cancel" [ref=f3e687] [cursor=pointer]
+        - button "Save" [ref=f3e688] [cursor=pointer]

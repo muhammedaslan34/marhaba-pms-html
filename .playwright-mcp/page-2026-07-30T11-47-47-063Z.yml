@@ -1,0 +1,143 @@
+- generic [ref=f31e2]:
+  - complementary [ref=f31e3]:
+    - generic [ref=f31e4]:
+      - generic [ref=f31e5]: S
+      - generic [ref=f31e6]:
+        - generic [ref=f31e7]: Solvfast PMS
+        - generic [ref=f31e8]: إدارة الفندق
+    - navigation "القائمة الرئيسية" [ref=f31e9]:
+      - link "الرئيسية" [ref=f31e10] [cursor=pointer]:
+        - /url: dashboard.html
+      - generic [ref=f31e14]: عمليات اليوم
+      - link "الحجوزات" [ref=f31e15] [cursor=pointer]:
+        - /url: reservations.html
+      - link "الوصول والمغادرة" [ref=f31e20] [cursor=pointer]:
+        - /url: checkin.html
+      - link "النزلاء" [ref=f31e25] [cursor=pointer]:
+        - /url: guests.html
+      - link "التوفر" [ref=f31e30] [cursor=pointer]:
+        - /url: availability.html
+      - link "التدبير الفندقي" [ref=f31e37] [cursor=pointer]:
+        - /url: housekeeping.html
+      - generic [ref=f31e42]: المالية
+      - link "الدفعات" [ref=f31e43] [cursor=pointer]:
+        - /url: payments.html
+      - link "الصندوق والورديات" [ref=f31e48] [cursor=pointer]:
+        - /url: cashier.html
+      - link "التقارير" [ref=f31e53] [cursor=pointer]:
+        - /url: reports.html
+      - generic [ref=f31e58]: الإدارة
+      - link "الإعدادات" [ref=f31e59] [cursor=pointer]:
+        - /url: settings.html
+    - generic [ref=f31e64]: فندق المدينة بلازاMADINAH1
+  - generic [ref=f31e65]:
+    - banner [ref=f31e66]:
+      - generic [ref=f31e68]:
+        - generic [ref=f31e69]:
+          - link "PMS" [ref=f31e70] [cursor=pointer]:
+            - /url: dashboard.html
+          - generic [ref=f31e71]: /
+          - generic [ref=f31e72]: الرئيسية
+        - heading "الرئيسية" [level=1] [ref=f31e73]
+      - generic [ref=f31e74]:
+        - searchbox "بحث عام" [ref=f31e79]
+        - generic [ref=f31e80]: فندق المدينة بلازا
+        - link "جديد" [ref=f31e83] [cursor=pointer]:
+          - /url: reservation-new.html
+        - button "الإشعارات" [ref=f31e84] [cursor=pointer]
+        - button "حساب المستخدم" [ref=f31e90] [cursor=pointer]: M
+    - main [ref=f31e91]:
+      - generic [ref=f31e92]:
+        - generic [ref=f31e93]:
+          - paragraph [ref=f31e94]: نظرة عامة على اليوم
+          - paragraph [ref=f31e95]: 2026-07-30 · MADINAH1
+        - generic [ref=f31e96]:
+          - link "حجز جديد" [ref=f31e97] [cursor=pointer]:
+            - /url: reservation-new.html
+          - link "تسجيل الدخول" [ref=f31e98] [cursor=pointer]:
+            - /url: checkin.html
+      - generic [ref=f31e99]:
+        - article [ref=f31e100]:
+          - generic [ref=f31e101]: الإشغال
+          - generic [ref=f31e102]: 14.3%
+          - generic [ref=f31e103]: 6 / 42 غرفة
+        - article [ref=f31e104]:
+          - generic [ref=f31e105]: وصول اليوم
+          - generic [ref=f31e106]: "6"
+        - article [ref=f31e107]:
+          - generic [ref=f31e108]: مغادرة اليوم
+          - generic [ref=f31e109]: "4"
+        - article [ref=f31e110]:
+          - generic [ref=f31e111]: إيراد اليوم
+          - generic [ref=f31e112]: 3,000
+          - generic [ref=f31e113]: SAR
+        - article [ref=f31e114]:
+          - generic [ref=f31e115]: المستحقات
+          - generic [ref=f31e116]: 4,350
+          - generic [ref=f31e117]: SAR
+      - generic [ref=f31e118]:
+        - article [ref=f31e119]:
+          - generic [ref=f31e120]:
+            - heading "الإشغال (آخر ١٤ يومًا)" [level=2] [ref=f31e121]
+            - generic [ref=f31e122]: MADINAH1
+          - generic [ref=f31e131]:
+            - generic [ref=f31e132]: 07-17
+            - generic [ref=f31e133]: 07-19
+            - generic [ref=f31e134]: 07-21
+            - generic [ref=f31e135]: 07-23
+            - generic [ref=f31e136]: 07-25
+            - generic [ref=f31e137]: 07-27
+            - generic [ref=f31e138]: 07-29
+        - article [ref=f31e139]:
+          - heading "الحجوزات حسب الحالة" [level=2] [ref=f31e140]
+          - generic [ref=f31e141]: "8"
+          - list [ref=f31e142]:
+            - listitem [ref=f31e143]:
+              - generic [ref=f31e144]: تم الدخول
+              - generic [ref=f31e146]: 5 (63%)
+            - listitem [ref=f31e147]:
+              - generic [ref=f31e148]: غير مؤكد
+              - generic [ref=f31e150]: 1 (13%)
+            - listitem [ref=f31e151]:
+              - generic [ref=f31e152]: مؤكد
+              - generic [ref=f31e154]: 2 (25%)
+      - generic [ref=f31e155]:
+        - article [ref=f31e156]:
+          - heading "الإيراد (ريال)" [level=2] [ref=f31e157]
+          - generic [ref=f31e158]: 10,350
+          - generic [ref=f31e159]:
+            - generic [ref=f31e160]:
+              - generic [ref=f31e161]: الإجمالي
+              - generic [ref=f31e162]: 15,450
+            - generic [ref=f31e163]:
+              - generic [ref=f31e164]: مدفوع
+              - generic [ref=f31e165]: "0"
+            - generic [ref=f31e166]:
+              - generic [ref=f31e167]: المستحقات
+              - generic [ref=f31e168]: —
+        - article [ref=f31e169]:
+          - heading "الطلب على أنواع الغرف" [level=2] [ref=f31e170]
+          - list [ref=f31e171]:
+            - listitem [ref=f31e172]:
+              - generic [ref=f31e174]:
+                - generic [ref=f31e175]: Double Room
+                - generic [ref=f31e176]: "10"
+            - listitem [ref=f31e179]:
+              - generic [ref=f31e181]:
+                - generic [ref=f31e182]: Twin Room
+                - generic [ref=f31e183]: "2"
+            - listitem [ref=f31e186]:
+              - generic [ref=f31e188]:
+                - generic [ref=f31e189]: Single Room
+                - generic [ref=f31e190]: "1"
+      - generic [ref=f31e193]:
+        - heading "إجراءات سريعة" [level=2] [ref=f31e194]
+        - generic [ref=f31e195]:
+          - link "الحجوزات" [ref=f31e196] [cursor=pointer]:
+            - /url: reservations.html
+          - link "التوفر" [ref=f31e197] [cursor=pointer]:
+            - /url: availability.html
+          - link "التدبير الفندقي" [ref=f31e198] [cursor=pointer]:
+            - /url: housekeeping.html
+          - link "التقارير" [ref=f31e199] [cursor=pointer]:
+            - /url: reports.html

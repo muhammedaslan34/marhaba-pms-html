@@ -1,0 +1,389 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: S
+        - generic [ref=e6]:
+          - generic [ref=e7]: Solvfast PMS
+          - generic [ref=e8]: إدارة الفندق
+        - button "طي الشريط الجانبي" [ref=e9] [cursor=pointer]
+      - navigation "القائمة الرئيسية" [ref=e12]:
+        - link "الرئيسية" [ref=e13] [cursor=pointer]:
+          - /url: dashboard.html
+        - generic [ref=e17]: عمليات اليوم
+        - link "الحجوزات" [ref=e18] [cursor=pointer]:
+          - /url: reservations.html
+        - link "الوصول والمغادرة" [ref=e23] [cursor=pointer]:
+          - /url: checkin.html
+        - link "النزلاء" [ref=e28] [cursor=pointer]:
+          - /url: guests.html
+        - link "التوفر" [ref=e33] [cursor=pointer]:
+          - /url: availability.html
+        - link "التدبير الفندقي" [ref=e40] [cursor=pointer]:
+          - /url: housekeeping.html
+        - generic [ref=e45]: المالية
+        - link "الدفعات" [ref=e46] [cursor=pointer]:
+          - /url: payments.html
+        - link "الصندوق والورديات" [ref=e51] [cursor=pointer]:
+          - /url: cashier.html
+        - link "التقارير" [ref=e56] [cursor=pointer]:
+          - /url: reports.html
+        - generic [ref=e61]: الإدارة
+        - link "الإعدادات" [ref=e62] [cursor=pointer]:
+          - /url: settings.html
+      - generic [ref=e68]:
+        - generic [ref=e69]: فندق المدينة بلازا
+        - generic [ref=e70]: MADINAH1
+    - generic [ref=e71]:
+      - banner [ref=e72]:
+        - generic [ref=e73]:
+          - button "طي الشريط الجانبي" [ref=e74] [cursor=pointer]
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - link "PMS" [ref=e80] [cursor=pointer]:
+                - /url: dashboard.html
+              - generic [ref=e81]: /
+              - generic [ref=e82]: التدبير الفندقي
+            - heading "التدبير الفندقي" [level=1] [ref=e83]
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - searchbox "بحث عام" [ref=e89]
+            - generic [ref=e90]: Ctrl+K
+          - generic [ref=e91]: فندق المدينة بلازا
+          - link "حجز جديد" [ref=e94] [cursor=pointer]:
+            - /url: reservation-new.html
+          - button "الإشعارات" [ref=e95] [cursor=pointer]
+          - button "حساب المستخدم" [ref=e101] [cursor=pointer]: M
+      - main [ref=e102]:
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - text: صفوف
+              - combobox "صفوف" [ref=e106]:
+                - option "20"
+                - option "32" [selected]
+                - option "42"
+            - generic [ref=e107]:
+              - button "عرض القائمة" [ref=e108] [cursor=pointer]
+              - button "عرض الشبكة" [ref=e111] [cursor=pointer]
+          - generic [ref=e117]: 1–34 من 34
+        - generic [ref=e118]:
+          - group "حالة الغرفة" [ref=e119]:
+            - button "الكل 34" [ref=e120] [cursor=pointer]:
+              - text: الكل
+              - generic [ref=e121]: "34"
+            - button "شاغرة 14" [ref=e122] [cursor=pointer]:
+              - text: شاغرة
+              - generic [ref=e124]: "14"
+            - button "مشغولة 8" [ref=e125] [cursor=pointer]:
+              - text: مشغولة
+              - generic [ref=e127]: "8"
+            - button "بانتظار الوصول 6" [ref=e128] [cursor=pointer]:
+              - text: بانتظار الوصول
+              - generic [ref=e130]: "6"
+            - button "مغادرة اليوم 6" [ref=e131] [cursor=pointer]:
+              - text: مغادرة اليوم
+              - generic [ref=e133]: "6"
+          - group "حالة النظافة" [ref=e134]:
+            - button "نظيفة 25" [ref=e135] [cursor=pointer]:
+              - text: نظيفة
+              - generic [ref=e137]: "25"
+            - button "متسخة 6" [ref=e138] [cursor=pointer]:
+              - text: متسخة
+              - generic [ref=e140]: "6"
+            - button "مشغولة متسخة 3" [ref=e141] [cursor=pointer]:
+              - text: مشغولة متسخة
+              - generic [ref=e143]: "3"
+            - button "الكل" [ref=e144] [cursor=pointer]
+        - searchbox "بحث برقم الغرفة / النوع / النزيل…" [ref=e146]
+        - generic [ref=e147]:
+          - button "101 Deluxe Twin جاهزة لتسجيل الدخول شاغرة" [ref=e148] [cursor=pointer]:
+            - generic [ref=e150]:
+              - generic [ref=e151]: "101"
+              - generic [ref=e152]: Deluxe Twin
+            - generic [ref=e155]: جاهزة لتسجيل الدخول
+            - generic [ref=e157]: شاغرة
+          - button "102 Deluxe Twin جاهزة لتسجيل الدخول شاغرة" [ref=e163] [cursor=pointer]:
+            - generic [ref=e165]:
+              - generic [ref=e166]: "102"
+              - generic [ref=e167]: Deluxe Twin
+            - generic [ref=e170]: جاهزة لتسجيل الدخول
+            - generic [ref=e172]: شاغرة
+          - button "103 Deluxe Twin جاهزة لتسجيل الدخول شاغرة" [ref=e178] [cursor=pointer]:
+            - generic [ref=e180]:
+              - generic [ref=e181]: "103"
+              - generic [ref=e182]: Deluxe Twin
+            - generic [ref=e185]: جاهزة لتسجيل الدخول
+            - generic [ref=e187]: شاغرة
+          - button "104 Deluxe Twin جاهزة لتسجيل الدخول شاغرة" [ref=e191] [cursor=pointer]:
+            - generic [ref=e193]:
+              - generic [ref=e194]: "104"
+              - generic [ref=e195]: Deluxe Twin
+            - generic [ref=e198]: جاهزة لتسجيل الدخول
+            - generic [ref=e200]: شاغرة
+          - button "105 Superior King سارة علي -100.000 SAR مشغولة" [ref=e204] [cursor=pointer]:
+            - generic [ref=e206]:
+              - generic [ref=e207]: "105"
+              - generic [ref=e208]: Superior King
+            - generic [ref=e212]:
+              - generic [ref=e213]: سارة علي
+              - generic [ref=e214]: "-100.000 SAR"
+            - generic [ref=e215]: مشغولة
+          - button "108 Double Room ابراهيم مدفوع مشغولة" [ref=e223] [cursor=pointer]:
+            - generic [ref=e225]:
+              - generic [ref=e226]: "108"
+              - generic [ref=e227]: Double Room
+            - generic [ref=e231]:
+              - generic [ref=e232]: ابراهيم
+              - generic [ref=e233]: مدفوع
+            - generic [ref=e234]: مشغولة
+          - button "301 Double Room ابراهيم مشغولة · تحتاج تنظيف مشغولة" [ref=e239] [cursor=pointer]:
+            - generic [ref=e241]:
+              - generic [ref=e242]: "301"
+              - generic [ref=e243]: Double Room
+            - generic [ref=e246]:
+              - generic [ref=e247]: ابراهيم
+              - generic [ref=e248]: مشغولة · تحتاج تنظيف
+            - generic [ref=e249]: مشغولة
+          - button "110 Double Room محمد سعد العتيبي مشغولة · تحتاج تنظيف مشغولة" [ref=e254] [cursor=pointer]:
+            - generic [ref=e256]:
+              - generic [ref=e257]: "110"
+              - generic [ref=e258]: Double Room
+            - generic [ref=e262]:
+              - generic [ref=e263]: محمد سعد العتيبي
+              - generic [ref=e264]: مشغولة · تحتاج تنظيف
+            - generic [ref=e265]: مشغولة
+          - button "201 Double Room ريم فهد RES-2026-00041 · قادم بانتظار" [ref=e270] [cursor=pointer]:
+            - generic [ref=e272]:
+              - generic [ref=e273]: "201"
+              - generic [ref=e274]: Double Room
+            - generic [ref=e278]:
+              - generic [ref=e279]: ريم فهد
+              - generic [ref=e280]: RES-2026-00041 · قادم
+            - generic [ref=e281]: بانتظار
+          - button "202 Single Room Ebrahim Al-desouki RES-2026-00043 · قادم بانتظار" [ref=e288] [cursor=pointer]:
+            - generic [ref=e290]:
+              - generic [ref=e291]: "202"
+              - generic [ref=e292]: Single Room
+            - generic [ref=e296]:
+              - generic [ref=e297]: Ebrahim Al-desouki
+              - generic [ref=e298]: RES-2026-00043 · قادم
+            - generic [ref=e299]: بانتظار
+          - button "203 Twin Room لطيفة أحمد RES-2026-00036 · قادم بانتظار" [ref=e303] [cursor=pointer]:
+            - generic [ref=e305]:
+              - generic [ref=e306]: "203"
+              - generic [ref=e307]: Twin Room
+            - generic [ref=e311]:
+              - generic [ref=e312]: لطيفة أحمد
+              - generic [ref=e313]: RES-2026-00036 · قادم
+            - generic [ref=e314]: بانتظار
+          - button "109 Double Room ابراهيم مغادرة 30 Jul مغادرة اليوم" [ref=e318] [cursor=pointer]:
+            - generic [ref=e320]:
+              - generic [ref=e321]: "109"
+              - generic [ref=e322]: Double Room
+            - generic [ref=e325]:
+              - generic [ref=e326]: ابراهيم
+              - generic [ref=e327]: مغادرة 30 Jul
+            - generic [ref=e328]: مغادرة اليوم
+          - button "106 King Room عمر خالد الغامدي مغادرة 30 Jul مغادرة اليوم" [ref=e334] [cursor=pointer]:
+            - generic [ref=e336]:
+              - generic [ref=e337]: "106"
+              - generic [ref=e338]: King Room
+            - generic [ref=e341]:
+              - generic [ref=e342]: عمر خالد الغامدي
+              - generic [ref=e343]: مغادرة 30 Jul
+            - generic [ref=e344]: مغادرة اليوم
+          - button "118 Single Room متسخة · تحتاج تنظيف شاغرة" [ref=e348] [cursor=pointer]:
+            - generic [ref=e350]:
+              - generic [ref=e351]: "118"
+              - generic [ref=e352]: Single Room
+            - generic [ref=e355]: متسخة · تحتاج تنظيف
+            - generic [ref=e359]: شاغرة
+          - button "107 Double Room متسخة · تحتاج تنظيف شاغرة" [ref=e364] [cursor=pointer]:
+            - generic [ref=e366]:
+              - generic [ref=e367]: "107"
+              - generic [ref=e368]: Double Room
+            - generic [ref=e371]: متسخة · تحتاج تنظيف
+            - generic [ref=e373]: شاغرة
+          - button "111 Double Room جاهزة لتسجيل الدخول شاغرة" [ref=e378] [cursor=pointer]:
+            - generic [ref=e380]:
+              - generic [ref=e381]: "111"
+              - generic [ref=e382]: Double Room
+            - generic [ref=e385]: جاهزة لتسجيل الدخول
+            - generic [ref=e387]: شاغرة
+          - button "112 Double Room جاهزة لتسجيل الدخول شاغرة" [ref=e391] [cursor=pointer]:
+            - generic [ref=e393]:
+              - generic [ref=e394]: "112"
+              - generic [ref=e395]: Double Room
+            - generic [ref=e398]: جاهزة لتسجيل الدخول
+            - generic [ref=e400]: شاغرة
+          - button "113 Single Room جاهزة لتسجيل الدخول شاغرة" [ref=e404] [cursor=pointer]:
+            - generic [ref=e406]:
+              - generic [ref=e407]: "113"
+              - generic [ref=e408]: Single Room
+            - generic [ref=e411]: جاهزة لتسجيل الدخول
+            - generic [ref=e413]: شاغرة
+          - button "114 Single Room جاهزة لتسجيل الدخول شاغرة" [ref=e417] [cursor=pointer]:
+            - generic [ref=e419]:
+              - generic [ref=e420]: "114"
+              - generic [ref=e421]: Single Room
+            - generic [ref=e424]: جاهزة لتسجيل الدخول
+            - generic [ref=e426]: شاغرة
+          - button "115 Single Room جاهزة لتسجيل الدخول شاغرة" [ref=e430] [cursor=pointer]:
+            - generic [ref=e432]:
+              - generic [ref=e433]: "115"
+              - generic [ref=e434]: Single Room
+            - generic [ref=e437]: جاهزة لتسجيل الدخول
+            - generic [ref=e439]: شاغرة
+          - button "116 Single Room LISTFIX GUEST مشغولة · تحتاج تنظيف مشغولة" [ref=e443] [cursor=pointer]:
+            - generic [ref=e445]:
+              - generic [ref=e446]: "116"
+              - generic [ref=e447]: Single Room
+            - generic [ref=e451]:
+              - generic [ref=e452]: LISTFIX GUEST
+              - generic [ref=e453]: مشغولة · تحتاج تنظيف
+            - generic [ref=e454]: مشغولة
+          - button "117 Single Room عبدالرحمن مغادرة 30 Jul مغادرة اليوم" [ref=e459] [cursor=pointer]:
+            - generic [ref=e461]:
+              - generic [ref=e462]: "117"
+              - generic [ref=e463]: Single Room
+            - generic [ref=e466]:
+              - generic [ref=e467]: عبدالرحمن
+              - generic [ref=e468]: مغادرة 30 Jul
+            - generic [ref=e469]: مغادرة اليوم
+          - button "302 Single Room نورا سعد RES-2026-00038 · قادم بانتظار" [ref=e473] [cursor=pointer]:
+            - generic [ref=e475]:
+              - generic [ref=e476]: "302"
+              - generic [ref=e477]: Single Room
+            - generic [ref=e481]:
+              - generic [ref=e482]: نورا سعد
+              - generic [ref=e483]: RES-2026-00038 · قادم
+            - generic [ref=e484]: بانتظار
+          - button "303 Twin Room خالد الحربي RES-2026-00040 · قادم بانتظار" [ref=e488] [cursor=pointer]:
+            - generic [ref=e490]:
+              - generic [ref=e491]: "303"
+              - generic [ref=e492]: Twin Room
+            - generic [ref=e496]:
+              - generic [ref=e497]: خالد الحربي
+              - generic [ref=e498]: RES-2026-00040 · قادم
+            - generic [ref=e499]: بانتظار
+          - button "401 Double Room فاطمة السعد مغادرة 30 Jul مغادرة اليوم" [ref=e503] [cursor=pointer]:
+            - generic [ref=e505]:
+              - generic [ref=e506]: "401"
+              - generic [ref=e507]: Double Room
+            - generic [ref=e510]:
+              - generic [ref=e511]: فاطمة السعد
+              - generic [ref=e512]: مغادرة 30 Jul
+            - generic [ref=e513]: مغادرة اليوم
+          - button "402 Single Room أحمد المطيري مغادرة 30 Jul مغادرة اليوم" [ref=e517] [cursor=pointer]:
+            - generic [ref=e519]:
+              - generic [ref=e520]: "402"
+              - generic [ref=e521]: Single Room
+            - generic [ref=e524]:
+              - generic [ref=e525]: أحمد المطيري
+              - generic [ref=e526]: مغادرة 30 Jul
+            - generic [ref=e527]: مغادرة اليوم
+          - button "403 Twin Room سارة الشهري -450.00 SAR مشغولة" [ref=e531] [cursor=pointer]:
+            - generic [ref=e533]:
+              - generic [ref=e534]: "403"
+              - generic [ref=e535]: Twin Room
+            - generic [ref=e539]:
+              - generic [ref=e540]: سارة الشهري
+              - generic [ref=e541]: "-450.00 SAR"
+            - generic [ref=e542]: مشغولة
+          - button "501 Double Room متسخة · تحتاج تنظيف شاغرة" [ref=e547] [cursor=pointer]:
+            - generic [ref=e549]:
+              - generic [ref=e550]: "501"
+              - generic [ref=e551]: Double Room
+            - generic [ref=e554]: متسخة · تحتاج تنظيف
+            - generic [ref=e556]: شاغرة
+          - button "502 Single Room عبدالله الأحمد RES-2026-00042 · قادم بانتظار" [ref=e561] [cursor=pointer]:
+            - generic [ref=e563]:
+              - generic [ref=e564]: "502"
+              - generic [ref=e565]: Single Room
+            - generic [ref=e569]:
+              - generic [ref=e570]: عبدالله الأحمد
+              - generic [ref=e571]: RES-2026-00042 · قادم
+            - generic [ref=e572]: بانتظار
+          - button "503 Twin Room نورة القحطاني مغادرة 30 Jul مغادرة اليوم" [ref=e576] [cursor=pointer]:
+            - generic [ref=e578]:
+              - generic [ref=e579]: "503"
+              - generic [ref=e580]: Twin Room
+            - generic [ref=e583]:
+              - generic [ref=e584]: نورة القحطاني
+              - generic [ref=e585]: مغادرة 30 Jul
+            - generic [ref=e586]: مغادرة اليوم
+          - button "601 Double Room محمد سعد العتيبي رصيد دائن مشغولة" [ref=e590] [cursor=pointer]:
+            - generic [ref=e592]:
+              - generic [ref=e593]: "601"
+              - generic [ref=e594]: Double Room
+            - generic [ref=e598]:
+              - generic [ref=e599]: محمد سعد العتيبي
+              - generic [ref=e600]: رصيد دائن
+            - generic [ref=e601]: مشغولة
+          - button "602 Single Room جاهزة لتسجيل الدخول شاغرة" [ref=e606] [cursor=pointer]:
+            - generic [ref=e608]:
+              - generic [ref=e609]: "602"
+              - generic [ref=e610]: Single Room
+            - generic [ref=e613]: جاهزة لتسجيل الدخول
+            - generic [ref=e615]: شاغرة
+          - button "603 Twin Room جاهزة لتسجيل الدخول شاغرة" [ref=e619] [cursor=pointer]:
+            - generic [ref=e621]:
+              - generic [ref=e622]: "603"
+              - generic [ref=e623]: Twin Room
+            - generic [ref=e626]: جاهزة لتسجيل الدخول
+            - generic [ref=e628]: شاغرة
+          - button "701 Double Room ريم فهد الدوسري 1,500 SAR مشغولة" [ref=e632] [cursor=pointer]:
+            - generic [ref=e634]:
+              - generic [ref=e635]: "701"
+              - generic [ref=e636]: Double Room
+            - generic [ref=e640]:
+              - generic [ref=e641]: ريم فهد الدوسري
+              - generic [ref=e642]: 1,500 SAR
+            - generic [ref=e643]: مشغولة
+  - generic [ref=e648]:
+    - generic [ref=e649]:
+      - heading "غرفة 101" [level=3] [ref=e650]
+      - button "إغلاق" [ref=e651] [cursor=pointer]
+    - generic [ref=e652]:
+      - generic [ref=e653]:
+        - generic [ref=e654]: الحالة التشغيلية
+        - generic [ref=e655]:
+          - generic [ref=e656] [cursor=pointer]:
+            - radio "شاغرة" [ref=e657]
+            - text: شاغرة
+          - generic [ref=e658] [cursor=pointer]:
+            - radio "مشغولة" [ref=e659]
+            - text: مشغولة
+          - generic [ref=e660] [cursor=pointer]:
+            - radio "بانتظار" [ref=e661]
+            - text: بانتظار
+          - generic [ref=e662] [cursor=pointer]:
+            - radio "مغادرة اليوم" [ref=e663]
+            - text: مغادرة اليوم
+      - generic [ref=e664]:
+        - generic [ref=e665]: حالة النظافة
+        - generic [ref=e666]:
+          - generic [ref=e667] [cursor=pointer]:
+            - radio "نظيفة" [ref=e668]
+            - text: نظيفة
+          - generic [ref=e669] [cursor=pointer]:
+            - radio "متسخة" [ref=e670]
+            - text: متسخة
+      - generic [ref=e671]:
+        - generic [ref=e672]: المكلّف
+        - combobox [ref=e673]:
+          - option "— تلقائي —" [selected]
+          - option "ريم فيصل"
+          - option "سارة أحمد"
+          - option "عمر خالد"
+          - option "محمد عبدالعزيز"
+      - generic [ref=e674]:
+        - generic [ref=e675]: الوقت المتوقع (دقائق)
+        - spinbutton "30" [ref=e676]
+      - generic [ref=e677]:
+        - generic [ref=e678]: ملاحظات
+        - textbox [ref=e679]
+      - generic [ref=e680]:
+        - button "إلغاء" [ref=e681] [cursor=pointer]
+        - button "حفظ" [ref=e682] [cursor=pointer]

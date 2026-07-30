@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الوصول والمغادرة — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="checkin" data-title="الوصول والمغادرة"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الوصول والمغادرة"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">لوحة عمليات اليوم</p>
+            <p class="text-slate-800 font-extrabold mt-1">وصول ومغادرة · 30 يوليو 2026</p>
+          </div>
+          <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-5">
+          <section class="panel overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between" style="background:linear-gradient(90deg,#EEF2FF,transparent)">
+              <h2 class="font-extrabold text-lg">الوصول <span class="badge badge-primary ms-2">6</span></h2>
+            </div>
+            <ul class="divide-y divide-slate-100">
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">LISTFIX GUEST</div>
+                  <div class="text-sm text-slate-500">Double · Kaaba View · MADINAH1 · 30 Jul 2026</div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-primary btn-sm" data-action="toast" data-message="تم تسجيل الدخول (تجريبي)">تسجيل الدخول</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">ابراهيم</div>
+                  <div class="text-sm text-slate-500">Double · Haram View · MADINAH1 · 30 Jul 2026</div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-primary btn-sm" data-action="toast" data-message="تم تسجيل الدخول (تجريبي)">تسجيل الدخول</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">ابراهيم</div>
+                  <div class="text-sm text-slate-500">Double · Haram View ×4 · 30 Jul 2026</div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-primary btn-sm" data-action="toast" data-message="تم تسجيل الدخول (تجريبي)">تسجيل الدخول</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between" style="background:linear-gradient(90deg,#FFFBEB,transparent)">
+              <h2 class="font-extrabold text-lg">المغادرة <span class="badge badge-warning ms-2">4</span></h2>
+            </div>
+            <ul class="divide-y divide-slate-100">
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">ابراهيم</div>
+                  <div class="text-sm text-slate-500">Double · Haram View · 29 Jul 2026</div>
+                  <span class="badge badge-success mt-1">مدفوع</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-secondary btn-sm" data-action="toast" data-message="تم تسجيل الخروج (تجريبي)">تسجيل الخروج</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">ابراهيم</div>
+                  <div class="text-sm text-slate-500">Double · Haram View · 30 Jul 2026</div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-ghost btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-secondary btn-sm" data-action="toast" data-message="تم تسجيل الخروج (تجريبي)">تسجيل الخروج</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+              <li class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="font-semibold">عمر خالد الغامدي</div>
+                  <div class="text-sm text-slate-500">Twin Room · متبقي 2,550</div>
+                  <span class="badge badge-danger mt-1">رصيد مستحق</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-primary btn-sm" data-action="open-modal" data-target="payment-modal">تحصيل دفعة</button>
+                  <button class="btn btn-secondary btn-sm" data-action="toast" data-message="تم تسجيل الخروج (تجريبي)">تسجيل الخروج</button>
+                  <a href="reservation-detail.html" class="btn btn-ghost btn-sm">عرض</a>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-bold">تحصيل دفعة</h3>
+      <button class="btn btn-ghost btn-sm" data-action="close-modal" data-target="payment-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">العملة</label><select class="field-select"><option>SYP</option><option>USD</option></select></div>
+      <div><label class="field-label">المبلغ</label><input type="number" class="field-input" /></div>
+      <div><label class="field-label">طريقة الدفع</label><select class="field-select"><option>نقداً</option><option>بطاقة ائتمان</option><option>تحويل بنكي</option></select></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إلغاء</button>
+      <button class="btn btn-primary" data-action="close-modal" data-target="payment-modal" onclick="PMS.toast('تم التحصيل (تجريبي)')">حفظ</button>
+    </div>
+  </div>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>
