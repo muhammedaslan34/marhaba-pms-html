@@ -5,16 +5,63 @@ Static HTML redesign of the Solvfast hotel PMS demo (`pmsdemo.solvfaster.com`), 
 ## Stack
 
 - Semantic HTML5
-- Tailwind CSS (CDN) + `assets/css/app.css`
+- Tailwind CSS (CDN for local pages) + `assets/css/app.css`
 - Vanilla JavaScript (`assets/js/app.js`)
 - RTL Arabic first (`dir="rtl"`), LTR-ready logical properties
 - Brand primary: `#0027B7`
 
-## Open locally
+## Run locally
 
-Open `index.html` or `pages/login.html` in a browser (no build step).
+### Option A — recommended (local server)
 
-Demo login form submits to `pages/dashboard.html` (no real auth).
+Needs **Node.js 18+**.
+
+```bash
+cd PMSDEMO
+npm start
+```
+
+Then open:
+
+- http://localhost:4173/
+- or http://localhost:4173/pages/login.html
+
+`npm start` serves the project folder with [`serve`](https://www.npmjs.com/package/serve) (no install required beyond Node).
+
+### Option B — open files directly
+
+1. Open `index.html` or `pages/login.html` in your browser  
+   (double-click, or drag into Chrome/Edge).
+2. Demo login submits to `pages/dashboard.html` (no real auth).
+
+> Tip: a local server (Option A) is better for navigation, relative assets, and avoiding some browser `file://` limits.
+
+### Option C — Python server (no npm)
+
+```bash
+cd PMSDEMO
+python -m http.server 4173
+```
+
+Open http://localhost:4173/
+
+### Demo login
+
+Any values work on the login form — it just navigates to the dashboard. There is no backend auth.
+
+## Build for Cloudflare (optional)
+
+Local browsing uses the Tailwind CDN in the HTML pages. For Workers/Pages deploy, build a `dist/` folder without the CDN:
+
+```bash
+npm install
+npm run build
+npx wrangler deploy
+```
+
+- `npm run build:css` — compile Tailwind to `assets/css/tailwind.css`
+- `npm run build` — CSS + copy/transform site into `dist/`
+- Config: `wrangler.jsonc` (assets from `./dist`)
 
 ## Page map (existing → redesign)
 

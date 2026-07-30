@@ -24,6 +24,281 @@
     { id: "makkah1", name: "فندق مكة السلام", code: "MAKKAH1" },
   ];
 
+  // Combined country data: dial code (for phone) + demonym nat/natEn (for nationality)
+  const COUNTRIES = [
+    { iso: "SA", flag: "🇸🇦", dial: "+966", name: "السعودية", nameEn: "Saudi Arabia", nat: "سعودي", natEn: "Saudi" },
+    { iso: "AE", flag: "🇦🇪", dial: "+971", name: "الإمارات", nameEn: "United Arab Emirates", nat: "إماراتي", natEn: "Emirati" },
+    { iso: "KW", flag: "🇰🇼", dial: "+965", name: "الكويت", nameEn: "Kuwait", nat: "كويتي", natEn: "Kuwaiti" },
+    { iso: "QA", flag: "🇶🇦", dial: "+974", name: "قطر", nameEn: "Qatar", nat: "قطري", natEn: "Qatari" },
+    { iso: "BH", flag: "🇧🇭", dial: "+973", name: "البحرين", nameEn: "Bahrain", nat: "بحريني", natEn: "Bahraini" },
+    { iso: "OM", flag: "🇴🇲", dial: "+968", name: "عُمان", nameEn: "Oman", nat: "عماني", natEn: "Omani" },
+    { iso: "EG", flag: "🇪🇬", dial: "+20", name: "مصر", nameEn: "Egypt", nat: "مصري", natEn: "Egyptian" },
+    { iso: "JO", flag: "🇯🇴", dial: "+962", name: "الأردن", nameEn: "Jordan", nat: "أردني", natEn: "Jordanian" },
+    { iso: "PS", flag: "🇵🇸", dial: "+970", name: "فلسطين", nameEn: "Palestine", nat: "فلسطيني", natEn: "Palestinian" },
+    { iso: "LB", flag: "🇱🇧", dial: "+961", name: "لبنان", nameEn: "Lebanon", nat: "لبناني", natEn: "Lebanese" },
+    { iso: "SY", flag: "🇸🇾", dial: "+963", name: "سوريا", nameEn: "Syria", nat: "سوري", natEn: "Syrian" },
+    { iso: "IQ", flag: "🇮🇶", dial: "+964", name: "العراق", nameEn: "Iraq", nat: "عراقي", natEn: "Iraqi" },
+    { iso: "YE", flag: "🇾🇪", dial: "+967", name: "اليمن", nameEn: "Yemen", nat: "يمني", natEn: "Yemeni" },
+    { iso: "SD", flag: "🇸🇩", dial: "+249", name: "السودان", nameEn: "Sudan", nat: "سوداني", natEn: "Sudanese" },
+    { iso: "LY", flag: "🇱🇾", dial: "+218", name: "ليبيا", nameEn: "Libya", nat: "ليبي", natEn: "Libyan" },
+    { iso: "TN", flag: "🇹🇳", dial: "+216", name: "تونس", nameEn: "Tunisia", nat: "تونسي", natEn: "Tunisian" },
+    { iso: "DZ", flag: "🇩🇿", dial: "+213", name: "الجزائر", nameEn: "Algeria", nat: "جزائري", natEn: "Algerian" },
+    { iso: "MA", flag: "🇲🇦", dial: "+212", name: "المغرب", nameEn: "Morocco", nat: "مغربي", natEn: "Moroccan" },
+    { iso: "MR", flag: "🇲🇷", dial: "+222", name: "موريتانيا", nameEn: "Mauritania", nat: "موريتاني", natEn: "Mauritanian" },
+    { iso: "SO", flag: "🇸🇴", dial: "+252", name: "الصومال", nameEn: "Somalia", nat: "صومالي", natEn: "Somali" },
+    { iso: "DJ", flag: "🇩🇯", dial: "+253", name: "جيبوتي", nameEn: "Djibouti", nat: "جيبوتي", natEn: "Djiboutian" },
+    { iso: "KM", flag: "🇰🇲", dial: "+269", name: "جزر القمر", nameEn: "Comoros", nat: "قمري", natEn: "Comorian" },
+    { iso: "TR", flag: "🇹🇷", dial: "+90", name: "تركيا", nameEn: "Turkey", nat: "تركي", natEn: "Turkish" },
+    { iso: "IR", flag: "🇮🇷", dial: "+98", name: "إيران", nameEn: "Iran", nat: "إيراني", natEn: "Iranian" },
+    { iso: "US", flag: "🇺🇸", dial: "+1", name: "الولايات المتحدة", nameEn: "United States", nat: "أمريكي", natEn: "American" },
+    { iso: "GB", flag: "🇬🇧", dial: "+44", name: "المملكة المتحدة", nameEn: "United Kingdom", nat: "بريطاني", natEn: "British" },
+    { iso: "FR", flag: "🇫🇷", dial: "+33", name: "فرنسا", nameEn: "France", nat: "فرنسي", natEn: "French" },
+    { iso: "DE", flag: "🇩🇪", dial: "+49", name: "ألمانيا", nameEn: "Germany", nat: "ألماني", natEn: "German" },
+    { iso: "IT", flag: "🇮🇹", dial: "+39", name: "إيطاليا", nameEn: "Italy", nat: "إيطالي", natEn: "Italian" },
+    { iso: "ES", flag: "🇪🇸", dial: "+34", name: "إسبانيا", nameEn: "Spain", nat: "إسباني", natEn: "Spanish" },
+    { iso: "NL", flag: "🇳🇱", dial: "+31", name: "هولندا", nameEn: "Netherlands", nat: "هولندي", natEn: "Dutch" },
+    { iso: "BE", flag: "🇧🇪", dial: "+32", name: "بلجيكا", nameEn: "Belgium", nat: "بلجيكي", natEn: "Belgian" },
+    { iso: "CH", flag: "🇨🇭", dial: "+41", name: "سويسرا", nameEn: "Switzerland", nat: "سويسري", natEn: "Swiss" },
+    { iso: "AT", flag: "🇦🇹", dial: "+43", name: "النمسا", nameEn: "Austria", nat: "نمساوي", natEn: "Austrian" },
+    { iso: "SE", flag: "🇸🇪", dial: "+46", name: "السويد", nameEn: "Sweden", nat: "سويدي", natEn: "Swedish" },
+    { iso: "NO", flag: "🇳🇴", dial: "+47", name: "النرويج", nameEn: "Norway", nat: "نرويجي", natEn: "Norwegian" },
+    { iso: "DK", flag: "🇩🇰", dial: "+45", name: "الدنمارك", nameEn: "Denmark", nat: "دنماركي", natEn: "Danish" },
+    { iso: "FI", flag: "🇫🇮", dial: "+358", name: "فنلندا", nameEn: "Finland", nat: "فنلندي", natEn: "Finnish" },
+    { iso: "IE", flag: "🇮🇪", dial: "+353", name: "أيرلندا", nameEn: "Ireland", nat: "أيرلندي", natEn: "Irish" },
+    { iso: "PT", flag: "🇵🇹", dial: "+351", name: "البرتغال", nameEn: "Portugal", nat: "برتغالي", natEn: "Portuguese" },
+    { iso: "GR", flag: "🇬🇷", dial: "+30", name: "اليونان", nameEn: "Greece", nat: "يوناني", natEn: "Greek" },
+    { iso: "PL", flag: "🇵🇱", dial: "+48", name: "بولندا", nameEn: "Poland", nat: "بولندي", natEn: "Polish" },
+    { iso: "RU", flag: "🇷🇺", dial: "+7", name: "روسيا", nameEn: "Russia", nat: "روسي", natEn: "Russian" },
+    { iso: "UA", flag: "🇺🇦", dial: "+380", name: "أوكرانيا", nameEn: "Ukraine", nat: "أوكراني", natEn: "Ukrainian" },
+    { iso: "RO", flag: "🇷🇴", dial: "+40", name: "رومانيا", nameEn: "Romania", nat: "روماني", natEn: "Romanian" },
+    { iso: "CZ", flag: "🇨🇿", dial: "+420", name: "التشيك", nameEn: "Czech Republic", nat: "تشيكي", natEn: "Czech" },
+    { iso: "IN", flag: "🇮🇳", dial: "+91", name: "الهند", nameEn: "India", nat: "هندي", natEn: "Indian" },
+    { iso: "PK", flag: "🇵🇰", dial: "+92", name: "باكستان", nameEn: "Pakistan", nat: "باكستاني", natEn: "Pakistani" },
+    { iso: "BD", flag: "🇧🇩", dial: "+880", name: "بنغلاديش", nameEn: "Bangladesh", nat: "بنغلاديشي", natEn: "Bangladeshi" },
+    { iso: "ID", flag: "🇮🇩", dial: "+62", name: "إندونيسيا", nameEn: "Indonesia", nat: "إندونيسي", natEn: "Indonesian" },
+    { iso: "MY", flag: "🇲🇾", dial: "+60", name: "ماليزيا", nameEn: "Malaysia", nat: "ماليزي", natEn: "Malaysian" },
+    { iso: "TH", flag: "🇹🇭", dial: "+66", name: "تايلاند", nameEn: "Thailand", nat: "تايلاندي", natEn: "Thai" },
+    { iso: "PH", flag: "🇵🇭", dial: "+63", name: "الفلبين", nameEn: "Philippines", nat: "فلبيني", natEn: "Filipino" },
+    { iso: "VN", flag: "🇻🇳", dial: "+84", name: "فيتنام", nameEn: "Vietnam", nat: "فيتنامي", natEn: "Vietnamese" },
+    { iso: "CN", flag: "🇨🇳", dial: "+86", name: "الصين", nameEn: "China", nat: "صيني", natEn: "Chinese" },
+    { iso: "JP", flag: "🇯🇵", dial: "+81", name: "اليابان", nameEn: "Japan", nat: "ياباني", natEn: "Japanese" },
+    { iso: "KR", flag: "🇰🇷", dial: "+82", name: "كوريا الجنوبية", nameEn: "South Korea", nat: "كوري", natEn: "Korean" },
+    { iso: "HK", flag: "🇭🇰", dial: "+852", name: "هونغ كونغ", nameEn: "Hong Kong", nat: "هونغ كونغي", natEn: "Hongkongese" },
+    { iso: "SG", flag: "🇸🇬", dial: "+65", name: "سنغافورة", nameEn: "Singapore", nat: "سنغافوري", natEn: "Singaporean" },
+    { iso: "AU", flag: "🇦🇺", dial: "+61", name: "أستراليا", nameEn: "Australia", nat: "أسترالي", natEn: "Australian" },
+    { iso: "NZ", flag: "🇳🇿", dial: "+64", name: "نيوزيلندا", nameEn: "New Zealand", nat: "نيوزيلندي", natEn: "New Zealander" },
+    { iso: "CA", flag: "🇨🇦", dial: "+1", name: "كندا", nameEn: "Canada", nat: "كندي", natEn: "Canadian" },
+    { iso: "MX", flag: "🇲🇽", dial: "+52", name: "المكسيك", nameEn: "Mexico", nat: "مكسيكي", natEn: "Mexican" },
+    { iso: "BR", flag: "🇧🇷", dial: "+55", name: "البرازيل", nameEn: "Brazil", nat: "برازيلي", natEn: "Brazilian" },
+    { iso: "AR", flag: "🇦🇷", dial: "+54", name: "الأرجنتين", nameEn: "Argentina", nat: "أرجنتيني", natEn: "Argentine" },
+    { iso: "ZA", flag: "🇿🇦", dial: "+27", name: "جنوب أفريقيا", nameEn: "South Africa", nat: "جنوب أفريقي", natEn: "South African" },
+    { iso: "NG", flag: "🇳🇬", dial: "+234", name: "نيجيريا", nameEn: "Nigeria", nat: "نيجيري", natEn: "Nigerian" },
+    { iso: "KE", flag: "🇰🇪", dial: "+254", name: "كينيا", nameEn: "Kenya", nat: "كيني", natEn: "Kenyan" },
+    { iso: "ET", flag: "🇪🇹", dial: "+251", name: "إثيوبيا", nameEn: "Ethiopia", nat: "إثيوبي", natEn: "Ethiopian" },
+    { iso: "GH", flag: "🇬🇭", dial: "+233", name: "غانا", nameEn: "Ghana", nat: "غاني", natEn: "Ghanaian" },
+    { iso: "SN", flag: "🇸🇳", dial: "+221", name: "السنغال", nameEn: "Senegal", nat: "سنغالي", natEn: "Senegalese" },
+  ];
+
+  function flagImg(iso, size) {
+    const code = String(iso || "").toLowerCase();
+    const wh = size === "sm" ? 'width="20" height="15"' : 'width="24" height="18"';
+    return (
+      '<img class="flag-img" src="https://flagcdn.com/w40/' +
+      code +
+      '.png" ' +
+      wh +
+      ' alt="' +
+      String(iso || "").toUpperCase() +
+      '" loading="lazy" decoding="async" />'
+    );
+  }
+
+  // Shared searchable dropdown (portaled to <body> so it escapes modal transforms)
+  function initSearchableSelect(root, config) {
+    const trigger = root.querySelector("[data-ss-trigger]");
+    const flagEl = root.querySelector("[data-ss-flag]");
+    const textEl = root.querySelector("[data-ss-text]");
+    const dropdown = root.querySelector("[data-ss-dropdown]");
+    const searchInput = root.querySelector("[data-ss-search]");
+    const listEl = root.querySelector("[data-ss-list]");
+    if (!trigger || !dropdown || !listEl) return;
+
+    document.body.appendChild(dropdown);
+
+    let selected = config.items.find(function (c) { return c.iso === config.defaultIso; }) || config.items[0];
+    let query = "";
+
+    function render() {
+      const q = query.trim().toLowerCase();
+      const items = config.items.filter(function (c) { return !q || config.match(c, q); });
+      if (!items.length) {
+        listEl.innerHTML = '<div class="phone-dropdown-empty">لا توجد نتائج مطابقة</div>';
+        return;
+      }
+      listEl.innerHTML = items.map(function (c) {
+        const sel = c.iso === selected.iso ? " is-selected" : "";
+        return (
+          '<button type="button" class="phone-dropdown-item' + sel + '" data-iso="' + c.iso + '" role="option">' +
+            flagImg(c.iso, "sm") +
+            '<span class="country-name">' + config.itemPrimary(c) + '</span>' +
+            '<span class="dial-code">' + config.itemSecondary(c) + '</span>' +
+          "</button>"
+        );
+      }).join("");
+    }
+
+    function apply(c) {
+      selected = c;
+      if (flagEl) flagEl.innerHTML = flagImg(c.iso);
+      if (textEl) textEl.textContent = config.triggerText(c);
+      root.dataset.iso = c.iso;
+      if (config.onChange) config.onChange(c);
+      close();
+      render();
+    }
+
+    function getScrollParent(el) {
+      let node = el.parentElement;
+      while (node && node !== document.body) {
+        const ov = getComputedStyle(node).overflowY;
+        if (ov === "auto" || ov === "scroll") return node;
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    function ensureRoomBelow() {
+      const needed = 340;
+      const rect = root.getBoundingClientRect();
+      const overflow = rect.bottom + needed + 8 - window.innerHeight;
+      if (overflow > 0) {
+        const scroller = getScrollParent(root);
+        if (scroller) scroller.scrollTop += overflow + 8;
+      }
+    }
+
+    function position() {
+      const rect = root.getBoundingClientRect();
+      const ddW = Math.max(rect.width, 272);
+      dropdown.style.width = ddW + "px";
+      const isRTL = document.documentElement.dir === "rtl";
+      let left = isRTL ? rect.right - ddW : rect.left;
+      const top = rect.bottom + 6;
+      const margin = 8;
+      if (left < margin) left = margin;
+      if (left + ddW > window.innerWidth - margin) left = window.innerWidth - ddW - margin;
+      dropdown.style.top = top + "px";
+      dropdown.style.left = left + "px";
+    }
+
+    function open() {
+      dropdown.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+      query = "";
+      searchInput.value = "";
+      render();
+      ensureRoomBelow();
+      position();
+      setTimeout(function () { searchInput.focus(); }, 30);
+    }
+
+    function close() {
+      dropdown.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function toggle() {
+      if (dropdown.classList.contains("is-open")) close();
+      else open();
+    }
+
+    trigger.addEventListener("click", function (e) { e.preventDefault(); toggle(); });
+    document.addEventListener("scroll", function () {
+      if (dropdown.classList.contains("is-open")) position();
+    }, true);
+    window.addEventListener("resize", function () {
+      if (dropdown.classList.contains("is-open")) position();
+    });
+    if (searchInput) {
+      searchInput.addEventListener("input", function () { query = searchInput.value; render(); });
+      searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { close(); trigger.focus(); }
+      });
+    }
+    listEl.addEventListener("click", function (e) {
+      const item = e.target.closest("[data-iso]");
+      if (!item) return;
+      const c = config.items.find(function (x) { return x.iso === item.dataset.iso; });
+      if (c) apply(c);
+    });
+    listEl.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      e.preventDefault();
+      const items = Array.from(listEl.querySelectorAll("[data-iso]"));
+      if (!items.length) return;
+      const idx = items.indexOf(listEl.querySelector("[data-iso].is-selected"));
+      let next = e.key === "ArrowDown" ? idx + 1 : idx - 1;
+      if (next < 0) next = 0;
+      if (next > items.length - 1) next = items.length - 1;
+      const c = config.items.find(function (x) { return x.iso === items[next].dataset.iso; });
+      if (c) apply(c);
+    });
+    document.addEventListener("click", function (e) {
+      if (!root.contains(e.target) && !dropdown.contains(e.target)) close();
+    });
+
+    apply(selected);
+
+    root.__ssSetIso = function (iso) {
+      const c = config.items.find(function (x) { return x.iso === String(iso || "").toUpperCase(); });
+      if (c) apply(c);
+    };
+  }
+
+  function initPhoneFields() {
+    document.querySelectorAll("[data-phone-field]").forEach(function (root) {
+      initSearchableSelect(root, {
+        items: COUNTRIES,
+        defaultIso: "SA",
+        triggerText: function (c) { return c.dial; },
+        itemPrimary: function (c) { return c.name; },
+        itemSecondary: function (c) { return c.dial; },
+        match: function (c, q) {
+          return (
+            c.name.toLowerCase().includes(q) ||
+            c.nameEn.toLowerCase().includes(q) ||
+            c.dial.replace("+", "").includes(q.replace("+", "")) ||
+            c.iso.toLowerCase() === q
+          );
+        },
+        onChange: function (c) { root.dataset.dialCode = c.dial; },
+      });
+    });
+  }
+
+  function initNationalityFields() {
+    document.querySelectorAll("[data-nationality-field]").forEach(function (root) {
+      initSearchableSelect(root, {
+        items: COUNTRIES,
+        defaultIso: "SY",
+        triggerText: function (c) { return c.nat; },
+        itemPrimary: function (c) { return c.nat; },
+        itemSecondary: function (c) { return c.name; },
+        match: function (c, q) {
+          return (
+            c.nat.toLowerCase().includes(q) ||
+            (c.natEn || "").toLowerCase().includes(q) ||
+            c.name.toLowerCase().includes(q) ||
+            c.nameEn.toLowerCase().includes(q) ||
+            c.iso.toLowerCase() === q
+          );
+        },
+        onChange: function (c) { root.dataset.nationality = c.nat; },
+      });
+    });
+  }
+
+
   const ICONS = {
     home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
     calendar: '<rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
@@ -53,10 +328,8 @@
   function renderSidebar(active) {
     let html = `
       <div class="sidebar-brand">
-        <div class="sidebar-brand-mark">S</div>
-        <div class="sidebar-brand-text flex-1 min-w-0">
-          <div class="font-extrabold text-[0.95rem] leading-tight">Solvfast PMS</div>
-          <div class="text-[11px] text-white/70 font-semibold mt-0.5">إدارة الفندق</div>
+        <div class="sidebar-logo">
+          <img src="https://app.marhaba-syria.sy/assets/img/logo-syria.svg" alt="Marhaba Syria" />
         </div>
       </div>
       <nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="القائمة الرئيسية">`;
@@ -118,17 +391,6 @@
           <input id="global-search" type="search" placeholder="بحث…" aria-label="بحث عام" />
           <kbd class="search-kbd" aria-hidden="true">${shortcutLabel()}</kbd>
         </label>
-        <div class="relative">
-          <button type="button" class="hidden sm:flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 font-semibold" data-action="toggle-property-menu" aria-haspopup="menu" aria-label="المنشأة" title="تبديل المنشأة">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="truncate max-w-[9rem]" data-property-badge>${currentProperty().name}</span>
-            <svg class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div id="property-menu" class="hidden absolute end-0 mt-2 w-64 panel p-2 z-50">
-            <div class="px-2 text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-1">المنشأة</div>
-            <div class="space-y-0.5 max-h-64 overflow-y-auto" data-property-list>${propertyListHtml()}</div>
-          </div>
-        </div>
         <div class="header-switchers">
           <button type="button" class="header-icon-btn" data-action="toggle-lang" aria-label="${lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}" title="${lang === "en" ? "English → العربية" : "العربية → English"}">
             ${langIcon}
@@ -218,10 +480,7 @@
       localStorage.setItem("pms-property", id);
     } catch (_) {}
     const prop = PROPERTIES.find(function (p) { return p.id === id; });
-    // Update header badge text + re-render property lists (moves the green dot)
-    document.querySelectorAll("[data-property-badge]").forEach(function (el) {
-      el.textContent = prop.name;
-    });
+    // Re-render property lists (moves the green dot + checkmark)
     document.querySelectorAll("[data-property-list]").forEach(function (el) {
       el.innerHTML = propertyListHtml();
     });
@@ -435,6 +694,367 @@
     });
   }
 
+  const DP_MONTHS_AR = [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
+  ];
+  const DP_WEEKDAYS_AR = ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
+
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function toISODate(d) {
+    return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+  }
+
+  function parseISODate(value) {
+    if (!value) return null;
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!m) return null;
+    const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  function formatDisplayDate(d) {
+    return pad2(d.getMonth() + 1) + "/" + pad2(d.getDate()) + "/" + d.getFullYear();
+  }
+
+  function initDatePickers() {
+    function closeAll(except) {
+      document.querySelectorAll(".dp-field.is-open").forEach((field) => {
+        if (field === except) return;
+        field.classList.remove("is-open");
+        const pop = field._dpPopover;
+        if (pop) pop.classList.remove("is-open");
+        pop?.querySelector(".dp-months")?.classList.remove("is-open");
+        pop?.querySelector(".dp-years")?.classList.remove("is-open");
+        pop?.querySelector(".dp-calendar")?.classList.remove("is-hidden");
+      });
+    }
+
+    document.querySelectorAll("[data-datepicker]").forEach((field) => {
+      if (field.dataset.dpReady) return;
+      field.dataset.dpReady = "1";
+
+      const hidden = field.querySelector('input[type="hidden"]');
+      const trigger = field.querySelector(".dp-trigger");
+      const textEl = field.querySelector(".dp-text");
+      const popover = field.querySelector(".dp-popover");
+      const daysEl = field.querySelector("[data-dp-days]");
+      let monthsEl = field.querySelector(".dp-months");
+      const calendarEl = field.querySelector(".dp-calendar");
+      if (!hidden || !trigger || !popover || !daysEl || !calendarEl) return;
+
+      document.body.appendChild(popover);
+      field._dpPopover = popover;
+
+      // Ensure month/year header controls exist
+      const head = popover.querySelector(".dp-head");
+      let monthNameEl = popover.querySelector("[data-dp-month-name]");
+      let yearBtn = popover.querySelector("[data-dp-year-toggle]");
+      let monthBtn = popover.querySelector("[data-dp-month-toggle]");
+      if (head && (!monthNameEl || !yearBtn)) {
+        const title = document.createElement("div");
+        title.className = "dp-head-title";
+        title.innerHTML =
+          '<button type="button" class="dp-month-btn" data-dp-month-toggle aria-label="اختيار الشهر">' +
+          '<span data-dp-month-name></span>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          "</button>" +
+          '<button type="button" class="dp-year-btn" data-dp-year-toggle aria-label="اختيار السنة">' +
+          '<span data-dp-year-label></span>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          "</button>";
+        const oldLabelBtn = head.querySelector("[data-dp-month-toggle]");
+        if (oldLabelBtn) oldLabelBtn.replaceWith(title);
+        else head.insertBefore(title, head.firstChild);
+        monthNameEl = popover.querySelector("[data-dp-month-name]");
+        yearBtn = popover.querySelector("[data-dp-year-toggle]");
+        monthBtn = popover.querySelector("[data-dp-month-toggle]");
+      }
+      const yearLabel = popover.querySelector("[data-dp-year-label]");
+
+      if (!monthsEl) {
+        monthsEl = document.createElement("div");
+        monthsEl.className = "dp-months";
+        monthsEl.setAttribute("aria-label", "اختيار الشهر");
+        calendarEl.parentNode.insertBefore(monthsEl, calendarEl);
+      }
+
+      let yearsEl = popover.querySelector(".dp-years");
+      if (!yearsEl) {
+        yearsEl = document.createElement("div");
+        yearsEl.className = "dp-years";
+        yearsEl.setAttribute("aria-label", "اختيار السنة");
+        monthsEl.parentNode.insertBefore(yearsEl, monthsEl.nextSibling);
+      }
+
+      let view = parseISODate(hidden.value) || new Date();
+      view = new Date(view.getFullYear(), view.getMonth(), 1);
+      let mode = "calendar"; // calendar | months | years
+      let yearPageStart = view.getFullYear() - 5;
+
+      function selected() {
+        return parseISODate(hidden.value);
+      }
+
+      function position() {
+        const rect = trigger.getBoundingClientRect();
+        const width = Math.min(296, window.innerWidth - 16);
+        popover.style.width = width + "px";
+        let left = rect.left;
+        if (document.documentElement.dir === "rtl") left = rect.right - width;
+        const margin = 8;
+        if (left < margin) left = margin;
+        if (left + width > window.innerWidth - margin) left = window.innerWidth - width - margin;
+        let finalTop = rect.bottom + 6;
+        const approxH = 360;
+        if (finalTop + approxH > window.innerHeight - margin) {
+          finalTop = Math.max(margin, rect.top - approxH - 6);
+        }
+        popover.style.left = left + "px";
+        popover.style.top = finalTop + "px";
+      }
+
+      function setMode(next) {
+        mode = next;
+        calendarEl.classList.toggle("is-hidden", mode !== "calendar");
+        monthsEl.classList.toggle("is-open", mode === "months");
+        yearsEl.classList.toggle("is-open", mode === "years");
+        if (mode === "years") {
+          yearPageStart = view.getFullYear() - 5;
+        }
+        render();
+      }
+
+      function setOpen(open) {
+        field.classList.toggle("is-open", open);
+        popover.classList.toggle("is-open", open);
+        if (open) {
+          setMode("calendar");
+          position();
+        }
+      }
+
+      function setValue(dateOrNull) {
+        if (!dateOrNull) {
+          hidden.value = "";
+          textEl.textContent = field.dataset.placeholder || "اختر التاريخ";
+          textEl.classList.add("is-empty");
+        } else {
+          hidden.value = toISODate(dateOrNull);
+          textEl.textContent = formatDisplayDate(dateOrNull);
+          textEl.classList.remove("is-empty");
+          view = new Date(dateOrNull.getFullYear(), dateOrNull.getMonth(), 1);
+        }
+        hidden.dispatchEvent(new Event("change", { bubbles: true }));
+        field.dispatchEvent(
+          new CustomEvent("datepicker:change", {
+            bubbles: true,
+            detail: { value: hidden.value, date: dateOrNull },
+          })
+        );
+        render();
+      }
+
+      function renderYears() {
+        const cells = [];
+        for (let i = 0; i < 12; i++) {
+          const y = yearPageStart + i;
+          const active = y === view.getFullYear() ? " is-active" : "";
+          cells.push(
+            '<button type="button" class="dp-year-option' +
+              active +
+              '" data-year="' +
+              y +
+              '">' +
+              y +
+              "</button>"
+          );
+        }
+        yearsEl.innerHTML = cells.join("");
+      }
+
+      function render() {
+        if (monthNameEl) monthNameEl.textContent = DP_MONTHS_AR[view.getMonth()];
+        if (yearLabel) yearLabel.textContent = String(view.getFullYear());
+        // fallback old single label
+        const legacyLabel = popover.querySelector("[data-dp-month-label]");
+        if (legacyLabel) {
+          legacyLabel.textContent = DP_MONTHS_AR[view.getMonth()] + " " + view.getFullYear();
+        }
+
+        if (monthsEl) {
+          monthsEl.querySelectorAll(".dp-month-option").forEach((btn, i) => {
+            btn.classList.toggle("is-active", i === view.getMonth());
+          });
+        }
+        if (mode === "years") renderYears();
+
+        const year = view.getFullYear();
+        const month = view.getMonth();
+        const firstDow = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevDays = new Date(year, month, 0).getDate();
+        const sel = selected();
+        const todayIso = toISODate(new Date());
+
+        const cells = [];
+        for (let i = 0; i < 42; i++) {
+          let d;
+          let muted = false;
+          if (i < firstDow) {
+            d = new Date(year, month - 1, prevDays - firstDow + i + 1);
+            muted = true;
+          } else if (i - firstDow + 1 > daysInMonth) {
+            d = new Date(year, month + 1, i - firstDow - daysInMonth + 1);
+            muted = true;
+          } else {
+            d = new Date(year, month, i - firstDow + 1);
+          }
+          const iso = toISODate(d);
+          const isSel = sel && toISODate(sel) === iso;
+          const isToday = iso === todayIso;
+          cells.push(
+            '<button type="button" class="dp-day' +
+              (muted ? " is-muted" : "") +
+              (isSel ? " is-selected" : "") +
+              (isToday ? " is-today" : "") +
+              '" data-date="' +
+              iso +
+              '" aria-label="' +
+              iso +
+              '">' +
+              d.getDate() +
+              "</button>"
+          );
+        }
+        daysEl.innerHTML = cells.join("");
+      }
+
+      if (!popover.querySelector("[data-dp-weekdays]")) {
+        const week = document.createElement("div");
+        week.className = "dp-weekdays";
+        week.setAttribute("data-dp-weekdays", "");
+        week.innerHTML = DP_WEEKDAYS_AR.map((d) => "<span>" + d + "</span>").join("");
+        calendarEl.insertBefore(week, daysEl);
+      }
+
+      if (monthsEl && !monthsEl.children.length) {
+        monthsEl.innerHTML = DP_MONTHS_AR.map(
+          (name, i) =>
+            '<button type="button" class="dp-month-option" data-month="' + i + '">' + name + "</button>"
+        ).join("");
+      }
+
+      const initial = selected();
+      if (initial) {
+        textEl.textContent = formatDisplayDate(initial);
+        textEl.classList.remove("is-empty");
+      } else {
+        textEl.textContent = field.dataset.placeholder || "اختر التاريخ";
+        textEl.classList.add("is-empty");
+      }
+      render();
+
+      trigger.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const willOpen = !field.classList.contains("is-open");
+        closeAll(field);
+        setOpen(willOpen);
+      });
+
+      popover.querySelector("[data-dp-prev]")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (mode === "years") {
+          yearPageStart -= 12;
+          renderYears();
+          return;
+        }
+        if (mode === "months") {
+          view = new Date(view.getFullYear() - 1, view.getMonth(), 1);
+        } else {
+          view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
+        }
+        render();
+      });
+      popover.querySelector("[data-dp-next]")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (mode === "years") {
+          yearPageStart += 12;
+          renderYears();
+          return;
+        }
+        if (mode === "months") {
+          view = new Date(view.getFullYear() + 1, view.getMonth(), 1);
+        } else {
+          view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+        }
+        render();
+      });
+
+      monthBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setMode(mode === "months" ? "calendar" : "months");
+      });
+      yearBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setMode(mode === "years" ? "calendar" : "years");
+      });
+
+      monthsEl.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-month]");
+        if (!btn) return;
+        view = new Date(view.getFullYear(), Number(btn.dataset.month), 1);
+        setMode("calendar");
+      });
+      yearsEl.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-year]");
+        if (!btn) return;
+        view = new Date(Number(btn.dataset.year), view.getMonth(), 1);
+        setMode("months");
+      });
+      daysEl.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-date]");
+        if (!btn) return;
+        const d = parseISODate(btn.dataset.date);
+        if (!d) return;
+        setValue(d);
+        setOpen(false);
+      });
+      popover.querySelector("[data-dp-clear]")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setValue(null);
+      });
+      popover.querySelector("[data-dp-today]")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setValue(new Date());
+        setOpen(false);
+      });
+
+      document.addEventListener(
+        "scroll",
+        function () {
+          if (field.classList.contains("is-open")) position();
+        },
+        true
+      );
+      window.addEventListener("resize", function () {
+        if (field.classList.contains("is-open")) position();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".dp-field") || e.target.closest(".dp-popover")) return;
+      closeAll();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAll();
+    });
+  }
+
   function initShell() {
     const page = document.body.dataset.page || "dashboard";
     const title = document.body.dataset.title || "";
@@ -462,15 +1082,15 @@
     ensureToastStack();
     initChips();
     initTabs();
+    initDatePickers();
+    initPhoneFields();
+    initNationalityFields();
 
     document.body.addEventListener("click", (e) => {
       const actionEl = e.target.closest("[data-action]");
       if (!actionEl) {
         if (!e.target.closest("#user-menu") && !e.target.closest('[data-action="toggle-user-menu"]')) {
           document.getElementById("user-menu")?.classList.add("hidden");
-        }
-        if (!e.target.closest("#property-menu") && !e.target.closest('[data-action="toggle-property-menu"]')) {
-          document.getElementById("property-menu")?.classList.add("hidden");
         }
         return;
       }
@@ -479,17 +1099,11 @@
       if (action === "collapse-sidebar") toggleCollapseSidebar();
       if (action === "close-sidebar") closeSidebar();
       if (action === "toggle-user-menu") {
-        document.getElementById("property-menu")?.classList.add("hidden");
         document.getElementById("user-menu")?.classList.toggle("hidden");
-      }
-      if (action === "toggle-property-menu") {
-        document.getElementById("user-menu")?.classList.add("hidden");
-        document.getElementById("property-menu")?.classList.toggle("hidden");
       }
       if (action === "select-property") {
         selectProperty(actionEl.dataset.propertyId);
         document.getElementById("user-menu")?.classList.add("hidden");
-        document.getElementById("property-menu")?.classList.add("hidden");
       }
       if (action === "toggle-notifications") toast("لا توجد إشعارات جديدة");
       if (action === "toggle-theme") toggleTheme();
@@ -508,7 +1122,6 @@
         closeAllModals();
         closeDrawer();
         document.getElementById("user-menu")?.classList.add("hidden");
-        document.getElementById("property-menu")?.classList.add("hidden");
         document.getElementById("global-search")?.blur();
       }
       if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {

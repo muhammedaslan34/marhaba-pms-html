@@ -18,7 +18,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=hk11" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=hk17" />
   <style>
     .hk-page { --vacant:#55A06F; --occupied:#C44755; --waiting:#7B4FC8; --checkout:#C9A227; --dirty:#B08900; --clean-gold:#C9A227; }
     .hk-topbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; }
@@ -85,15 +85,13 @@
     .rc-num { font-size:22px; font-weight:800; color:#0f172a; line-height:1; letter-spacing:-.02em; }
     .rc-type { margin-top:4px; font-size:11px; font-weight:700; color:#94A3B8; }
 
-    /* Property + mop badge (reference style) */
+    /* Property badge — status color; mop overlays corner on dirty rooms */
     .rc-prop {
       position: relative;
-      width: 34px;
+      width: 36px;
       height: 40px;
       flex-shrink: 0;
       --prop: #C9A227;
-      --prop-win: #FFF8E7;
-      --mop: #D9C79A;
       color: var(--prop);
     }
     .rc-prop > .rc-building,
@@ -105,26 +103,24 @@
     }
     .rc-mop {
       position: absolute;
-      inset-inline-end: -4px;
-      bottom: -2px;
-      width: 20px;
-      height: 28px;
-      color: var(--mop) !important;
-      transform: rotate(-28deg);
-      transform-origin: 50% 10%;
-      filter: drop-shadow(0 0 1px rgba(0,0,0,.08));
+      inset-inline-end: -8px;
+      bottom: -1px;
+      width: 22px;
+      height: 30px;
+      color: #A67C2D;
+      transform: rotate(-32deg);
+      transform-origin: center top;
       pointer-events: none;
+      filter: drop-shadow(0 0 0 1.5px #fff) drop-shadow(0 1px 1px rgba(0,0,0,.12));
     }
-    .room-card[data-status="vacant"] .rc-prop { --prop: var(--vacant); --prop-win: #EAF6EE; --mop: #C9B27A; }
-    .room-card[data-status="occupied"] .rc-prop { --prop: var(--occupied); --prop-win: #FCECEE; --mop: #D9C79A; }
-    .room-card[data-status="waiting"] .rc-prop { --prop: var(--waiting); --prop-win: #F3ECFB; --mop: #D9C79A; }
-    .room-card[data-status="checkout"] .rc-prop { --prop: var(--checkout); --prop-win: #FFF8E7; --mop: #E8D9B0; }
+    .room-card[data-status="vacant"] .rc-prop { --prop: var(--vacant); }
+    .room-card[data-status="occupied"] .rc-prop { --prop: var(--occupied); }
+    .room-card[data-status="waiting"] .rc-prop { --prop: var(--waiting); }
+    .room-card[data-status="checkout"] .rc-prop { --prop: var(--checkout); }
     .room-card[data-hk="dirty"] .rc-prop,
-    .room-card[data-hk="rented-dirty"] .rc-prop {
-      --prop: #C9A227;
-      --prop-win: #FFF8E7;
-      --mop: #E6D7B0;
-    }
+    .room-card[data-hk="rented-dirty"] .rc-prop { --prop: var(--dirty); }
+    .room-card[data-hk="dirty"] .rc-mop,
+    .room-card[data-hk="rented-dirty"] .rc-mop { color: #8B6914; }
 
     .rc-mid {
       flex:1; display:flex; flex-direction:column; justify-content:center;
@@ -152,24 +148,127 @@
 
         .hk-empty { display:none; grid-column:1/-1; text-align:center; padding:48px 16px; color:#64748B; font-weight:700; }
     .hk-empty.show { display:block; }
+
+    /* List view */
+    .hk-list-panel { display:none; }
+    .hk-list-panel.is-on { display:block; }
+    .hk-list-table { width:100%; border-collapse:collapse; }
+    .hk-list-table th {
+      text-align:start; font-size:.72rem; font-weight:800; color:#94a3b8;
+      padding:.75rem 1rem; border-bottom:1px solid #E2E8F0; background:#F8FAFC;
+    }
+    .hk-list-table td {
+      padding:.85rem 1rem; border-bottom:1px solid #F1F5F9; vertical-align:middle;
+      font-size:.9rem; font-weight:600;
+    }
+    .hk-list-table tr { cursor:pointer; transition:background .12s; }
+    .hk-list-table tbody tr:hover { background:#F8FAFC; }
+    .hk-list-room { font-size:1.05rem; font-weight:800; color:#0f172a; }
+    .hk-list-type { font-size:.75rem; color:#94a3b8; font-weight:700; }
+    .hk-list-guest { font-weight:800; color:#0f172a; }
+    .hk-badge {
+      display:inline-flex; align-items:center; gap:.35rem;
+      border-radius:999px; padding:.28rem .7rem; font-size:.72rem; font-weight:800; color:#fff;
+    }
+    .hk-badge[data-s="vacant"] { background:var(--vacant); }
+    .hk-badge[data-s="occupied"] { background:var(--occupied); }
+    .hk-badge[data-s="waiting"] { background:var(--waiting); }
+    .hk-badge[data-s="checkout"] { background:var(--checkout); }
+    .hk-badge[data-h="clean"] { background:#64748B; }
+    .hk-badge[data-h="dirty"], .hk-badge[data-h="rented-dirty"] { background:var(--dirty); }
+
+    /* Calendar view */
+    .hk-cal-panel { display:none; }
+    .hk-cal-panel.is-on { display:block; }
+    .hk-cal-head {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      gap:.75rem; margin-bottom:1rem;
+    }
+    .hk-cal-title { font-size:1.1rem; font-weight:800; color:#0f172a; }
+    .hk-cal-nav { display:flex; align-items:center; gap:.4rem; }
+    .hk-cal-grid {
+      display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px;
+    }
+    .hk-cal-dow {
+      text-align:center; font-size:.72rem; font-weight:800; color:#94a3b8; padding:.35rem 0;
+    }
+    .hk-cal-day {
+      min-height:110px; background:#fff; border:1px solid #E8ECF1; border-radius:12px;
+      padding:8px; display:flex; flex-direction:column; gap:4px;
+    }
+    .hk-cal-day.is-muted { opacity:.45; background:#F8FAFC; }
+    .hk-cal-day.is-today { border-color:#0027B7; box-shadow:0 0 0 2px rgba(0,39,183,.12); }
+    .hk-cal-num { font-size:.8rem; font-weight:800; color:#64748B; }
+    .hk-cal-day.is-today .hk-cal-num { color:#0027B7; }
+    .hk-cal-chips { display:flex; flex-direction:column; gap:3px; overflow:hidden; }
+    .hk-cal-chip {
+      display:flex; align-items:center; justify-content:space-between; gap:4px;
+      border-radius:7px; padding:3px 6px; font-size:.68rem; font-weight:800; color:#fff;
+      cursor:pointer; border:0; text-align:start; width:100%;
+    }
+    .hk-cal-chip[data-s="vacant"] { background:var(--vacant); }
+    .hk-cal-chip[data-s="occupied"] { background:var(--occupied); }
+    .hk-cal-chip[data-s="waiting"] { background:var(--waiting); }
+    .hk-cal-chip[data-s="checkout"] { background:var(--checkout); }
+    .hk-cal-more { font-size:.65rem; font-weight:700; color:#64748B; padding-inline:4px; }
+    .room-grid.is-off, .hk-list-panel:not(.is-on), .hk-cal-panel:not(.is-on) { display:none !important; }
+    .hk-money { font-variant-numeric: tabular-nums; font-weight:800; }
+    .hk-money.is-due { color: var(--occupied); }
+    .hk-money.is-credit { color: var(--vacant); }
+    .hk-drawer-head {
+      display:flex; align-items:flex-start; justify-content:space-between; gap:.75rem;
+      margin-bottom:1rem; padding-bottom:.85rem; border-bottom:1px solid #E2E8F0;
+    }
+    .hk-drawer-actions { display:flex; align-items:center; gap:.35rem; flex-shrink:0; }
+    .hk-kv {
+      display:grid; grid-template-columns:1fr 1fr; gap:.65rem .85rem;
+    }
+    .hk-kv-item {
+      background:#F8FAFC; border:1px solid #EEF2F7; border-radius:10px; padding:.65rem .75rem;
+    }
+    .hk-kv-item.is-wide { grid-column:1 / -1; }
+    .hk-kv-label { font-size:.7rem; font-weight:800; color:#94a3b8; margin-bottom:.2rem; }
+    .hk-kv-value { font-size:.92rem; font-weight:800; color:#0f172a; word-break:break-word; }
+    .hk-fin {
+      border:1px solid #E8ECF1; border-radius:12px; overflow:hidden; background:#fff;
+    }
+    .hk-fin-row {
+      display:flex; align-items:center; justify-content:space-between; gap:.75rem;
+      padding:.7rem .9rem; border-bottom:1px solid #F1F5F9; font-size:.88rem;
+    }
+    .hk-fin-row:last-child { border-bottom:0; }
+    .hk-fin-row.is-total { background:#EEF2FF; font-weight:800; }
+    .hk-fin-label { color:#64748B; font-weight:700; }
+    .hk-fin-row.is-total .hk-fin-label { color:#0027B7; }
+    .hk-section-title {
+      font-size:.78rem; font-weight:800; color:#94a3b8; letter-spacing:.04em;
+      margin:1rem 0 .55rem;
+    }
+    .hk-vacant-note {
+      text-align:center; padding:1.25rem; color:#64748B; font-weight:700;
+      background:#F8FAFC; border-radius:12px; border:1px dashed #E2E8F0;
+    }
+    #room-drawer { width:min(440px, 100vw); max-width:100%; }
+    .hk-list-table th, .hk-list-table td { white-space: nowrap; }
+    .hk-list-table .action-cell { white-space: nowrap; width:1%; }
   </style>
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-    <!-- Solid building with light windows -->
+    <!-- Solid building; color via currentColor -->
     <symbol id="icon-property" viewBox="0 0 28 36">
-      <rect x="1" y="1" width="26" height="34" rx="4" fill="currentColor"/>
-      <rect x="6" y="7" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
-      <rect x="16.5" y="7" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
-      <rect x="6" y="15.5" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
-      <rect x="16.5" y="15.5" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
-      <rect x="6" y="24" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
-      <rect x="16.5" y="24" width="5.5" height="5.5" rx="1" fill="#fff" fill-opacity=".92"/>
+      <rect x="0" y="0" width="28" height="36" rx="5" fill="currentColor"/>
+      <rect x="5" y="6" width="6" height="6" rx="1.2" fill="#fff"/>
+      <rect x="17" y="6" width="6" height="6" rx="1.2" fill="#fff"/>
+      <rect x="5" y="15" width="6" height="6" rx="1.2" fill="#fff"/>
+      <rect x="17" y="15" width="6" height="6" rx="1.2" fill="#fff"/>
+      <rect x="5" y="24" width="6" height="6" rx="1.2" fill="#fff"/>
+      <rect x="17" y="24" width="6" height="6" rx="1.2" fill="#fff"/>
     </symbol>
-    <!-- Soft cream broom / mop -->
-    <symbol id="icon-mop" viewBox="0 0 24 36" fill="none">
-      <path d="M12 2.5v18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M7.5 20.5h9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M6 22c.6 3.2 1.4 7.2 2.2 10.2M9.2 22c.4 3.5.9 8 1.4 11M12 22c.2 3.6.5 8.2.8 11.2M14.8 22c-.4 3.5-.9 8-1.4 11M18 22c-.6 3.2-1.4 7.2-2.2 10.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
-      <ellipse cx="12" cy="21.2" rx="6.2" ry="2.2" fill="currentColor" opacity=".35"/>
+    <!-- Cleaning mop / broom — filled, readable -->
+    <symbol id="icon-mop" viewBox="0 0 24 36">
+      <path d="M12 3v17" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M5.5 20.5h13" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M6 21.5c.8 4 2 9.5 3 12.5M10 21.5c.5 4.2 1.2 10 1.8 13M14 21.5c-.5 4.2-1.2 10-1.8 13M18 21.5c-.8 4-2 9.5-3 12.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      <ellipse cx="12" cy="20.8" rx="7" ry="2.6" fill="currentColor"/>
     </symbol>
   </svg>
 </head>
@@ -230,10 +329,10 @@
           </div>
           <div class="hk-pills" id="hk-pills">
             <button type="button" class="hk-pill" data-group="hk" data-f="clean">
-              <svg class="hk-ico" viewBox="0 0 28 36" style="color:#C9A227"><use href="#icon-property"/></svg>
+              <svg class="hk-ico" viewBox="0 0 28 36" style="color:#B08900"><use href="#icon-property"/></svg>
               نظيفة <span class="n" data-c="clean">0</span>
             </button>
-            <button type="button" class="hk-pill" data-group="hk" data-f="dirty"><svg class="hk-ico" viewBox="0 0 24 36" style="color:#E6D7B0"><use href="#icon-mop"/></svg>تحتاج تنظيف <span class="n" data-c="dirty">0</span></button>
+            <button type="button" class="hk-pill" data-group="hk" data-f="dirty"><svg class="hk-ico" viewBox="0 0 24 36" style="color:#8B6914"><use href="#icon-mop"/></svg>تحتاج تنظيف <span class="n" data-c="dirty">0</span></button>
             <button type="button" class="hk-pill" data-group="hk" data-f="rented-dirty">مشغولة · تحتاج تنظيف <span class="n" data-c="rented-dirty">0</span></button>
             <button type="button" class="hk-pill is-on" data-group="hk" data-f="all-hk">الكل</button>
           </div>
@@ -414,6 +513,44 @@
           <div class="hk-empty" id="hk-empty">لا توجد غرف مطابقة للفلاتر الحالية</div>
         </div>
 
+        <div class="hk-list-panel panel overflow-hidden" id="room-list" hidden>
+          <div class="table-wrap">
+            <table class="hk-list-table">
+              <thead>
+                <tr>
+                  <th>رقم الحجز</th>
+                  <th>الحالة</th>
+                  <th>العميل</th>
+                  <th>الوحدة</th>
+                  <th>دخول في</th>
+                  <th>خروج في</th>
+                  <th>الليالي</th>
+                  <th>الإيجار</th>
+                  <th>الإجمالي</th>
+                  <th>المدفوع</th>
+                  <th>الرصيد</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="room-list-body"></tbody>
+            </table>
+          </div>
+          <div class="hk-empty" id="hk-empty-list">لا توجد غرف مطابقة للفلاتر الحالية</div>
+        </div>
+
+        <div class="hk-cal-panel panel p-4 sm:p-5" id="room-calendar" hidden>
+          <div class="hk-cal-head">
+            <div class="hk-cal-title" id="hk-cal-title">يوليو 2026</div>
+            <div class="hk-cal-nav">
+              <button type="button" class="btn btn-ghost btn-sm" id="hk-cal-prev" title="الشهر السابق">السابق</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="hk-cal-today">اليوم</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="hk-cal-next" title="الشهر التالي">التالي</button>
+            </div>
+          </div>
+          <div class="hk-cal-grid" id="hk-cal-dows"></div>
+          <div class="hk-cal-grid mt-1" id="hk-cal-days"></div>
+        </div>
+
         <div class="hk-pager">
           <button type="button" class="btn btn-ghost btn-sm" id="hk-prev">السابق</button>
           <span class="hk-range" id="hk-range">1–20 من 20</span>
@@ -424,44 +561,505 @@
   </div>
 
   <div id="room-drawer" class="drawer p-5 overflow-y-auto">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="font-extrabold text-lg">الغرفة <span id="room-num">101</span></h3>
-      <button class="btn btn-ghost btn-sm" data-action="close-drawer">إغلاق</button>
+    <div class="hk-drawer-head">
+      <div class="min-w-0">
+        <h3 class="font-extrabold text-lg leading-tight">الغرفة <span id="room-num">101</span></h3>
+        <p class="text-xs text-slate-500 font-bold mt-1" id="drawer-res-code">—</p>
+      </div>
+      <div class="hk-drawer-actions">
+        <button type="button" id="drawer-edit-btn" class="icon-btn is-edit" title="تعديل بيانات العميل" aria-label="تعديل بيانات العميل">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="icon-btn is-close" title="إغلاق" aria-label="إغلاق" data-action="close-drawer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
+
+    <div id="drawer-vacant" class="hk-vacant-note" hidden>لا يوجد حجز مرتبط بهذه الغرفة حالياً</div>
+
+    <div id="drawer-booking">
+      <div class="hk-section-title">بيانات الحجز</div>
+      <div class="hk-kv">
+        <div class="hk-kv-item"><div class="hk-kv-label">رقم الحجز</div><div class="hk-kv-value" id="d-res">—</div></div>
+        <div class="hk-kv-item"><div class="hk-kv-label">الحالة</div><div class="hk-kv-value" id="d-status">—</div></div>
+        <div class="hk-kv-item"><div class="hk-kv-label">العميل</div><div class="hk-kv-value" id="d-guest">—</div></div>
+        <div class="hk-kv-item"><div class="hk-kv-label">الوحدة</div><div class="hk-kv-value" id="d-unit">—</div></div>
+        <div class="hk-kv-item"><div class="hk-kv-label">دخول في</div><div class="hk-kv-value" id="d-in">—</div></div>
+        <div class="hk-kv-item"><div class="hk-kv-label">خروج في</div><div class="hk-kv-value" id="d-out">—</div></div>
+        <div class="hk-kv-item is-wide"><div class="hk-kv-label">الليالي</div><div class="hk-kv-value" id="d-nights">—</div></div>
+      </div>
+
+      <div class="hk-section-title">الملخص المالي</div>
+      <div class="hk-fin">
+        <div class="hk-fin-row"><span class="hk-fin-label">الإيجار الكلي</span><span class="hk-money" id="d-rent">—</span></div>
+        <div class="hk-fin-row"><span class="hk-fin-label">التكلفة الكلية</span><span class="hk-money" id="d-cost">—</span></div>
+        <div class="hk-fin-row"><span class="hk-fin-label">الضرائب</span><span class="hk-money" id="d-tax">—</span></div>
+        <div class="hk-fin-row is-total"><span class="hk-fin-label">الإجمالي</span><span class="hk-money" id="d-total">—</span></div>
+        <div class="hk-fin-row"><span class="hk-fin-label">التأمين</span><span class="hk-money" id="d-deposit">—</span></div>
+        <div class="hk-fin-row"><span class="hk-fin-label">المدفوع</span><span class="hk-money" id="d-paid">—</span></div>
+        <div class="hk-fin-row is-total"><span class="hk-fin-label">الرصيد</span><span class="hk-money" id="d-balance">—</span></div>
+      </div>
+    </div>
+
+    <div class="hk-section-title">حالة الغرفة</div>
     <div class="space-y-4">
       <div>
         <label class="field-label">الحالة</label>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> شاغرة</label>
-          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> مشغولة</label>
-          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> بانتظار الدخول</label>
-          <label class="chip justify-center"><input type="radio" name="st" class="me-1" /> مغادرة اليوم</label>
+        <div class="grid grid-cols-2 gap-2 text-sm" id="drawer-status-radios">
+          <label class="chip justify-center"><input type="radio" name="st" value="vacant" class="me-1" /> شاغرة</label>
+          <label class="chip justify-center"><input type="radio" name="st" value="occupied" class="me-1" /> مشغولة</label>
+          <label class="chip justify-center"><input type="radio" name="st" value="waiting" class="me-1" /> بانتظار الدخول</label>
+          <label class="chip justify-center"><input type="radio" name="st" value="checkout" class="me-1" /> مغادرة اليوم</label>
         </div>
       </div>
       <div>
         <label class="field-label">التدبير الفندقي</label>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <label class="chip justify-center"><input type="radio" name="hk" class="me-1" /> نظيفة</label>
-          <label class="chip justify-center"><input type="radio" name="hk" class="me-1" /> تحتاج تنظيف</label>
+        <div class="grid grid-cols-2 gap-2 text-sm" id="drawer-hk-radios">
+          <label class="chip justify-center"><input type="radio" name="hk" value="clean" class="me-1" /> نظيفة</label>
+          <label class="chip justify-center"><input type="radio" name="hk" value="dirty" class="me-1" /> تحتاج تنظيف</label>
         </div>
       </div>
-      <div class="flex gap-2 pt-2">
+      <div class="flex gap-2 pt-1">
         <button class="btn btn-ghost flex-1" data-action="close-drawer">إلغاء</button>
         <button class="btn btn-primary flex-1" data-action="close-drawer" onclick="PMS.toast('تم تحديث الغرفة (تجريبي)')">حفظ</button>
       </div>
     </div>
   </div>
 
-  <script src="../assets/js/app.js?v=hk11"></script>
+  <div id="edit-guest-modal" class="modal" style="width:min(40rem, calc(100% - 2rem)); z-index:55">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center gap-3">
+      <div class="min-w-0">
+        <h3 class="font-bold">تعديل بيانات العميل</h3>
+        <p class="text-xs text-slate-500 font-bold mt-0.5" id="eg-subtitle">—</p>
+      </div>
+      <button type="button" class="icon-btn is-close" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="edit-guest-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 grid sm:grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+      <div class="sm:col-span-2">
+        <label class="field-label">اسم العميل *</label>
+        <input id="eg-name" class="field-input" type="text" autocomplete="name" />
+      </div>
+      <div>
+        <label class="field-label">الجوال</label>
+        <div class="phone-field" data-phone-field id="eg-phone-field">
+          <button type="button" class="phone-code-btn" data-ss-trigger aria-expanded="false" aria-haspopup="listbox">
+            <span data-ss-flag><img class="flag-img" src="https://flagcdn.com/w40/sa.png" width="24" height="18" alt="SA" /></span>
+            <span data-ss-text>+966</span>
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <input type="tel" class="phone-input" id="eg-phone" placeholder="5xxxxxxxx" inputmode="numeric" data-phone-input />
+          <div class="phone-dropdown" data-ss-dropdown role="listbox">
+            <div class="phone-dropdown-search search-input">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" placeholder="ابحث عن دولة أو رمز…" data-ss-search />
+            </div>
+            <div class="phone-dropdown-list" data-ss-list></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">البريد</label>
+        <input id="eg-email" class="field-input" type="email" placeholder="name@example.com" />
+      </div>
+      <div>
+        <label class="field-label">الجنسية</label>
+        <div data-nationality-field id="eg-nationality-field">
+          <button type="button" class="ss-select-btn" data-ss-trigger aria-expanded="false" aria-haspopup="listbox">
+            <span data-ss-flag><img class="flag-img" src="https://flagcdn.com/w40/sy.png" width="24" height="18" alt="SY" /></span>
+            <span class="ss-select-text" data-ss-text>سوري</span>
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="phone-dropdown" data-ss-dropdown role="listbox">
+            <div class="phone-dropdown-search search-input">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" placeholder="ابحث عن الجنسية…" data-ss-search />
+            </div>
+            <div class="phone-dropdown-list" data-ss-list></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">نوع الهوية</label>
+        <select id="eg-id-type" class="field-select">
+          <option>جواز سفر</option>
+          <option>الهوية الوطنية/الإقامة</option>
+          <option>هوية خليجية</option>
+          <option>إخراج قيد</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">رقم الهوية</label>
+        <input id="eg-id-num" class="field-input" type="text" />
+      </div>
+      <div>
+        <label class="field-label">الجنس</label>
+        <select id="eg-gender" class="field-select">
+          <option value="">—</option>
+          <option>ذكر</option>
+          <option>أنثى</option>
+        </select>
+      </div>
+      <div class="sm:col-span-2 border-t border-slate-100 pt-4 mt-1">
+        <div class="text-xs font-extrabold text-slate-400 mb-3">بيانات الإقامة</div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="field-label">رقم الحجز</label>
+            <input id="eg-res" class="field-input" type="text" readonly />
+          </div>
+          <div>
+            <label class="field-label">الوحدة</label>
+            <input id="eg-unit" class="field-input" type="text" />
+          </div>
+          <div>
+            <label class="field-label">دخول في</label>
+            <input id="eg-in" class="field-input" type="text" placeholder="DD/MM/YYYY" />
+          </div>
+          <div>
+            <label class="field-label">خروج في</label>
+            <input id="eg-out" class="field-input" type="text" placeholder="DD/MM/YYYY" />
+          </div>
+          <div>
+            <label class="field-label">الليالي</label>
+            <input id="eg-nights" class="field-input" type="number" min="1" />
+          </div>
+          <div>
+            <label class="field-label">حالة الحجز</label>
+            <select id="eg-status" class="field-select">
+              <option value="occupied">تم الدخول</option>
+              <option value="waiting">مؤكد</option>
+              <option value="checkout">مغادرة اليوم</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="edit-guest-modal">إلغاء</button>
+      <button type="button" class="btn btn-primary" id="eg-save">حفظ التعديلات</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/app.js?v=hk17"></script>
   <script>
     (function () {
       const grid = document.getElementById('room-grid');
+      const listPanel = document.getElementById('room-list');
+      const listBody = document.getElementById('room-list-body');
+      const calPanel = document.getElementById('room-calendar');
+      const calDays = document.getElementById('hk-cal-days');
+      const calDows = document.getElementById('hk-cal-dows');
+      const calTitle = document.getElementById('hk-cal-title');
       const cards = () => [...grid.querySelectorAll('.room-card')];
       const empty = document.getElementById('hk-empty');
+      const emptyList = document.getElementById('hk-empty-list');
       const range = document.getElementById('hk-range');
       const search = document.getElementById('hk-search');
+      const viewToggle = document.getElementById('hk-view-toggle');
+
+      const STATUS_AR = { vacant: 'شاغرة', occupied: 'مشغولة', waiting: 'بانتظار الدخول', checkout: 'مغادرة اليوم' };
+      const BOOKING_STATUS_AR = {
+        vacant: 'شاغرة',
+        occupied: 'تم الدخول',
+        waiting: 'مؤكد',
+        checkout: 'مغادرة اليوم',
+      };
+      const HK_AR = { clean: 'نظيفة', dirty: 'تحتاج تنظيف', 'rented-dirty': 'مشغولة · تحتاج تنظيف' };
+      const DOW = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'];
+      const MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      const EDIT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" stroke-linejoin="round"/></svg>';
+
       let statusF = 'all';
       let hkF = 'all-hk';
+      let view = 'grid';
+      let calCursor = new Date(2026, 6, 1); // Jul 2026 demo
+      let currentMeta = null;
+
+      function money(n) {
+        const abs = Math.abs(n);
+        const s = abs.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (n < 0 ? '-' : '') + s;
+      }
+
+      function fmtDate(d) {
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        return dd + '/' + mm + '/' + d.getFullYear();
+      }
+
+      function bookingFor(meta) {
+        const n = parseInt(meta.room, 10) || 100;
+        const hasBooking = meta.status !== 'vacant' && meta.guest && meta.guest !== '—';
+        if (!hasBooking) {
+          return {
+            hasBooking: false,
+            resId: '—',
+            statusLabel: STATUS_AR[meta.status] || meta.status,
+            guest: '—',
+            phone: '',
+            phoneIso: 'SA',
+            email: '',
+            idType: 'جواز سفر',
+            idNum: '',
+            nationality: '',
+            nationalityIso: 'SY',
+            gender: '',
+            unit: meta.room + (meta.type ? ' · ' + meta.type : ''),
+            checkIn: '—',
+            checkOut: '—',
+            nights: '—',
+            rent: '—',
+            cost: '—',
+            tax: '—',
+            total: '—',
+            deposit: '—',
+            paid: '—',
+            balance: '—',
+            balanceNum: 0,
+            statusKey: meta.status,
+          };
+        }
+
+        const nights = 2 + (n % 5);
+        const rate = 280 + (n % 7) * 45;
+        const rent = rate * nights;
+        const extras = (n % 3) * 75;
+        const cost = rent + extras;
+        const tax = Math.round(cost * 0.15 * 100) / 100;
+        const total = Math.round((cost + tax) * 100) / 100;
+        const deposit = 500;
+        const paidRatio = meta.status === 'waiting' ? 0.35 : (meta.status === 'checkout' ? 1 : 0.7 + (n % 4) * 0.08);
+        let paid = Math.round(total * Math.min(paidRatio, 1.15) * 100) / 100;
+        if (meta.status === 'occupied' && n % 5 === 0) paid = Math.round((total + 350) * 100) / 100;
+        const balance = Math.round((total - paid) * 100) / 100;
+
+        let inDate; let outDate;
+        if (meta.status === 'waiting') {
+          inDate = new Date(2026, 6, 30);
+          outDate = new Date(2026, 6, 30 + nights);
+        } else if (meta.status === 'checkout') {
+          outDate = new Date(2026, 6, 30);
+          inDate = new Date(2026, 6, 30 - nights);
+        } else {
+          inDate = new Date(2026, 6, 28 - (n % 3));
+          outDate = new Date(inDate.getFullYear(), inDate.getMonth(), inDate.getDate() + nights);
+        }
+
+        const idTypes = ['جواز سفر', 'الهوية الوطنية/الإقامة', 'هوية خليجية', 'إخراج قيد'];
+        const phones = [
+          { iso: 'SA', local: '551234007' },
+          { iso: 'SA', local: '564179297' },
+          { iso: 'SA', local: '500222111' },
+          { iso: 'SA', local: '551234010' },
+          { iso: 'SA', local: '599035677' },
+        ];
+        const nats = [
+          { iso: 'SA', nat: 'سعودي' },
+          { iso: 'SY', nat: 'سوري' },
+          { iso: 'EG', nat: 'مصري' },
+          { iso: 'AE', nat: 'إماراتي' },
+        ];
+        const phone = phones[n % phones.length];
+        const nationality = nats[n % nats.length];
+
+        return {
+          hasBooking: true,
+          resId: 'RES-' + String(24000 + n),
+          statusLabel: BOOKING_STATUS_AR[meta.status] || STATUS_AR[meta.status],
+          guest: meta.guest,
+          phone: phone.local,
+          phoneIso: phone.iso,
+          email: n % 3 === 0 ? 'guest' + n + '@example.com' : '',
+          idType: idTypes[n % idTypes.length],
+          idNum: String(1000000000 + n * 137),
+          nationality: nationality.nat,
+          nationalityIso: nationality.iso,
+          gender: n % 2 === 0 ? 'ذكر' : 'أنثى',
+          unit: meta.room + (meta.type ? ' · ' + meta.type : ''),
+          checkIn: fmtDate(inDate),
+          checkOut: fmtDate(outDate),
+          nights: String(nights),
+          rent: money(rent),
+          cost: money(cost),
+          tax: money(tax),
+          total: money(total),
+          deposit: money(deposit),
+          paid: money(paid),
+          balance: money(balance),
+          balanceNum: balance,
+          statusKey: meta.status,
+          room: meta.room,
+        };
+      }
+
+      function roomMeta(card) {
+        const mid = card.querySelector('.rc-mid');
+        const detail = mid ? mid.innerText.replace(/\s+/g, ' ').trim() : '';
+        const base = {
+          room: card.dataset.room || '',
+          type: card.dataset.type || '',
+          guest: card.dataset.guest || '—',
+          status: card.dataset.status || 'vacant',
+          hk: card.dataset.hk || 'clean',
+          detail,
+          el: card,
+        };
+        return Object.assign(base, { booking: bookingFor(base) });
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      function setMoneyEl(id, text, balanceNum) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = text;
+        el.classList.remove('is-due', 'is-credit');
+        if (typeof balanceNum === 'number' && text !== '—') {
+          if (balanceNum > 0) el.classList.add('is-due');
+          else if (balanceNum < 0) el.classList.add('is-credit');
+        }
+      }
+
+      function setRadios(name, value) {
+        document.querySelectorAll('input[name="' + name + '"]').forEach(inp => {
+          let v = value;
+          if (name === 'hk' && value === 'rented-dirty') v = 'dirty';
+          inp.checked = inp.value === v;
+        });
+      }
+
+      function fillDrawer(meta) {
+        currentMeta = meta;
+        const b = meta.booking;
+        setText('room-num', meta.room);
+        setText('drawer-res-code', b.hasBooking ? b.resId : 'بدون حجز');
+        const vacantNote = document.getElementById('drawer-vacant');
+        const bookingBlock = document.getElementById('drawer-booking');
+        const editBtn = document.getElementById('drawer-edit-btn');
+        if (vacantNote) vacantNote.hidden = b.hasBooking;
+        if (bookingBlock) bookingBlock.hidden = !b.hasBooking;
+        if (editBtn) editBtn.hidden = !b.hasBooking;
+        setText('d-res', b.resId);
+        setText('d-status', b.statusLabel);
+        setText('d-guest', b.guest);
+        setText('d-unit', b.unit);
+        setText('d-in', b.checkIn);
+        setText('d-out', b.checkOut);
+        setText('d-nights', b.nights);
+        setMoneyEl('d-rent', b.rent);
+        setMoneyEl('d-cost', b.cost);
+        setMoneyEl('d-tax', b.tax);
+        setMoneyEl('d-total', b.total);
+        setMoneyEl('d-deposit', b.deposit);
+        setMoneyEl('d-paid', b.paid);
+        setMoneyEl('d-balance', b.balance, b.balanceNum);
+        setRadios('st', meta.status);
+        setRadios('hk', meta.hk);
+      }
+
+      function setInput(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.value = value == null ? '' : value;
+      }
+
+      function flagHtml(iso) {
+        const code = String(iso || 'SA').toLowerCase();
+        return '<img class="flag-img" src="https://flagcdn.com/w40/' + code + '.png" width="24" height="18" alt="' + String(iso || 'SA').toUpperCase() + '" loading="lazy" decoding="async" />';
+      }
+
+      const DIAL_BY_ISO = { SA: '+966', SY: '+963', EG: '+20', AE: '+971', JO: '+962', KW: '+965', BH: '+973', QA: '+974', OM: '+968' };
+      const NAT_BY_ISO = { SA: 'سعودي', SY: 'سوري', EG: 'مصري', AE: 'إماراتي', JO: 'أردني', KW: 'كويتي', BH: 'بحريني', QA: 'قطري', OM: 'عماني' };
+
+      function setPhoneField(iso, local) {
+        const root = document.getElementById('eg-phone-field');
+        if (!root) return;
+        if (typeof root.__ssSetIso === 'function') root.__ssSetIso(iso || 'SA');
+        else {
+          const code = iso || 'SA';
+          const dial = DIAL_BY_ISO[code] || '+966';
+          root.dataset.iso = code;
+          root.dataset.dialCode = dial;
+          const flagEl = root.querySelector('[data-ss-flag]');
+          const textEl = root.querySelector('[data-ss-text]');
+          if (flagEl) flagEl.innerHTML = flagHtml(code);
+          if (textEl) textEl.textContent = dial;
+        }
+        setInput('eg-phone', local || '');
+      }
+
+      function setNationalityField(iso) {
+        const root = document.getElementById('eg-nationality-field');
+        if (!root) return;
+        if (typeof root.__ssSetIso === 'function') root.__ssSetIso(iso || 'SY');
+        else {
+          const code = iso || 'SY';
+          const label = NAT_BY_ISO[code] || 'سوري';
+          root.dataset.iso = code;
+          root.dataset.nationality = label;
+          const flagEl = root.querySelector('[data-ss-flag]');
+          const textEl = root.querySelector('[data-ss-text]');
+          if (flagEl) flagEl.innerHTML = flagHtml(code);
+          if (textEl) textEl.textContent = label;
+        }
+      }
+
+      function openEditModal(meta) {
+        if (!meta || !meta.booking || !meta.booking.hasBooking) return;
+        currentMeta = meta;
+        const b = meta.booking;
+        setText('eg-subtitle', b.resId + ' · غرفة ' + meta.room);
+        setInput('eg-name', b.guest);
+        setPhoneField(b.phoneIso || 'SA', b.phone);
+        setInput('eg-email', b.email);
+        setInput('eg-id-type', b.idType);
+        setInput('eg-id-num', b.idNum);
+        setNationalityField(b.nationalityIso || (b.nationality === 'سعودي' ? 'SA' : 'SY'));
+        setInput('eg-gender', b.gender);
+        setInput('eg-res', b.resId);
+        setInput('eg-unit', b.unit);
+        setInput('eg-in', b.checkIn === '—' ? '' : b.checkIn);
+        setInput('eg-out', b.checkOut === '—' ? '' : b.checkOut);
+        setInput('eg-nights', b.nights === '—' ? '' : b.nights);
+        setInput('eg-status', b.statusKey === 'vacant' ? 'occupied' : b.statusKey);
+        if (window.PMS && PMS.openModal) PMS.openModal('edit-guest-modal');
+        else document.getElementById('edit-guest-modal')?.classList.add('is-open');
+      }
+
+      function saveGuestEdit() {
+        const name = (document.getElementById('eg-name')?.value || '').trim();
+        if (!name) {
+          if (window.PMS && PMS.toast) PMS.toast('يرجى إدخال اسم العميل');
+          return;
+        }
+        const room = currentMeta && currentMeta.room;
+        const card = room ? cards().find(c => c.dataset.room === String(room)) : null;
+        if (card) {
+          card.dataset.guest = name;
+          const guestEl = card.querySelector('.rc-guest');
+          if (guestEl) guestEl.textContent = name;
+          const status = document.getElementById('eg-status')?.value;
+          if (status) card.dataset.status = status;
+          const inVal = document.getElementById('eg-in')?.value || '';
+          const outVal = document.getElementById('eg-out')?.value || '';
+          const nights = document.getElementById('eg-nights')?.value || '';
+          const unit = document.getElementById('eg-unit')?.value || '';
+          fillDrawer(roomMeta(card));
+          setText('d-guest', name);
+          if (inVal) setText('d-in', inVal);
+          if (outVal) setText('d-out', outVal);
+          if (nights) setText('d-nights', nights);
+          if (unit) setText('d-unit', unit);
+        }
+        if (window.PMS && PMS.closeModal) PMS.closeModal('edit-guest-modal');
+        else document.getElementById('edit-guest-modal')?.classList.remove('is-open');
+        if (window.PMS && PMS.toast) PMS.toast('تم حفظ بيانات العميل (تجريبي)');
+        apply();
+      }
 
       function setCounts() {
         const all = cards();
@@ -482,7 +1080,11 @@
 
       function match(card) {
         const q = (search.value || '').trim().toLowerCase();
-        const hay = [card.dataset.room, card.dataset.type, card.dataset.guest, card.textContent].join(' ').toLowerCase();
+        const meta = roomMeta(card);
+        const hay = [
+          card.dataset.room, card.dataset.type, card.dataset.guest, card.textContent,
+          meta.booking.resId, meta.booking.guest, meta.booking.statusLabel
+        ].join(' ').toLowerCase();
         if (q && !hay.includes(q)) return false;
         if (statusF !== 'all' && card.dataset.status !== statusF) return false;
         if (hkF === 'clean' && card.dataset.hk !== 'clean') return false;
@@ -491,15 +1093,147 @@
         return true;
       }
 
+      function filtered() {
+        return cards().filter(match).map(roomMeta);
+      }
+
+      function openRoom(room) {
+        const card = cards().find(c => c.dataset.room === String(room));
+        if (!card) return;
+        fillDrawer(roomMeta(card));
+        if (window.PMS && PMS.openDrawer) PMS.openDrawer('room-drawer');
+        else {
+          const d = document.getElementById('room-drawer');
+          if (d) d.classList.add('is-open');
+          document.body.classList.add('drawer-open');
+        }
+      }
+
+      function balClass(n) {
+        if (n > 0) return 'hk-money is-due';
+        if (n < 0) return 'hk-money is-credit';
+        return 'hk-money';
+      }
+
+      function renderList(rows) {
+        listBody.innerHTML = rows.map(r => {
+          const b = r.booking;
+          const editCell = b.hasBooking
+            ? '<button type="button" class="icon-btn is-edit" title="تعديل بيانات العميل" aria-label="تعديل بيانات العميل" data-edit="1">' + EDIT_ICON + '</button>'
+            : '<span class="text-slate-300">—</span>';
+          return `
+          <tr data-room="${r.room}">
+            <td class="font-extrabold">${b.resId}</td>
+            <td><span class="hk-badge" data-s="${r.status}">${b.statusLabel}</span></td>
+            <td class="hk-list-guest">${b.guest}</td>
+            <td>
+              <div class="hk-list-room">${r.room}</div>
+              <div class="hk-list-type">${r.type}</div>
+            </td>
+            <td>${b.checkIn}</td>
+            <td>${b.checkOut}</td>
+            <td>${b.nights}</td>
+            <td class="hk-money">${b.rent}</td>
+            <td class="hk-money">${b.total}</td>
+            <td class="hk-money">${b.paid}</td>
+            <td class="${balClass(b.balanceNum)}">${b.balance}</td>
+            <td class="action-cell">${editCell}</td>
+          </tr>`;
+        }).join('');
+        emptyList.classList.toggle('show', rows.length === 0);
+        emptyList.style.display = rows.length === 0 ? 'block' : 'none';
+      }
+
+      function dayKey(d) {
+        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      }
+
+      function roomsForDay(day, rows) {
+        const today = new Date(2026, 6, 30);
+        const key = dayKey(day);
+        const todayKey = dayKey(today);
+        return rows.filter(r => {
+          if (r.status === 'checkout') return key === todayKey;
+          if (r.status === 'waiting') return key === todayKey || key === dayKey(new Date(2026, 6, 31));
+          if (r.status === 'occupied') {
+            const start = new Date(2026, 6, 28);
+            const end = new Date(2026, 7, 2);
+            return day >= start && day <= end;
+          }
+          if (r.status === 'vacant') return key === todayKey && r.hk === 'dirty';
+          return false;
+        });
+      }
+
+      function renderCalendar(rows) {
+        calTitle.textContent = MONTHS[calCursor.getMonth()] + ' ' + calCursor.getFullYear();
+        if (!calDows.dataset.ready) {
+          calDows.innerHTML = DOW.map(d => '<div class="hk-cal-dow">' + d + '</div>').join('');
+          calDows.dataset.ready = '1';
+        }
+
+        const y = calCursor.getFullYear();
+        const m = calCursor.getMonth();
+        const first = new Date(y, m, 1);
+        const startPad = first.getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const todayKey = dayKey(new Date(2026, 6, 30));
+        let html = '';
+
+        for (let i = 0; i < startPad; i++) {
+          const d = new Date(y, m, -startPad + i + 1);
+          html += '<div class="hk-cal-day is-muted"><div class="hk-cal-num">' + d.getDate() + '</div></div>';
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const d = new Date(y, m, day);
+          const key = dayKey(d);
+          const list = roomsForDay(d, rows);
+          const show = list.slice(0, 3);
+          const more = list.length - show.length;
+          html += '<div class="hk-cal-day' + (key === todayKey ? ' is-today' : '') + '">' +
+            '<div class="hk-cal-num">' + day + '</div>' +
+            '<div class="hk-cal-chips">' +
+            show.map(r => '<button type="button" class="hk-cal-chip" data-s="' + r.status + '" data-room="' + r.room + '" title="' + (STATUS_AR[r.status] || '') + '">' +
+              '<span>' + r.room + '</span><span>' + (r.guest !== '—' ? r.guest.split(' ')[0] : '') + '</span></button>').join('') +
+            (more > 0 ? '<div class="hk-cal-more">+' + more + ' أخرى</div>' : '') +
+            '</div></div>';
+        }
+
+        const cells = startPad + daysInMonth;
+        const trail = (7 - (cells % 7)) % 7;
+        for (let i = 1; i <= trail; i++) {
+          html += '<div class="hk-cal-day is-muted"><div class="hk-cal-num">' + i + '</div></div>';
+        }
+        calDays.innerHTML = html;
+      }
+
+      function setView(next) {
+        view = next;
+        viewToggle.querySelectorAll('.view-toggle-btn').forEach(b => {
+          b.classList.toggle('is-active', b.dataset.view === view);
+        });
+        grid.classList.toggle('is-off', view !== 'grid');
+        listPanel.classList.toggle('is-on', view === 'list');
+        listPanel.hidden = view !== 'list';
+        calPanel.classList.toggle('is-on', view === 'calendar');
+        calPanel.hidden = view !== 'calendar';
+        apply();
+      }
+
       function apply() {
+        const rows = filtered();
         let n = 0;
         cards().forEach(card => {
           const ok = match(card);
           card.classList.toggle('hide', !ok);
           if (ok) n += 1;
         });
-        empty.classList.toggle('show', n === 0);
+        empty.classList.toggle('show', view === 'grid' && n === 0);
         range.textContent = n ? ('1–' + n + ' من ' + n) : '0 من 0';
+
+        if (view === 'list') renderList(rows);
+        if (view === 'calendar') renderCalendar(rows);
       }
 
       function bindPills(rootId, group) {
@@ -517,13 +1251,60 @@
       bindPills('hk-pills', 'hk');
       search.addEventListener('input', apply);
 
+      viewToggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-view]');
+        if (!btn) return;
+        setView(btn.dataset.view);
+      });
+
       grid.addEventListener('click', (e) => {
         const card = e.target.closest('.room-card');
-        if (card) document.getElementById('room-num').textContent = card.dataset.room;
+        if (card) openRoom(card.dataset.room);
+      });
+
+      listBody.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('[data-edit]');
+        if (editBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const tr = editBtn.closest('tr[data-room]');
+          if (!tr) return;
+          const card = cards().find(c => c.dataset.room === tr.dataset.room);
+          if (card) openEditModal(roomMeta(card));
+          return;
+        }
+        const tr = e.target.closest('tr[data-room]');
+        if (tr) openRoom(tr.dataset.room);
+      });
+
+      document.getElementById('drawer-edit-btn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (currentMeta) openEditModal(currentMeta);
+      });
+
+      document.getElementById('eg-save')?.addEventListener('click', saveGuestEdit);
+
+      calDays.addEventListener('click', (e) => {
+        const chip = e.target.closest('.hk-cal-chip[data-room]');
+        if (chip) openRoom(chip.dataset.room);
+      });
+
+      document.getElementById('hk-cal-prev').addEventListener('click', () => {
+        calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() - 1, 1);
+        apply();
+      });
+      document.getElementById('hk-cal-next').addEventListener('click', () => {
+        calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() + 1, 1);
+        apply();
+      });
+      document.getElementById('hk-cal-today').addEventListener('click', () => {
+        calCursor = new Date(2026, 6, 1);
+        apply();
       });
 
       setCounts();
-      apply();
+      setView('grid');
     })();
   </script>
 </body>

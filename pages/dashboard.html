@@ -21,7 +21,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=dash2" />
 </head>
 <body class="app-bg font-sans" data-page="dashboard" data-title="الرئيسية"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الرئيسية"}]'>
@@ -139,18 +139,59 @@
           </article>
         </section>
 
-        <section>
-          <h2 class="font-extrabold text-lg mb-3">إجراءات سريعة</h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <a href="reservations.html" class="quick-tile">الحجوزات</a>
-            <a href="availability.html" class="quick-tile">التوفر</a>
-            <a href="housekeeping.html" class="quick-tile">التدبير الفندقي</a>
-            <a href="reports.html" class="quick-tile">التقارير</a>
+        <section class="quick-actions">
+          <div class="quick-actions-head">
+            <div>
+              <h2>إجراءات سريعة</h2>
+              <p>اختصارات للعمليات اليومية الأكثر استخداماً</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <a href="reservations.html" class="quick-tile" data-tone="primary">
+              <span class="quick-tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+              </span>
+              <span class="quick-tile-body">
+                <span class="quick-tile-title">الحجوزات</span>
+                <span class="quick-tile-desc">عرض وإدارة حجوزات اليوم والقادمة</span>
+              </span>
+              <span class="quick-tile-go">افتح <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+            <a href="availability.html" class="quick-tile" data-tone="secondary">
+              <span class="quick-tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              </span>
+              <span class="quick-tile-body">
+                <span class="quick-tile-title">التوفر</span>
+                <span class="quick-tile-desc">شبكة الغرف والشواغر حسب التاريخ</span>
+              </span>
+              <span class="quick-tile-go">افتح <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+            <a href="housekeeping.html" class="quick-tile" data-tone="success">
+              <span class="quick-tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 20h14"/><path d="M8 20V10l4-6 4 6v10" stroke-linejoin="round"/><path d="M10 14h4" stroke-linecap="round"/></svg>
+              </span>
+              <span class="quick-tile-body">
+                <span class="quick-tile-title">التدبير الفندقي</span>
+                <span class="quick-tile-desc">حالة النظافة وتحديث الغرف فوراً</span>
+              </span>
+              <span class="quick-tile-go">افتح <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
+            <a href="reports.html" class="quick-tile" data-tone="warning">
+              <span class="quick-tile-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5"/><path d="M4 19h16" stroke-linecap="round"/><path d="M8 15v-4M12 15V8M16 15v-6" stroke-linecap="round"/></svg>
+              </span>
+              <span class="quick-tile-body">
+                <span class="quick-tile-title">التقارير</span>
+                <span class="quick-tile-desc">ملخصات الإشغال والإيراد والأداء</span>
+              </span>
+              <span class="quick-tile-go">افتح <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </a>
           </div>
         </section>
       </main>
     </div>
   </div>
-  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/app.js?v=dash2"></script>
 </body>
 </html>
