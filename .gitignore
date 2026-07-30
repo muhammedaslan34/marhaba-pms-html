@@ -1,0 +1,6 @@
+node_modules/
+dist/
+assets/css/tailwind.css
+.playwright-mcp/
+.claude/
+npm-debug.log*

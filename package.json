@@ -1,0 +1,15 @@
+{
+  "name": "solvfast-pms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Solvfast PMS — static front-end",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./assets/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./assets/css/tailwind.css --watch",
+    "build": "npm run build:css && node scripts/build.js",
+    "dev": "npm run watch:css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
