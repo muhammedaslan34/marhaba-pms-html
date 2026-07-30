@@ -899,6 +899,10 @@ html.dark .table-pager-btn {
   border-radius: 0.75rem;
   box-shadow: 0 14px 36px rgba(15, 23, 42, 0.14);
 }
+.property-select-trigger[aria-expanded="true"] {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 39, 183, 0.14);
+}
 .property-select-menu.is-open {
   display: flex;
 }
@@ -946,7 +950,7 @@ html.dark .property-select-menu {
   transition: border-color 0.15s, background 0.15s;
   flex-shrink: 0;
 }
-.pswitch-badge:hover { border-color: #c7d2fe; background: var(--color-primary-soft); }
+.pswitch-badge:hover { border-color: rgba(0, 39, 183, 0.35); background: var(--color-primary-soft); }
 .pswitch-badge-code {
   font-size: 0.72rem;
   font-weight: 800;

@@ -830,24 +830,15 @@
   function propertySwitcherOptionHtml(p, selectedId) {
     const sel = p.id === selectedId;
     return (
-      '<button type="button" class="pswitch-option' +
+      '<button type="button" class="property-select-option' +
       (sel ? " is-selected" : "") +
       '" data-action="select-property-switcher" data-property-id="' +
       p.id +
       '" role="option" aria-selected="' +
       (sel ? "true" : "false") +
-      '" data-search="' +
-      (p.name + " " + p.arabicName + " " + p.code + " " + p.city).toLowerCase() +
       '">' +
-      '<span class="pswitch-option-dot" aria-hidden="true"></span>' +
-      '<span class="min-w-0 flex-1 text-start">' +
-      '<span class="block truncate font-extrabold text-sm">' + p.name + '</span>' +
-      '<span class="block truncate text-xs text-slate-400 font-semibold">' + p.arabicName + '</span>' +
-      '</span>' +
-      '<span class="pswitch-option-code">' + p.code + '</span>' +
-      (sel
-        ? '<svg class="w-4 h-4 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-        : "") +
+      '<span class="min-w-0 flex-1 truncate">' + p.name + "</span>" +
+      '<span class="property-select-code">' + p.code + "</span>" +
       "</button>"
     );
   }
@@ -855,28 +846,32 @@
   function propertySwitcherMenuHtml() {
     const user = CURRENT_USER;
     const selectedId = PD.getSelectedPropertyId();
+    const label = propertySwitcherTriggerLabel(selectedId);
     const options = PD.getAssignedProperties(user).map(function (p) {
       return propertySwitcherOptionHtml(p, selectedId);
     }).join("");
     const allOption = PD.hasMultiPropertyAccess(user)
-      ? '<button type="button" class="pswitch-option pswitch-option-all' +
+      ? '<button type="button" class="property-select-option' +
         (selectedId === "all" ? " is-selected" : "") +
         '" data-action="select-property-switcher" data-property-id="all" role="option" aria-selected="' +
         (selectedId === "all" ? "true" : "false") +
-        '" data-search="جميع المنشآت all properties">' +
-        '<span class="pswitch-option-dot is-all" aria-hidden="true"></span>' +
-        '<span class="min-w-0 flex-1 text-start"><span class="block truncate font-extrabold text-sm">جميع المنشآت</span><span class="block truncate text-xs text-slate-400 font-semibold">تقرير موحّد عبر كل المنشآت المتاحة لك</span></span>' +
-        (selectedId === "all"
-          ? '<svg class="w-4 h-4 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-          : "") +
+        '">' +
+        '<span class="min-w-0 flex-1 truncate">جميع المنشآت</span>' +
+        '<span class="property-select-code">' + String(user.assignedPropertyIds.length) + "</span>" +
         "</button>"
       : "";
     return (
-      '<div class="pswitch-search search-input">' +
-      '<svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>' +
-      '<input type="search" placeholder="ابحث عن منشأة…" data-pswitch-search aria-label="بحث عن منشأة" />' +
+      '<div class="property-select" data-property-select>' +
+      '<button type="button" class="ss-select-btn property-select-trigger" data-action="toggle-property-select" aria-expanded="false" aria-haspopup="listbox">' +
+      '<span class="ss-select-text">' + label.name + "</span>" +
+      (label.code ? '<span class="property-select-code">' + label.code + "</span>" : "") +
+      SS_CHEVRON +
+      "</button>" +
+      '<div class="property-select-menu" data-property-select-menu role="listbox">' +
+      allOption +
+      options +
       "</div>" +
-      '<div class="pswitch-list" data-pswitch-list role="listbox">' + allOption + options + "</div>" +
+      "</div>" +
       '<a href="properties.html" class="pswitch-manage">' +
       '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>' +
       "إدارة المنشآت</a>"
@@ -890,16 +885,19 @@
     return { name: p.name, code: p.code };
   }
 
-  function closePropertySwitcher() {
-    document.getElementById("user-menu")?.classList.add("hidden");
+  function closePropertySelectMenus(except) {
+    document.querySelectorAll("[data-property-select]").forEach(function (wrap) {
+      if (except && wrap === except) return;
+      const trigger = wrap.querySelector("[data-action='toggle-property-select']");
+      const menu = wrap.querySelector("[data-property-select-menu]");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+      if (menu) menu.classList.remove("is-open");
+    });
   }
 
-  function filterPropertySwitcherList(query) {
-    const q = query.trim().toLowerCase();
-    document.querySelectorAll("[data-pswitch-list] [data-search]").forEach(function (opt) {
-      const match = !q || opt.getAttribute("data-search").indexOf(q) !== -1;
-      opt.classList.toggle("hidden", !match);
-    });
+  function closePropertySwitcher() {
+    closePropertySelectMenus();
+    document.getElementById("user-menu")?.classList.add("hidden");
   }
 
   function selectPropertySwitcher(id) {
@@ -1586,6 +1584,9 @@
         if (!e.target.closest("#user-menu") && !e.target.closest('[data-action="toggle-user-menu"]')) {
           document.getElementById("user-menu")?.classList.add("hidden");
         }
+        if (!e.target.closest("[data-property-select]")) {
+          closePropertySelectMenus();
+        }
         return;
       }
       const action = actionEl.dataset.action;
@@ -1604,10 +1605,19 @@
         const menu = document.getElementById("user-menu");
         const willOpen = menu?.classList.contains("hidden");
         menu?.classList.toggle("hidden");
-        if (willOpen) {
-          const search = menu.querySelector("[data-pswitch-search]");
-          if (search) { search.value = ""; filterPropertySwitcherList(""); }
-        }
+        if (willOpen) closePropertySelectMenus();
+      }
+      if (action === "toggle-property-select") {
+        e.preventDefault();
+        e.stopPropagation();
+        const wrap = actionEl.closest("[data-property-select]");
+        if (!wrap) return;
+        const menu = wrap.querySelector("[data-property-select-menu]");
+        const open = !menu?.classList.contains("is-open");
+        closePropertySelectMenus(open ? wrap : null);
+        if (menu) menu.classList.toggle("is-open", open);
+        actionEl.setAttribute("aria-expanded", open ? "true" : "false");
+        return;
       }
       if (action === "select-property-switcher") {
         e.preventDefault();
@@ -1624,12 +1634,6 @@
       if (action === "close-drawer") closeDrawer();
       if (action === "toast") toast(actionEl.dataset.message || "تم");
       if (action === "prevent") e.preventDefault();
-    });
-
-    document.body.addEventListener("input", (e) => {
-      if (e.target.matches("[data-pswitch-search]")) {
-        filterPropertySwitcherList(e.target.value);
-      }
     });
 
     document.addEventListener("keydown", (e) => {
