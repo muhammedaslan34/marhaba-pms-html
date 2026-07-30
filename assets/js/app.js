@@ -298,6 +298,339 @@
     });
   }
 
+  const SS_CHEVRON =
+    '<svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
+  function initTablePagination() {
+    const PAGE_SIZES = [20, 50, 100];
+    const chevPrev =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+    const chevNext =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>';
+
+    document.querySelectorAll("table.data-table, table.hk-list-table").forEach(function (table) {
+      if (table.dataset.paged === "1") return;
+      if (table.hasAttribute("data-no-pager")) return;
+      if (table.classList.contains("avail-board-table")) return;
+      const tbody = table.tBodies[0];
+      if (!tbody) return;
+
+      table.dataset.paged = "1";
+      const rows = Array.from(tbody.rows);
+      let page = 1;
+      let pageSize = Number(table.getAttribute("data-page-size")) || 20;
+      if (PAGE_SIZES.indexOf(pageSize) === -1) pageSize = 20;
+
+      const bar = document.createElement("div");
+      bar.className = "table-pager";
+      bar.setAttribute("data-table-pager", "");
+      bar.innerHTML =
+        '<div class="table-pager-meta">' +
+        '<label class="table-pager-size">عرض' +
+        '<select class="field-select w-auto" data-pager-size aria-label="عدد الصفوف في الصفحة">' +
+        PAGE_SIZES.map(function (n) {
+          return (
+            '<option value="' +
+            n +
+            '"' +
+            (n === pageSize ? " selected" : "") +
+            ">" +
+            n +
+            "</option>"
+          );
+        }).join("") +
+        "</select>" +
+        "</label>" +
+        '<div class="table-pager-info" data-pager-info></div>' +
+        "</div>" +
+        '<div class="table-pager-nav" data-pager-nav></div>';
+
+      const host = table.closest(".table-wrap") || table;
+      const parent = host.parentNode;
+      if (parent) parent.insertBefore(bar, host.nextSibling);
+
+      const infoEl = bar.querySelector("[data-pager-info]");
+      const navEl = bar.querySelector("[data-pager-nav]");
+      const sizeSelect = bar.querySelector("[data-pager-size]");
+
+      function totalPages() {
+        return Math.max(1, Math.ceil(rows.length / pageSize) || 1);
+      }
+
+      function pageList(current, total) {
+        if (total <= 7) {
+          return Array.from({ length: total }, function (_, i) { return i + 1; });
+        }
+        const pages = [1];
+        const start = Math.max(2, current - 1);
+        const end = Math.min(total - 1, current + 1);
+        if (start > 2) pages.push("…");
+        for (let i = start; i <= end; i++) pages.push(i);
+        if (end < total - 1) pages.push("…");
+        pages.push(total);
+        return pages;
+      }
+
+      function render() {
+        const total = rows.length;
+        const pages = totalPages();
+        if (page > pages) page = pages;
+        if (page < 1) page = 1;
+        const start = total === 0 ? 0 : (page - 1) * pageSize + 1;
+        const end = Math.min(page * pageSize, total);
+
+        rows.forEach(function (row, idx) {
+          const show = idx >= (page - 1) * pageSize && idx < page * pageSize;
+          row.hidden = !show;
+          row.style.display = show ? "" : "none";
+        });
+
+        infoEl.innerHTML =
+          total === 0
+            ? "لا توجد نتائج"
+            : "عرض <span>" + start + "–" + end + "</span> من <span>" + total + "</span>";
+
+        const nums = pageList(page, pages);
+        navEl.innerHTML =
+          '<button type="button" class="table-pager-btn is-icon" data-pager-go="prev" aria-label="الصفحة السابقة"' +
+          (page <= 1 ? " disabled" : "") +
+          ">" +
+          chevPrev +
+          "</button>" +
+          nums
+            .map(function (item) {
+              if (item === "…") return '<span class="table-pager-ellipsis">…</span>';
+              return (
+                '<button type="button" class="table-pager-btn' +
+                (item === page ? " is-active" : "") +
+                '" data-pager-page="' +
+                item +
+                '">' +
+                item +
+                "</button>"
+              );
+            })
+            .join("") +
+          '<button type="button" class="table-pager-btn is-icon" data-pager-go="next" aria-label="الصفحة التالية"' +
+          (page >= pages ? " disabled" : "") +
+          ">" +
+          chevNext +
+          "</button>";
+      }
+
+      navEl.addEventListener("click", function (e) {
+        const btn = e.target.closest("button");
+        if (!btn || btn.disabled) return;
+        if (btn.hasAttribute("data-pager-go")) {
+          page += btn.getAttribute("data-pager-go") === "next" ? 1 : -1;
+          render();
+          return;
+        }
+        if (btn.hasAttribute("data-pager-page")) {
+          page = Number(btn.getAttribute("data-pager-page"));
+          render();
+        }
+      });
+
+      sizeSelect.addEventListener("change", function () {
+        pageSize = Number(sizeSelect.value) || 20;
+        page = 1;
+        render();
+      });
+
+      render();
+    });
+  }
+
+  // Turn native <select class="field-select"> into الجنسية-style custom dropdowns
+  function initEnhancedSelects() {
+    document.querySelectorAll("select.field-select").forEach(function (select) {
+      if (select.dataset.enhanced === "1") return;
+      select.dataset.enhanced = "1";
+
+      const wrap = document.createElement("div");
+      wrap.className = "ss-field";
+      if (select.classList.contains("w-auto")) wrap.classList.add("is-auto");
+      select.parentNode.insertBefore(wrap, select);
+      wrap.appendChild(select);
+      select.classList.add("ss-native-hidden");
+      select.tabIndex = -1;
+
+      const options = Array.prototype.map.call(select.options, function (opt, index) {
+        return {
+          index: index,
+          value: opt.value,
+          label: (opt.textContent || "").trim(),
+          disabled: !!opt.disabled,
+          placeholder: !!opt.disabled && (opt.value === "" || !opt.value),
+        };
+      });
+
+      const selectableCount = options.filter(function (o) {
+        return !o.placeholder && !o.disabled;
+      }).length;
+      const searchable = selectableCount >= 7;
+      const trigger = document.createElement("button");
+      trigger.type = "button";
+      trigger.className = "ss-select-btn";
+      trigger.setAttribute("data-ss-trigger", "");
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.setAttribute("aria-haspopup", "listbox");
+      if (select.id) trigger.id = select.id + "-trigger";
+      if (select.hasAttribute("required")) trigger.setAttribute("aria-required", "true");
+      trigger.innerHTML =
+        '<span class="ss-select-text" data-ss-text></span>' + SS_CHEVRON;
+
+      const dropdown = document.createElement("div");
+      dropdown.className = "phone-dropdown ss-dropdown-panel";
+      dropdown.setAttribute("data-ss-dropdown", "");
+      dropdown.setAttribute("role", "listbox");
+      dropdown.innerHTML =
+        (searchable
+          ? '<div class="phone-dropdown-search search-input">' +
+            '<svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>' +
+            '<input type="search" placeholder="بحث…" data-ss-search />' +
+            "</div>"
+          : "") +
+        '<div class="phone-dropdown-list" data-ss-list></div>';
+
+      wrap.appendChild(trigger);
+      document.body.appendChild(dropdown);
+
+      const textEl = trigger.querySelector("[data-ss-text]");
+      const listEl = dropdown.querySelector("[data-ss-list]");
+      const searchInput = dropdown.querySelector("[data-ss-search]");
+      let query = "";
+
+      function currentOption() {
+        const opt = select.options[select.selectedIndex];
+        return opt || null;
+      }
+
+      function syncLabel() {
+        const opt = currentOption();
+        if (!opt || (opt.disabled && !opt.value)) {
+          textEl.textContent = (opt && opt.textContent) || "اختر…";
+          textEl.classList.add("is-empty");
+        } else {
+          textEl.textContent = opt.textContent;
+          textEl.classList.remove("is-empty");
+        }
+      }
+
+      function renderList() {
+        const q = query.trim().toLowerCase();
+        const items = options.filter(function (o) {
+          if (o.placeholder) return false;
+          if (o.disabled) return false;
+          if (!q) return true;
+          return o.label.toLowerCase().includes(q) || String(o.value).toLowerCase().includes(q);
+        });
+        if (!items.length) {
+          listEl.innerHTML = '<div class="phone-dropdown-empty">لا توجد نتائج مطابقة</div>';
+          return;
+        }
+        const selectedVal = select.value;
+        listEl.innerHTML = items
+          .map(function (o) {
+            const sel = String(o.value) === String(selectedVal) ? " is-selected" : "";
+            return (
+              '<button type="button" class="phone-dropdown-item' +
+              sel +
+              '" data-value="' +
+              String(o.value).replace(/"/g, "&quot;") +
+              '" data-index="' +
+              o.index +
+              '" role="option">' +
+              '<span class="country-name">' +
+              o.label +
+              "</span>" +
+              "</button>"
+            );
+          })
+          .join("");
+      }
+
+      function position() {
+        const rect = trigger.getBoundingClientRect();
+        const ddW = Math.max(rect.width, 220);
+        dropdown.style.width = ddW + "px";
+        const isRTL = document.documentElement.dir === "rtl";
+        let left = isRTL ? rect.right - ddW : rect.left;
+        const top = rect.bottom + 6;
+        const margin = 8;
+        if (left < margin) left = margin;
+        if (left + ddW > window.innerWidth - margin) left = window.innerWidth - ddW - margin;
+        dropdown.style.top = top + "px";
+        dropdown.style.left = left + "px";
+      }
+
+      function open() {
+        dropdown.classList.add("is-open");
+        trigger.setAttribute("aria-expanded", "true");
+        query = "";
+        if (searchInput) searchInput.value = "";
+        renderList();
+        position();
+        if (searchInput) setTimeout(function () { searchInput.focus(); }, 20);
+      }
+
+      function close() {
+        dropdown.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+
+      function toggle() {
+        if (dropdown.classList.contains("is-open")) close();
+        else open();
+      }
+
+      syncLabel();
+      renderList();
+
+      trigger.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle();
+      });
+      listEl.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-index]");
+        if (!btn) return;
+        const idx = Number(btn.dataset.index);
+        select.selectedIndex = idx;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        syncLabel();
+        close();
+      });
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          query = searchInput.value;
+          renderList();
+        });
+        searchInput.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            close();
+            trigger.focus();
+          }
+        });
+      }
+      select.addEventListener("change", syncLabel);
+      document.addEventListener(
+        "scroll",
+        function () {
+          if (dropdown.classList.contains("is-open")) position();
+        },
+        true
+      );
+      window.addEventListener("resize", function () {
+        if (dropdown.classList.contains("is-open")) position();
+      });
+      document.addEventListener("click", function (e) {
+        if (!wrap.contains(e.target) && !dropdown.contains(e.target)) close();
+      });
+    });
+  }
+
 
   const ICONS = {
     home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
@@ -391,6 +724,10 @@
           <input id="global-search" type="search" placeholder="بحث…" aria-label="بحث عام" />
           <kbd class="search-kbd" aria-hidden="true">${shortcutLabel()}</kbd>
         </label>
+        <button type="button" class="hidden sm:flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 font-semibold" data-action="toggle-user-menu" aria-label="المنشأة الحالية" title="المنشأة الحالية — لتبديلها افتح قائمة الحساب">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate max-w-[9rem]" data-property-badge>${currentProperty().name}</span>
+        </button>
         <div class="header-switchers">
           <button type="button" class="header-icon-btn" data-action="toggle-lang" aria-label="${lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}" title="${lang === "en" ? "English → العربية" : "العربية → English"}">
             ${langIcon}
@@ -419,8 +756,16 @@
             </div>
             <div class="px-1 pt-1.5 pb-1">
               <div class="px-2 text-[11px] font-extrabold text-slate-400 uppercase tracking-wide mb-1">المنشأة</div>
-              <div class="space-y-0.5 max-h-52 overflow-y-auto" data-property-list>
-                ${propertyListHtml()}
+              <div class="property-select" data-property-select>
+                <button type="button" class="ss-select-btn property-select-trigger" data-action="toggle-property-select" aria-expanded="false" aria-haspopup="listbox">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0" aria-hidden="true"></span>
+                  <span class="ss-select-text" data-property-select-label>${currentProperty().name}</span>
+                  <span class="property-select-code" data-property-select-code>${currentProperty().code}</span>
+                  <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="property-select-menu" data-property-select-menu role="listbox" hidden>
+                  ${propertyOptionsHtml()}
+                </div>
               </div>
             </div>
             <div class="border-t border-slate-100 mt-1 pt-1">
@@ -456,21 +801,45 @@
     return PROPERTIES.find(function (p) { return p.id === id; }) || PROPERTIES[0];
   }
 
-  function propertyListHtml() {
+  function propertyOptionsHtml() {
     const currentId = currentProperty().id;
     return PROPERTIES.map(function (p) {
       const sel = p.id === currentId;
       return (
-        '<button type="button" class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm font-semibold transition-colors ' +
-        (sel ? 'bg-primary-soft text-primary' : 'text-slate-700 hover:bg-slate-50') +
-        '" data-action="select-property" data-property-id="' + p.id + '">' +
-          '<span class="w-2 h-2 rounded-full ' + (sel ? 'bg-emerald-500' : 'bg-slate-300') + ' shrink-0"></span>' +
-          '<span class="flex-1 text-start truncate">' + p.name + '</span>' +
-          '<span class="text-[11px] text-slate-400 font-bold">' + p.code + '</span>' +
-          (sel ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') +
-        '</button>'
+        '<button type="button" class="property-select-option' +
+        (sel ? " is-selected" : "") +
+        '" data-action="select-property" data-property-id="' +
+        p.id +
+        '" role="option" aria-selected="' +
+        (sel ? "true" : "false") +
+        '">' +
+        '<span class="w-2 h-2 rounded-full ' +
+        (sel ? "bg-emerald-500" : "bg-slate-300") +
+        ' shrink-0"></span>' +
+        '<span class="flex-1 text-start truncate">' +
+        p.name +
+        "</span>" +
+        '<span class="property-select-code">' +
+        p.code +
+        "</span>" +
+        (sel
+          ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          : "") +
+        "</button>"
       );
-    }).join('');
+    }).join("");
+  }
+
+  function closePropertySelect() {
+    document.querySelectorAll("[data-property-select]").forEach(function (root) {
+      const menu = root.querySelector("[data-property-select-menu]");
+      const trigger = root.querySelector("[data-action='toggle-property-select']");
+      if (menu) {
+        menu.hidden = true;
+        menu.classList.remove("is-open");
+      }
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+    });
   }
 
   function selectProperty(id) {
@@ -480,10 +849,19 @@
       localStorage.setItem("pms-property", id);
     } catch (_) {}
     const prop = PROPERTIES.find(function (p) { return p.id === id; });
-    // Re-render property lists (moves the green dot + checkmark)
-    document.querySelectorAll("[data-property-list]").forEach(function (el) {
-      el.innerHTML = propertyListHtml();
+    document.querySelectorAll("[data-property-badge]").forEach(function (el) {
+      el.textContent = prop.name;
     });
+    document.querySelectorAll("[data-property-select-label]").forEach(function (el) {
+      el.textContent = prop.name;
+    });
+    document.querySelectorAll("[data-property-select-code]").forEach(function (el) {
+      el.textContent = prop.code;
+    });
+    document.querySelectorAll("[data-property-select-menu]").forEach(function (el) {
+      el.innerHTML = propertyOptionsHtml();
+    });
+    closePropertySelect();
     toast("تم التبديل إلى " + prop.name);
   }
 
@@ -1085,12 +1463,17 @@
     initDatePickers();
     initPhoneFields();
     initNationalityFields();
+    initTablePagination();
+    initEnhancedSelects();
 
     document.body.addEventListener("click", (e) => {
       const actionEl = e.target.closest("[data-action]");
       if (!actionEl) {
         if (!e.target.closest("#user-menu") && !e.target.closest('[data-action="toggle-user-menu"]')) {
           document.getElementById("user-menu")?.classList.add("hidden");
+          closePropertySelect();
+        } else if (!e.target.closest("[data-property-select]")) {
+          closePropertySelect();
         }
         return;
       }
@@ -1099,11 +1482,31 @@
       if (action === "collapse-sidebar") toggleCollapseSidebar();
       if (action === "close-sidebar") closeSidebar();
       if (action === "toggle-user-menu") {
-        document.getElementById("user-menu")?.classList.toggle("hidden");
+        const menu = document.getElementById("user-menu");
+        const willOpen = menu?.classList.contains("hidden");
+        menu?.classList.toggle("hidden");
+        if (!willOpen) closePropertySelect();
+      }
+      if (action === "toggle-property-select") {
+        e.preventDefault();
+        e.stopPropagation();
+        const root = actionEl.closest("[data-property-select]");
+        const submenu = root && root.querySelector("[data-property-select-menu]");
+        if (!submenu) return;
+        const open = submenu.hidden;
+        closePropertySelect();
+        if (open) {
+          submenu.hidden = false;
+          submenu.classList.add("is-open");
+          actionEl.setAttribute("aria-expanded", "true");
+        }
+        return;
       }
       if (action === "select-property") {
+        e.preventDefault();
+        e.stopPropagation();
         selectProperty(actionEl.dataset.propertyId);
-        document.getElementById("user-menu")?.classList.add("hidden");
+        return;
       }
       if (action === "toggle-notifications") toast("لا توجد إشعارات جديدة");
       if (action === "toggle-theme") toggleTheme();
@@ -1121,6 +1524,7 @@
         closeSidebar();
         closeAllModals();
         closeDrawer();
+        closePropertySelect();
         document.getElementById("user-menu")?.classList.add("hidden");
         document.getElementById("global-search")?.blur();
       }
