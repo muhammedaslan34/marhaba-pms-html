@@ -3587,3 +3587,100 @@ html.dark .fin-filters {
 .property-pick-card.is-active { border-color: var(--color-primary); background: var(--color-primary-soft); }
 .property-pick-card input[type="checkbox"],
 .property-pick-card input[type="radio"] { width: 1.1rem; height: 1.1rem; accent-color: var(--color-primary); flex-shrink: 0; }
+
+/* ════════════════════════════════════════════════════════════════
+   DARK MODE — Tailwind utility overrides
+   The app toggles dark mode via the `.dark` class on <html>, but the
+   inline Tailwind utilities (bg-slate-50, text-slate-800, border-…)
+   only react to prefers-color-scheme. These rules flip the neutral +
+   accent palette so every page reads correctly in dark mode.
+   Specificity html.dark .xxx (0,2,1) beats Tailwind .xxx (0,1,0),
+   so no !important needed.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Neutral backgrounds ── */
+html.dark .bg-white { background-color: #111827; }
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/60,
+html.dark .bg-slate-50\/70,
+html.dark .bg-slate-50\/40 { background-color: #0d1526; }
+html.dark .bg-slate-100 { background-color: #131c2e; }
+html.dark .bg-slate-200 { background-color: #1f2a3d; }
+
+/* ── Neutral text ── */
+html.dark .text-slate-900,
+html.dark .text-slate-800 { color: #e5eefb; }
+html.dark .text-slate-700 { color: #cbd5e1; }
+html.dark .text-slate-600 { color: #aebbd0; }
+html.dark .text-slate-500 { color: #94a3b8; }
+html.dark .text-slate-400 { color: #7c8aa3; }
+
+/* ── Neutral borders ── */
+html.dark .border-slate-200,
+html.dark .border-slate-300 { border-color: #1f2a3d; }
+html.dark .border-slate-100 { border-color: #172033; }
+html.dark .divide-slate-100 > * + * { border-color: #172033; }
+
+/* ── Accent tints: backgrounds (darken so pastels don't glare) ── */
+html.dark .bg-amber-50 { background-color: rgba(245, 158, 11, 0.10); }
+html.dark .bg-amber-100 { background-color: rgba(245, 158, 11, 0.16); }
+html.dark .bg-emerald-50 { background-color: rgba(16, 185, 129, 0.10); }
+html.dark .bg-emerald-100 { background-color: rgba(16, 185, 129, 0.16); }
+html.dark .bg-sky-50 { background-color: rgba(14, 165, 233, 0.10); }
+html.dark .bg-sky-100 { background-color: rgba(14, 165, 233, 0.16); }
+html.dark .bg-red-50 { background-color: rgba(239, 68, 68, 0.10); }
+html.dark .bg-rose-50 { background-color: rgba(244, 63, 94, 0.10); }
+html.dark .bg-primary\/10 { background-color: rgba(0, 39, 183, 0.22); }
+
+/* ── Accent tints: text (lighten so dark greens/ambers stay readable) ── */
+html.dark .text-emerald-900,
+html.dark .text-emerald-800,
+html.dark .text-emerald-700,
+html.dark .text-emerald-600 { color: #34d399; }
+html.dark .text-amber-900,
+html.dark .text-amber-800,
+html.dark .text-amber-700,
+html.dark .text-amber-600 { color: #fbbf24; }
+html.dark .text-sky-700,
+html.dark .text-sky-800 { color: #38bdf8; }
+html.dark .text-rose-700,
+html.dark .text-red-700,
+html.dark .text-red-600 { color: #f87171; }
+
+/* ── Accent tints: borders ── */
+html.dark .border-amber-100,
+html.dark .border-amber-200 { border-color: rgba(245, 158, 11, 0.25); }
+html.dark .border-emerald-100,
+html.dark .border-emerald-200 { border-color: rgba(16, 185, 129, 0.25); }
+html.dark .border-sky-100 { border-color: rgba(14, 165, 233, 0.25); }
+html.dark .border-red-100 { border-color: rgba(239, 68, 68, 0.25); }
+
+/* ── Gradients (from/to light stops) ── */
+html.dark .from-slate-50 { --tw-gradient-from: #0d1526 var(--tw-gradient-from-position); }
+html.dark .from-emerald-50 { --tw-gradient-from: rgba(16,185,129,0.10) var(--tw-gradient-from-position); }
+html.dark .from-sky-50 { --tw-gradient-from: rgba(14,165,233,0.10) var(--tw-gradient-from-position); }
+html.dark .to-white { --tw-gradient-to: #111827 var(--tw-gradient-to-position); }
+
+/* ── Badges & chips that use inline light palettes ── */
+html.dark .badge { color: #e5eefb; }
+html.dark .badge-success { background: rgba(16, 185, 129, 0.16); color: #34d399; }
+html.dark .badge-warning { background: rgba(245, 158, 11, 0.16); color: #fbbf24; }
+html.dark .badge-danger { background: rgba(239, 68, 68, 0.16); color: #f87171; }
+html.dark .badge-info { background: rgba(14, 165, 233, 0.16); color: #38bdf8; }
+html.dark .badge-primary { background: rgba(0, 39, 183, 0.30); color: #93b4ff; }
+html.dark .badge-neutral { background: #1f2a3d; color: #cbd5e1; }
+
+/* ── Misc light surfaces (hover rows, inputs left white, modals) ── */
+html.dark .modal { background: #111827; }
+html.dark .modal .border-slate-200,
+html.dark .modal .border-slate-100 { border-color: #1f2a3d; }
+html.dark .data-table th { background: #0d1526; color: #94a3b8; }
+html.dark .chip { background: #111827; border-color: #1f2a3d; color: #cbd5e1; }
+html.dark .chip:hover { border-color: #334155; color: #e5eefb; }
+html.dark .btn-ghost { background: #111827; border-color: #1f2a3d; }
+html.dark .btn-ghost:hover { background: #172033; color: #e5eefb; border-color: #334155; }
+html.dark .toast { background: #1f2a3d; }
+html.dark .overlay { background: rgba(2, 6, 16, 0.65); }
+html.dark .property-pick-card { background: #111827; }
+html.dark .property-pick-card:hover { border-color: #334155; }
+html.dark .property-pick-card.is-active { background: rgba(0, 39, 183, 0.30); }
