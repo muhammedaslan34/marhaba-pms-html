@@ -18,7 +18,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=users1" />
 </head>
 <body class="app-bg font-sans" data-page="users" data-title="المستخدمون"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المستخدمون"}]'>
@@ -29,35 +29,86 @@
       <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
         <div class="page-hero">
           <div>
-            <p class="page-kicker">المستخدمون</p>
+            <p class="page-kicker">المستخدمون والصلاحيات</p>
             <p class="text-slate-800 font-extrabold mt-1 text-lg">إدارة مستخدمي النظام وصلاحياتهم ومنشآتهم</p>
           </div>
-          <button type="button" class="btn btn-primary" id="add-user-btn">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
-            إضافة مستخدم
-          </button>
+          <div class="flex flex-wrap gap-2">
+            <a href="roles-permissions.html" class="btn btn-secondary btn-sm">الأدوار والصلاحيات</a>
+            <button type="button" class="btn btn-primary" id="add-user-btn">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              إضافة مستخدم
+            </button>
+          </div>
         </div>
 
-        <section class="panel p-4">
-          <div class="prop-toolbar">
-            <div class="search-input flex-1 min-w-[12rem]">
-              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
-              <input type="search" id="user-search" class="field-input" placeholder="ابحث بالاسم أو البريد…" />
+        <section class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+          <article class="stat-card" data-tone="primary">
+            <div class="stat-label">إجمالي المستخدمين</div>
+            <div class="stat-value text-primary" id="stat-total">0</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">نشط</div>
+            <div class="stat-value text-emerald-600" id="stat-active">0</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="stat-label">مدعو</div>
+            <div class="stat-value text-secondary" id="stat-invited">0</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">معطّل</div>
+            <div class="stat-value text-amber-600" id="stat-disabled">0</div>
+          </article>
+        </section>
+
+        <section class="users-filters panel">
+          <div class="users-filters-head">
+            <div>
+              <h2 class="font-extrabold text-base">بحث وتصفية</h2>
+              <p class="text-xs text-slate-500 font-semibold mt-0.5">ابحث بالاسم أو البريد، ثم صفِّ حسب الدور والمنشأة والحالة</p>
             </div>
-            <select id="user-role-filter" class="field-select w-auto"><option value="all">كل الأدوار</option></select>
-            <select id="user-property-filter" class="field-select w-auto"><option value="all">كل المنشآت</option></select>
-            <select id="user-status-filter" class="field-select w-auto">
-              <option value="all">كل الحالات</option>
-              <option value="active">نشط</option>
-              <option value="invited">مدعو</option>
-              <option value="disabled">معطّل</option>
-            </select>
+            <button type="button" class="btn btn-ghost btn-sm" id="user-filter-reset">إعادة ضبط</button>
           </div>
+
+          <div class="users-filters-row">
+            <div class="users-search">
+              <div class="search-input">
+                <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                <input type="search" id="user-search" class="field-input" placeholder="ابحث بالاسم أو البريد…" />
+              </div>
+            </div>
+            <div class="users-filter-field">
+              <label class="field-label" for="user-role-filter">الدور</label>
+              <select id="user-role-filter" class="field-select w-auto">
+                <option value="all">كل الأدوار</option>
+              </select>
+            </div>
+            <div class="users-filter-field">
+              <label class="field-label" for="user-property-filter">المنشأة</label>
+              <select id="user-property-filter" class="field-select w-auto">
+                <option value="all">كل المنشآت</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="users-status-chips" id="user-status-chips" role="group" aria-label="تصفية الحالة">
+            <button type="button" class="users-status-chip is-on" data-status="all">الكل <span class="n" data-count="all">0</span></button>
+            <button type="button" class="users-status-chip" data-status="active">نشط <span class="n" data-count="active">0</span></button>
+            <button type="button" class="users-status-chip" data-status="invited">مدعو <span class="n" data-count="invited">0</span></button>
+            <button type="button" class="users-status-chip" data-status="disabled">معطّل <span class="n" data-count="disabled">0</span></button>
+          </div>
+          <input type="hidden" id="user-status-filter" value="all" />
         </section>
 
         <section class="panel overflow-hidden">
+          <div class="users-table-head">
+            <div>
+              <h2 class="font-extrabold text-base">قائمة المستخدمين</h2>
+              <p class="text-xs text-slate-500 font-semibold mt-0.5"><span id="users-visible-count">0</span> نتيجة معروضة</p>
+            </div>
+            <a href="roles-permissions.html" class="text-xs font-extrabold text-primary hover:underline">إدارة الأدوار ←</a>
+          </div>
           <div class="table-wrap">
-            <table class="data-table" data-no-pager>
+            <table class="data-table">
               <thead>
                 <tr>
                   <th>المستخدم</th>
@@ -123,8 +174,7 @@
 
       <section>
         <h4 class="font-extrabold text-sm text-slate-800 mb-3">إسناد الدور</h4>
-        <div class="grid grid-cols-2 gap-2 mb-3" id="u-role-presets"></div>
-        <div class="rounded-2xl border border-slate-200 p-3 space-y-1.5 max-h-40 overflow-y-auto" id="u-role-checklist"></div>
+        <div class="grid grid-cols-2 gap-2" id="u-role-presets"></div>
       </section>
 
       <section>
@@ -193,7 +243,7 @@
   </div>
 
   <script src="../assets/js/pms-data.js"></script>
-  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/app.js?v=users1"></script>
   <script>
     (function () {
       const PD = PMSData;
@@ -227,6 +277,25 @@
         if (u.status === "active") return '<span class="badge badge-success">نشط</span>';
         if (u.status === "invited") return '<span class="badge badge-info">مدعو</span>';
         return '<span class="badge badge-neutral">معطّل</span>';
+      }
+
+      function updateStats() {
+        const all = PD.getUsers();
+        const counts = { all: all.length, active: 0, invited: 0, disabled: 0 };
+        all.forEach(function (u) {
+          if (counts[u.status] != null) counts[u.status]++;
+        });
+        const set = function (id, n) {
+          const el = document.getElementById(id);
+          if (el) el.textContent = String(n);
+        };
+        set("stat-total", counts.all);
+        set("stat-active", counts.active);
+        set("stat-invited", counts.invited);
+        set("stat-disabled", counts.disabled);
+        document.querySelectorAll("[data-count]").forEach(function (el) {
+          el.textContent = String(counts[el.getAttribute("data-count")] || 0);
+        });
       }
 
       function filteredUsers() {
@@ -274,16 +343,42 @@
         document.getElementById("users-body").innerHTML = list.map(rowHtml).join("");
         const empty = document.getElementById("users-empty");
         empty.classList.toggle("hidden", list.length > 0);
+        const countEl = document.getElementById("users-visible-count");
+        if (countEl) countEl.textContent = String(list.length);
         if (!list.length) {
           const total = PD.getUsers().length;
           document.getElementById("users-empty-title").textContent = total === 0 ? "لا يوجد مستخدمون بعد" : "لا توجد نتائج مطابقة";
           document.getElementById("users-empty-desc").textContent = total === 0 ? "ابدأ بإضافة أول مستخدم." : "جرّب تعديل كلمات البحث أو الفلاتر.";
         }
+        updateStats();
       }
 
-      ["input"].forEach(function (evt) { document.getElementById("user-search").addEventListener(evt, renderTable); });
-      [roleFilterSelect, propFilterSelect, document.getElementById("user-status-filter")].forEach(function (el) {
+      document.getElementById("user-search").addEventListener("input", renderTable);
+      [roleFilterSelect, propFilterSelect].forEach(function (el) {
         el.addEventListener("change", renderTable);
+      });
+
+      document.getElementById("user-status-chips").addEventListener("click", function (e) {
+        const chip = e.target.closest("[data-status]");
+        if (!chip) return;
+        document.querySelectorAll(".users-status-chip").forEach(function (c) {
+          c.classList.toggle("is-on", c === chip);
+        });
+        document.getElementById("user-status-filter").value = chip.dataset.status;
+        renderTable();
+      });
+
+      document.getElementById("user-filter-reset").addEventListener("click", function () {
+        document.getElementById("user-search").value = "";
+        roleFilterSelect.value = "all";
+        propFilterSelect.value = "all";
+        roleFilterSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        propFilterSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        document.getElementById("user-status-filter").value = "all";
+        document.querySelectorAll(".users-status-chip").forEach(function (c) {
+          c.classList.toggle("is-on", c.dataset.status === "all");
+        });
+        renderTable();
       });
 
       // ─── Drawer: role presets + checklist ─────────────────────
@@ -298,26 +393,19 @@
           );
         }).join("");
       }
-      function renderRoleChecklist(activeRoles) {
-        document.getElementById("u-role-checklist").innerHTML = PD.ROLE_CATALOG.map(function (r) {
-          const checked = activeRoles.indexOf(r) !== -1;
-          return (
-            '<label class="flex items-center gap-2.5 py-1 cursor-pointer">' +
-            '<input type="checkbox" class="w-4 h-4 accent-primary" data-role-checkbox value="' + r + '" ' + (checked ? "checked" : "") + " />" +
-            '<span class="text-sm font-semibold text-slate-700">' + r + "</span>" +
-            "</label>"
-          );
-        }).join("");
-      }
       function currentSelectedRoles() {
-        return Array.from(document.querySelectorAll("[data-role-checkbox]:checked")).map(function (el) { return el.value; });
+        const active = document.querySelector("#u-role-presets .role-preset-item.is-active");
+        if (!active) return [];
+        const preset = PD.ROLE_PRESETS[active.dataset.preset];
+        return preset && preset.roles ? preset.roles.slice() : [];
       }
 
       document.getElementById("u-role-presets").addEventListener("click", function (e) {
         const btn = e.target.closest("[data-preset]");
         if (!btn) return;
-        document.querySelectorAll("#u-role-presets .role-preset-item").forEach(function (b) { b.classList.toggle("is-active", b === btn); });
-        renderRoleChecklist(PD.ROLE_PRESETS[btn.dataset.preset].roles);
+        document.querySelectorAll("#u-role-presets .role-preset-item").forEach(function (b) {
+          b.classList.toggle("is-active", b === btn);
+        });
       });
 
       // ─── Access mode + property pickers ────────────────────────
@@ -404,7 +492,6 @@
         document.getElementById("u-timezone").value = "Asia/Damascus";
         document.getElementById("u-status").value = "invited";
         document.querySelectorAll("#u-role-presets .role-preset-item").forEach(function (b) { b.classList.remove("is-active"); });
-        renderRoleChecklist([]);
         selectedMultiple = preselectProperty ? [preselectProperty] : [];
         defaultPropertyId = preselectProperty || null;
         populateOnePropertySelect();
@@ -431,7 +518,6 @@
         document.getElementById("u-language").value = u.language || "ar";
         document.getElementById("u-timezone").value = u.timezone || "Asia/Damascus";
         document.getElementById("u-status").value = u.status;
-        renderRoleChecklist(u.roles || []);
         document.querySelectorAll("#u-role-presets .role-preset-item").forEach(function (b) {
           b.classList.toggle("is-active", b.dataset.preset === u.rolePreset);
         });
@@ -489,7 +575,9 @@
         if (!assignedPropertyIds.length) { PMS.toast("يرجى اختيار صلاحية وصول لمنشأة واحدة على الأقل"); return; }
         const roles = currentSelectedRoles();
         const activePresetBtn = document.querySelector("#u-role-presets .role-preset-item.is-active");
-        const rolePreset = activePresetBtn ? activePresetBtn.dataset.preset : "Custom Roles";
+        if (!activePresetBtn) { PMS.toast("يرجى اختيار دور للمستخدم"); return; }
+        const rolePreset = activePresetBtn.dataset.preset;
+        const roleLabel = (PD.ROLE_PRESETS[rolePreset] && PD.ROLE_PRESETS[rolePreset].label) || rolePreset;
 
         const payload = {
           firstName: firstName,
@@ -501,7 +589,7 @@
           status: document.getElementById("u-status").value,
           roles: roles,
           rolePreset: rolePreset,
-          roleLabel: rolePreset,
+          roleLabel: roleLabel,
           assignedPropertyIds: assignedPropertyIds,
           defaultPropertyId: defaultPropertyId || assignedPropertyIds[0],
           requirePasswordChange: document.getElementById("u-force-pw").checked,

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصناديق — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=fin3" />
+</head>
+<body class="app-bg font-sans" data-page="finance-cashboxes" data-title="الصناديق"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المالية","href":"finance-transactions.html"},{"label":"الصناديق"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5" id="page-root">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الإيرادات والمصروفات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">صناديق النقدية وأرصدة العملات</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="add-exchange-btn">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 7h11l-3-3m3 3-3 3M17 17H6l3 3m-3-3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            تحويل عملة جديد
+          </button>
+        </div>
+
+        <nav class="fin-subnav" aria-label="أقسام المالية">
+          <a class="chip" href="finance-transactions.html">الحركات المالية</a>
+          <a class="chip is-active" href="finance-cashboxes.html">الصناديق</a>
+          <a class="chip" href="finance-rates.html">أسعار الصرف</a>
+          <a class="chip" href="finance-categories.html">الفئات</a>
+        </nav>
+
+        <div class="prop-grid" id="cashbox-grid"></div>
+        <div class="empty-state hidden" id="cashbox-empty">لا توجد صناديق لهذه المنشأة.</div>
+      </main>
+    </div>
+  </div>
+
+  <div id="exchange-modal" class="modal" style="width:min(34rem,calc(100% - 2rem))">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تحويل عملة جديد</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="exchange-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="field-label">المنشأة *</label>
+        <select id="x-property" class="field-input"></select>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="field-label">من صندوق *</label><select id="x-from-account" class="field-input"></select></div>
+        <div><label class="field-label">إلى صندوق *</label><select id="x-to-account" class="field-input"></select></div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="field-label">المبلغ المُعطى *</label><input id="x-from-amount" type="number" min="0" step="0.01" class="field-input" placeholder="0.00" /></div>
+        <div><label class="field-label">سعر الصرف الدفتري</label><input id="x-book-rate" class="field-input bg-slate-50 font-extrabold" readonly /></div>
+      </div>
+      <div class="rounded-2xl bg-slate-50 border border-slate-200 p-3 text-sm font-bold" id="x-book-value">القيمة الدفترية: —</div>
+      <div><label class="field-label">المبلغ المستلم فعلياً *</label><input id="x-actual-amount" type="number" min="0" step="0.01" class="field-input" placeholder="0.00" /></div>
+      <div class="rounded-2xl p-3 text-sm font-extrabold" id="x-gain-loss">فرق الصرف: —</div>
+      <div><label class="field-label">تاريخ الحركة</label><input id="x-date" type="date" class="field-input" /></div>
+      <div><label class="field-label">ملاحظات</label><textarea id="x-notes" class="field-textarea" rows="2" placeholder="ملاحظات إضافية…"></textarea></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="exchange-modal">إلغاء</button>
+      <button class="btn btn-primary" id="x-save-btn">تنفيذ التحويل</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/finance-data.js"></script>
+  <script src="../assets/js/app.js?v=fin3"></script>
+  <script src="../assets/js/finance-transactions.js?v=fin3"></script>
+</body>
+</html>

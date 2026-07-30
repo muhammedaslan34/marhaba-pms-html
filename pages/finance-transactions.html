@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الإيرادات والمصروفات — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=fin4" />
+</head>
+<body class="app-bg font-sans" data-page="finance-transactions" data-title="الإيرادات والمصروفات"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المالية"},{"label":"الإيرادات والمصروفات"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5 pb-24 sm:pb-8" id="page-root">
+
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الإيرادات والمصروفات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">تتبّع إيرادات ومصروفات وأرصدة المنشأة بعملتي SYP وUSD</p>
+            <div class="hidden items-center gap-2 mt-2" id="consolidated-banner">
+              <span class="badge badge-primary">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/></svg>
+                عرض موحّد عبر <span id="consolidated-count">2</span> منشآت
+              </span>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <select id="date-range" class="field-select w-auto">
+              <option value="7">آخر 7 أيام</option>
+              <option value="14">آخر 14 يوماً</option>
+              <option value="30" selected>آخر 30 يوماً</option>
+              <option value="90">آخر 90 يوماً</option>
+              <option value="all">كل الفترة</option>
+            </select>
+            <button type="button" class="btn btn-ghost" id="export-btn">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round"/></svg>
+              تصدير
+            </button>
+            <button type="button" class="btn btn-primary" id="add-txn-btn">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              إضافة حركة
+            </button>
+          </div>
+        </div>
+
+        <section class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+          <article class="stat-card" data-tone="success">
+            <div class="stat-label">إجمالي الإيرادات</div>
+            <div class="stat-value text-emerald-600" id="sum-income">—</div>
+            <div class="text-[11px] text-slate-400 mt-1.5 font-semibold" id="sum-income-orig">—</div>
+            <div class="text-[11px] text-emerald-600 mt-1 font-bold" id="sum-income-trend">—</div>
+          </article>
+          <article class="stat-card" data-tone="danger">
+            <div class="stat-label">إجمالي المصروفات</div>
+            <div class="stat-value money-due" id="sum-expense">—</div>
+            <div class="text-[11px] text-slate-400 mt-1.5 font-semibold" id="sum-expense-orig">—</div>
+            <div class="text-[11px] text-red-600 mt-1 font-bold" id="sum-expense-trend">—</div>
+          </article>
+          <article class="stat-card" data-tone="primary">
+            <div class="stat-label">صافي الرصيد</div>
+            <div class="stat-value text-primary" id="sum-net">—</div>
+            <div class="text-[11px] text-slate-400 mt-1.5 font-semibold" id="sum-net-orig">—</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">رصيد الصندوق USD</div>
+            <div class="stat-value" id="sum-cash-usd">—</div>
+            <div class="text-[11px] text-slate-400 mt-1.5 font-semibold">جميع صناديق الدولار</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">رصيد الصندوق SYP</div>
+            <div class="stat-value" id="sum-cash-syp">—</div>
+            <div class="text-[11px] text-slate-400 mt-1.5 font-semibold">جميع صناديق الليرة</div>
+          </article>
+        </section>
+
+        <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <article class="panel p-4">
+            <h4 class="text-xs font-extrabold text-slate-500 mb-3">الإيراد والمصروف خلال الفترة</h4>
+            <div class="h-28 flex items-stretch gap-1.5" id="chart-trend"></div>
+          </article>
+          <article class="panel p-4">
+            <h4 class="text-xs font-extrabold text-slate-500 mb-3">الإيراد حسب العملة</h4>
+            <div class="space-y-2.5" id="chart-currency"></div>
+          </article>
+          <article class="panel p-4">
+            <h4 class="text-xs font-extrabold text-slate-500 mb-3">المصروفات حسب الفئة</h4>
+            <div class="space-y-2" id="chart-expense-category"></div>
+          </article>
+          <article class="panel p-4">
+            <h4 class="text-xs font-extrabold text-slate-500 mb-3">الإيراد حسب المنشأة</h4>
+            <div class="space-y-2.5" id="chart-property"></div>
+          </article>
+        </section>
+
+        <nav class="fin-subnav overflow-x-auto" aria-label="أقسام المالية">
+          <a class="chip is-active" href="finance-transactions.html">الحركات المالية</a>
+          <a class="chip" href="finance-cashboxes.html">الصناديق</a>
+          <a class="chip" href="finance-rates.html">أسعار الصرف</a>
+          <a class="chip" href="finance-categories.html">الفئات</a>
+        </nav>
+
+        <div class="space-y-4">
+            <section class="fin-filters panel">
+              <div class="fin-filters-head">
+                <div>
+                  <h2 class="font-extrabold text-base">فلاتر الحركات</h2>
+                  <p class="text-xs text-slate-500 font-semibold mt-0.5">صفِّ حسب التاريخ، النوع، المنشأة والحساب</p>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm" id="clear-filters-top">إعادة ضبط</button>
+              </div>
+
+              <div class="fin-filters-grid">
+                <div class="fin-filter-search">
+                  <label class="field-label" for="f-search">بحث</label>
+                  <div class="search-input">
+                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                    <input type="search" id="f-search" class="field-input" placeholder="ابحث بالمرجع أو الوصف…" />
+                  </div>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-from-trigger">من تاريخ</label>
+                  <div class="dp-field" data-datepicker data-placeholder="من تاريخ">
+                    <button type="button" class="field-input dp-trigger" id="f-from-trigger" aria-haspopup="dialog" aria-label="من تاريخ">
+                      <span class="dp-text is-empty">من تاريخ</span>
+                      <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                    </button>
+                    <input type="hidden" id="f-from" name="from" value="" />
+                    <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ البداية">
+                      <div class="dp-head">
+                        <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                          <span data-dp-month-label>يوليو 2026</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="dp-nav">
+                          <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                          <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        </div>
+                      </div>
+                      <div class="dp-months" aria-label="اختيار الشهر"></div>
+                      <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                      <div class="dp-foot">
+                        <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                        <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-to-trigger">إلى تاريخ</label>
+                  <div class="dp-field" data-datepicker data-placeholder="إلى تاريخ">
+                    <button type="button" class="field-input dp-trigger" id="f-to-trigger" aria-haspopup="dialog" aria-label="إلى تاريخ">
+                      <span class="dp-text is-empty">إلى تاريخ</span>
+                      <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                    </button>
+                    <input type="hidden" id="f-to" name="to" value="" />
+                    <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ النهاية">
+                      <div class="dp-head">
+                        <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                          <span data-dp-month-label>يوليو 2026</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="dp-nav">
+                          <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                          <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        </div>
+                      </div>
+                      <div class="dp-months" aria-label="اختيار الشهر"></div>
+                      <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                      <div class="dp-foot">
+                        <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                        <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-type">النوع</label>
+                  <select id="f-type" class="field-select">
+                    <option value="all">كل الأنواع</option>
+                    <option value="income">إيراد</option>
+                    <option value="expense">مصروف</option>
+                    <option value="exchange">تحويل عملة</option>
+                    <option value="transfer">تحويل</option>
+                    <option value="adjustment">تسوية</option>
+                  </select>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-category">الفئة</label>
+                  <select id="f-category" class="field-select"><option value="all">كل الفئات</option></select>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-currency">العملة</label>
+                  <select id="f-currency" class="field-select">
+                    <option value="all">كل العملات</option>
+                    <option value="SYP">SYP فقط</option>
+                    <option value="USD">USD فقط</option>
+                  </select>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-account">حساب الدفع</label>
+                  <select id="f-account" class="field-select"><option value="all">كل الحسابات</option></select>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-status">الحالة</label>
+                  <select id="f-status" class="field-select">
+                    <option value="all">كل الحالات</option>
+                    <option value="draft">مسودة</option>
+                    <option value="confirmed">مؤكدة</option>
+                    <option value="cancelled">ملغاة</option>
+                  </select>
+                </div>
+
+                <div class="fin-filter-field">
+                  <label class="field-label" for="f-property">المنشأة</label>
+                  <select id="f-property" class="field-select"><option value="all">كل المنشآت</option></select>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 flex-wrap mt-3" id="active-filters"></div>
+            </section>
+
+            <section class="panel overflow-hidden hidden md:block">
+              <div class="table-wrap">
+                <table class="data-table" data-no-pager>
+                  <thead>
+                    <tr>
+                      <th>التاريخ</th><th>المرجع</th><th>المنشأة</th><th>النوع</th><th>الفئة</th><th>الوصف</th>
+                      <th>حساب الدفع</th><th>المبلغ الأصلي</th><th>سعر الصرف</th><th>المبلغ بالأساس</th><th>الحالة</th><th class="text-center">إجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="txn-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="txn-empty-desktop">لا توجد حركات مطابقة للفلاتر الحالية.</div>
+            </section>
+
+            <section class="space-y-3 md:hidden" id="txn-cards"></section>
+            <div class="empty-state hidden md:hidden" id="txn-empty-mobile">لا توجد حركات مطابقة للفلاتر الحالية.</div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Sticky mobile Add button -->
+  <button type="button" class="btn btn-primary sm:hidden fixed bottom-4 inset-x-4 z-40 justify-center shadow-lg" id="add-txn-btn-mobile">
+    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+    إضافة حركة
+  </button>
+
+  <!-- ── Add / Edit Transaction drawer ── -->
+  <div id="txn-drawer" class="drawer" style="width:min(36rem,100%)">
+    <div class="flex items-center justify-between p-5 border-b border-slate-200">
+      <h3 class="font-extrabold text-lg" id="txn-drawer-title">إضافة حركة مالية</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-7 overflow-y-auto" style="max-height:calc(100vh - 8.5rem)">
+      <section>
+        <h4 class="font-extrabold text-sm text-slate-800 mb-3">بيانات الحركة</h4>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label class="field-label" for="t-property">المنشأة *</label>
+            <select id="t-property" class="field-select"></select>
+          </div>
+          <div>
+            <label class="field-label" for="t-type">نوع الحركة *</label>
+            <select id="t-type" class="field-select">
+              <option value="income">إيراد</option>
+              <option value="expense">مصروف</option>
+              <option value="adjustment">تسوية</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="t-date">تاريخ الحركة *</label>
+            <div class="dp-field" data-datepicker data-placeholder="اختر التاريخ">
+              <button type="button" class="field-input dp-trigger" id="t-date-trigger" aria-haspopup="dialog" aria-label="تاريخ الحركة">
+                <span class="dp-text is-empty">اختر التاريخ</span>
+                <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+              </button>
+              <input type="hidden" id="t-date" name="t-date" value="" />
+              <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ الحركة">
+                <div class="dp-head">
+                  <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                    <span data-dp-month-label>يوليو 2026</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <div class="dp-nav">
+                    <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  </div>
+                </div>
+                <div class="dp-months" aria-label="اختيار الشهر"></div>
+                <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                <div class="dp-foot">
+                  <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                  <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="t-category">الفئة *</label>
+            <select id="t-category" class="field-select"></select>
+          </div>
+          <div class="sm:col-span-2"><label class="field-label" for="t-description">الوصف</label><input id="t-description" class="field-input" placeholder="وصف مختصر للحركة" /></div>
+          <div>
+            <label class="field-label" for="t-ref-type">نوع المرجع</label>
+            <select id="t-ref-type" class="field-select">
+              <option value="">بدون</option>
+              <option value="Reservation">حجز</option>
+              <option value="Invoice">فاتورة</option>
+              <option value="Other">أخرى</option>
+            </select>
+          </div>
+          <div><label class="field-label" for="t-ref-id">رقم المرجع</label><input id="t-ref-id" class="field-input" placeholder="مثال: RES-1001" /></div>
+        </div>
+      </section>
+
+      <section>
+        <h4 class="font-extrabold text-sm text-slate-800 mb-3">بيانات الدفع</h4>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div class="sm:col-span-2">
+            <label class="field-label" for="t-account">حساب الدفع *</label>
+            <select id="t-account" class="field-select"></select>
+          </div>
+          <div><label class="field-label">العملة</label><div class="field-input bg-slate-50 font-extrabold" id="t-currency-display">—</div></div>
+          <div><label class="field-label" for="t-amount">المبلغ الأصلي *</label><input id="t-amount" type="number" min="0" step="0.01" class="field-input" placeholder="0.00" /></div>
+          <div>
+            <label class="field-label" for="t-rate">سعر الصرف <span class="text-xs text-slate-400 font-semibold" id="t-rate-auto-label"></span></label>
+            <input id="t-rate" type="number" min="0" step="0.000001" class="field-input" value="1" />
+          </div>
+          <div><label class="field-label" for="t-base-amount">المبلغ بالعملة الأساسية (SYP)</label><input id="t-base-amount" class="field-input bg-slate-50 font-extrabold" readonly /></div>
+        </div>
+        <div class="rounded-2xl bg-primary-soft border border-primary/15 p-3 mt-3 text-sm font-bold text-primary" id="t-calc-line">—</div>
+        <p class="hidden text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3 mt-3" id="t-rate-warning">
+          سيتم حفظ هذا السعر بشكل دائم مع الحركة. أي تغيير مستقبلي على سعر الصرف لن يؤثر على هذه الحركة.
+        </p>
+        <p class="hidden text-xs font-semibold text-red-800 bg-red-50 border border-red-100 rounded-xl p-3 mt-3" id="t-balance-warning"></p>
+      </section>
+
+      <section id="t-status-section">
+        <h4 class="font-extrabold text-sm text-slate-800 mb-3">الحالة</h4>
+        <select id="t-status" class="field-select">
+          <option value="draft">مسودة</option>
+          <option value="confirmed">مؤكدة</option>
+        </select>
+      </section>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex flex-wrap justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-drawer">إلغاء</button>
+      <button class="btn btn-secondary" id="t-save-draft">حفظ كمسودة</button>
+      <button class="btn btn-primary" id="t-save-confirm">حفظ وتأكيد</button>
+    </div>
+  </div>
+
+  <!-- ── Transaction details drawer ── -->
+  <div id="txn-details-drawer" class="drawer" style="width:min(30rem,100%)">
+    <div class="flex items-center justify-between p-5 border-b border-slate-200">
+      <h3 class="font-extrabold text-lg">تفاصيل الحركة</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4 overflow-y-auto" style="max-height:calc(100vh - 8.5rem)" id="txn-details-body"></div>
+    <div class="p-5 border-t border-slate-200 flex flex-wrap justify-end gap-2" id="txn-details-actions"></div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/finance-data.js"></script>
+  <script src="../assets/js/app.js?v=fin4"></script>
+  <script src="../assets/js/finance-transactions.js?v=fin4"></script>
+</body>
+</html>

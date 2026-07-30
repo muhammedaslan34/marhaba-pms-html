@@ -10,6 +10,19 @@
     { group: null, id: "availability", href: "availability.html", label: "التوفر", icon: "grid" },
     { group: null, id: "housekeeping", href: "housekeeping.html", label: "التدبير الفندقي", icon: "sparkles" },
     { group: "المالية", id: "payments", href: "payments.html", label: "الدفعات", icon: "wallet" },
+    {
+      group: null,
+      id: "finance",
+      href: "finance-transactions.html",
+      label: "الإيرادات والمصروفات",
+      icon: "cashFlow",
+      children: [
+        { id: "finance-transactions", href: "finance-transactions.html", label: "الحركات المالية" },
+        { id: "finance-cashboxes", href: "finance-cashboxes.html", label: "الصناديق" },
+        { id: "finance-rates", href: "finance-rates.html", label: "أسعار الصرف" },
+        { id: "finance-categories", href: "finance-categories.html", label: "الفئات" },
+      ],
+    },
     { group: null, id: "cashier", href: "cashier.html", label: "الصندوق والورديات", icon: "cash" },
     { group: null, id: "reports", href: "reports.html", label: "التقارير", icon: "chart" },
     { group: "إدارة المنشآت", id: "properties", href: "properties.html", label: "المنشآت", icon: "building" },
@@ -460,20 +473,26 @@
       select.classList.add("ss-native-hidden");
       select.tabIndex = -1;
 
-      const options = Array.prototype.map.call(select.options, function (opt, index) {
-        return {
-          index: index,
-          value: opt.value,
-          label: (opt.textContent || "").trim(),
-          disabled: !!opt.disabled,
-          placeholder: !!opt.disabled && (opt.value === "" || !opt.value),
-        };
-      });
+      function readOptions() {
+        return Array.prototype.map.call(select.options, function (opt, index) {
+          return {
+            index: index,
+            value: opt.value,
+            label: (opt.textContent || "").trim(),
+            disabled: !!opt.disabled,
+            placeholder: !!opt.disabled && (opt.value === "" || !opt.value),
+          };
+        });
+      }
 
-      const selectableCount = options.filter(function (o) {
-        return !o.placeholder && !o.disabled;
-      }).length;
-      const searchable = selectableCount >= 7;
+      let options = readOptions();
+
+      function selectableCount() {
+        return readOptions().filter(function (o) {
+          return !o.placeholder && !o.disabled;
+        }).length;
+      }
+
       const trigger = document.createElement("button");
       trigger.type = "button";
       trigger.className = "ss-select-btn";
@@ -490,12 +509,10 @@
       dropdown.setAttribute("data-ss-dropdown", "");
       dropdown.setAttribute("role", "listbox");
       dropdown.innerHTML =
-        (searchable
-          ? '<div class="phone-dropdown-search search-input">' +
-            '<svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>' +
-            '<input type="search" placeholder="بحث…" data-ss-search />' +
-            "</div>"
-          : "") +
+        '<div class="phone-dropdown-search search-input" data-ss-search-wrap hidden>' +
+        '<svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>' +
+        '<input type="search" placeholder="بحث…" data-ss-search />' +
+        "</div>" +
         '<div class="phone-dropdown-list" data-ss-list></div>';
 
       wrap.appendChild(trigger);
@@ -503,6 +520,7 @@
 
       const textEl = trigger.querySelector("[data-ss-text]");
       const listEl = dropdown.querySelector("[data-ss-list]");
+      const searchWrap = dropdown.querySelector("[data-ss-search-wrap]");
       const searchInput = dropdown.querySelector("[data-ss-search]");
       let query = "";
 
@@ -513,16 +531,20 @@
 
       function syncLabel() {
         const opt = currentOption();
-        if (!opt || (opt.disabled && !opt.value)) {
-          textEl.textContent = (opt && opt.textContent) || "اختر…";
+        if (!opt || ((opt.disabled || !String(opt.value || "").length) && (opt.textContent || "").trim() === "")) {
+          textEl.textContent = (opt && (opt.textContent || "").trim()) || "اختر…";
+          textEl.classList.add("is-empty");
+        } else if (!opt.value && opt.disabled) {
+          textEl.textContent = (opt.textContent || "").trim() || "اختر…";
           textEl.classList.add("is-empty");
         } else {
-          textEl.textContent = opt.textContent;
+          textEl.textContent = (opt.textContent || "").trim();
           textEl.classList.remove("is-empty");
         }
       }
 
       function renderList() {
+        options = readOptions();
         const q = query.trim().toLowerCase();
         const items = options.filter(function (o) {
           if (o.placeholder) return false;
@@ -574,9 +596,12 @@
         trigger.setAttribute("aria-expanded", "true");
         query = "";
         if (searchInput) searchInput.value = "";
+        if (searchWrap) searchWrap.hidden = selectableCount() < 7 && select.options.length < 7;
         renderList();
         position();
-        if (searchInput) setTimeout(function () { searchInput.focus(); }, 20);
+        if (searchInput && searchWrap && !searchWrap.hidden) {
+          setTimeout(function () { searchInput.focus(); }, 20);
+        }
       }
 
       function close() {
@@ -650,6 +675,7 @@
     building: '<path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 10h5a1 1 0 0 1 1 1v10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7 8h2M7 11h2M7 14h2M7 17h2M17 14h1M17 17h1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
     userCog: '<circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 19c0-2.8 2.7-5 6-5s6 2.2 6 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="18" cy="17" r="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M18 13.3v.9M18 19.8v.9M21.2 17h-.9M15.7 17h-.9M20.3 14.7l-.6.6M16.3 18.7l-.6.6M20.3 19.3l-.6-.6M16.3 15.3l-.6-.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
     shield: '<path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+    cashFlow: '<path d="M3 7h13M3 7l3-3M3 7l3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 17H8m13 0-3-3m3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
   };
 
   function icon(name) {
@@ -682,6 +708,27 @@
       } else if (!item.group && lastGroup === undefined) {
         lastGroup = null;
       }
+
+      const children = item.children || [];
+      const childActive = children.some((child) => child.id === active);
+      const branchOpen = childActive || item.id === active;
+
+      if (children.length) {
+        html += `<div class="sidebar-branch${branchOpen ? " is-open" : ""}${childActive ? " has-active" : ""}" data-nav-branch="${item.id}">`;
+        html += `<div class="sidebar-branch-head">`;
+        html += `<a class="sidebar-link${childActive ? " is-branch-active" : ""}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${icon(item.icon)}<span>${item.label}</span></a>`;
+        html += `<button type="button" class="sidebar-branch-toggle" data-action="toggle-nav-branch" aria-expanded="${branchOpen ? "true" : "false"}" aria-label="إظهار أو إخفاء ${item.label}">`;
+        html += `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        html += `</button></div>`;
+        html += `<div class="sidebar-subnav">`;
+        children.forEach((child) => {
+          const subActive = child.id === active ? " is-active" : "";
+          html += `<a class="sidebar-sublink${subActive}" href="${child.href}" data-nav="${child.id}">${child.label}</a>`;
+        });
+        html += `</div></div>`;
+        return;
+      }
+
       const activeClass = item.id === active ? " is-active" : "";
       html += `<a class="sidebar-link${activeClass}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${icon(item.icon)}<span>${item.label}</span></a>`;
     });
@@ -731,7 +778,10 @@
           <input id="global-search" type="search" placeholder="بحث…" aria-label="بحث عام" />
           <kbd class="search-kbd" aria-hidden="true">${shortcutLabel()}</kbd>
         </label>
-        ${renderPropertySwitcher()}
+        <button type="button" class="pswitch-badge" data-action="toggle-user-menu" aria-label="المنشأة الحالية — لتبديلها افتح قائمة الحساب" title="المنشأة الحالية — لتبديلها افتح قائمة الحساب">
+          ${PSWITCH_BUILDING_ICON}
+          <span class="pswitch-badge-code" data-pswitch-code>${propertySwitcherTriggerLabel(PD.getSelectedPropertyId()).code}</span>
+        </button>
         <div class="header-switchers">
           <button type="button" class="header-icon-btn" data-action="toggle-lang" aria-label="${lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}" title="${lang === "en" ? "English → العربية" : "العربية → English"}">
             ${langIcon}
@@ -760,6 +810,10 @@
                 </div>
               </div>
               <div class="text-xs text-slate-400 truncate font-semibold mt-1.5">${USER.email}</div>
+            </div>
+            <div class="px-2 pt-2 pb-1">
+              <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wide px-1 mb-1.5">المنشأة</div>
+              <div class="flex flex-col gap-2" data-pswitch-menu>${propertySwitcherMenuHtml()}</div>
             </div>
             <div class="border-t border-slate-100 mt-1 pt-1">
               <a href="settings.html" class="block px-3 py-2 text-sm rounded-lg hover:bg-primary-soft font-semibold text-slate-700">الإعدادات</a>
@@ -792,7 +846,7 @@
       '</span>' +
       '<span class="pswitch-option-code">' + p.code + '</span>' +
       (sel
-        ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        ? '<svg class="w-4 h-4 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         : "") +
       "</button>"
     );
@@ -813,7 +867,7 @@
         '<span class="pswitch-option-dot is-all" aria-hidden="true"></span>' +
         '<span class="min-w-0 flex-1 text-start"><span class="block truncate font-extrabold text-sm">جميع المنشآت</span><span class="block truncate text-xs text-slate-400 font-semibold">تقرير موحّد عبر كل المنشآت المتاحة لك</span></span>' +
         (selectedId === "all"
-          ? '<svg class="w-4 h-4 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          ? '<svg class="w-4 h-4 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
           : "") +
         "</button>"
       : "";
@@ -836,27 +890,8 @@
     return { name: p.name, code: p.code };
   }
 
-  function renderPropertySwitcher() {
-    const selectedId = PD.getSelectedPropertyId();
-    const label = propertySwitcherTriggerLabel(selectedId);
-    return (
-      '<div class="relative" data-property-switcher>' +
-      '<button type="button" class="pswitch-trigger" data-action="toggle-property-switcher" aria-haspopup="listbox" aria-expanded="false" title="المنشأة الحالية — لتبديلها اضغط هنا">' +
-      PSWITCH_BUILDING_ICON +
-      '<span class="pswitch-trigger-name hidden sm:inline" data-pswitch-name>' + label.name + "</span>" +
-      '<span class="pswitch-trigger-code" data-pswitch-code>' + label.code + "</span>" +
-      '<svg class="chevron w-3.5 h-3.5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>' +
-      "</button>" +
-      '<div class="pswitch-menu" data-pswitch-menu hidden role="listbox">' + propertySwitcherMenuHtml() + "</div>" +
-      "</div>"
-    );
-  }
-
   function closePropertySwitcher() {
-    const menu = document.querySelector("[data-pswitch-menu]");
-    const trigger = document.querySelector('[data-action="toggle-property-switcher"]');
-    if (menu) { menu.hidden = true; menu.classList.remove("is-open"); }
-    if (trigger) trigger.setAttribute("aria-expanded", "false");
+    document.getElementById("user-menu")?.classList.add("hidden");
   }
 
   function filterPropertySwitcherList(query) {
@@ -878,7 +913,6 @@
     window.setTimeout(function () {
       PD.setSelectedPropertyId(id);
       const label = propertySwitcherTriggerLabel(id);
-      document.querySelectorAll("[data-pswitch-name]").forEach(function (el) { el.textContent = label.name; });
       document.querySelectorAll("[data-pswitch-code]").forEach(function (el) { el.textContent = label.code; });
       document.querySelectorAll("[data-pswitch-menu]").forEach(function (el) { el.innerHTML = propertySwitcherMenuHtml(); });
       if (main) main.classList.remove("pms-loading");
@@ -1552,37 +1586,28 @@
         if (!e.target.closest("#user-menu") && !e.target.closest('[data-action="toggle-user-menu"]')) {
           document.getElementById("user-menu")?.classList.add("hidden");
         }
-        if (!e.target.closest("[data-property-switcher]")) {
-          closePropertySwitcher();
-        }
         return;
       }
       const action = actionEl.dataset.action;
       if (action === "toggle-sidebar") toggleMobileSidebar();
       if (action === "collapse-sidebar") toggleCollapseSidebar();
       if (action === "close-sidebar") closeSidebar();
+      if (action === "toggle-nav-branch") {
+        e.preventDefault();
+        const branch = actionEl.closest(".sidebar-branch");
+        if (!branch) return;
+        const open = branch.classList.toggle("is-open");
+        actionEl.setAttribute("aria-expanded", open ? "true" : "false");
+        return;
+      }
       if (action === "toggle-user-menu") {
         const menu = document.getElementById("user-menu");
         const willOpen = menu?.classList.contains("hidden");
         menu?.classList.toggle("hidden");
-        if (!willOpen) closePropertySwitcher();
-      }
-      if (action === "toggle-property-switcher") {
-        e.preventDefault();
-        e.stopPropagation();
-        const menu = document.querySelector("[data-pswitch-menu]");
-        if (!menu) return;
-        const open = menu.hidden;
-        closePropertySwitcher();
-        document.getElementById("user-menu")?.classList.add("hidden");
-        if (open) {
-          menu.hidden = false;
-          menu.classList.add("is-open");
-          actionEl.setAttribute("aria-expanded", "true");
+        if (willOpen) {
           const search = menu.querySelector("[data-pswitch-search]");
-          if (search) { search.value = ""; filterPropertySwitcherList(""); window.setTimeout(function () { search.focus(); }, 20); }
+          if (search) { search.value = ""; filterPropertySwitcherList(""); }
         }
-        return;
       }
       if (action === "select-property-switcher") {
         e.preventDefault();

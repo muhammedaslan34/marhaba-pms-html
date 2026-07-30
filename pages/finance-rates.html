@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أسعار الصرف — Solvfast PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=fin3" />
+</head>
+<body class="app-bg font-sans" data-page="finance-rates" data-title="أسعار الصرف"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"المالية","href":"finance-transactions.html"},{"label":"أسعار الصرف"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5" id="page-root">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الإيرادات والمصروفات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">أسعار صرف USD/SYP حسب المنشأة</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="add-rate-btn">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            إضافة سعر جديد
+          </button>
+        </div>
+
+        <nav class="fin-subnav" aria-label="أقسام المالية">
+          <a class="chip" href="finance-transactions.html">الحركات المالية</a>
+          <a class="chip" href="finance-cashboxes.html">الصناديق</a>
+          <a class="chip is-active" href="finance-rates.html">أسعار الصرف</a>
+          <a class="chip" href="finance-categories.html">الفئات</a>
+        </nav>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">السعر الحالي USD/SYP — HOMS1</div>
+            <div class="stat-value text-amber-600" id="rate-current-homs">—</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="stat-label">السعر الحالي USD/SYP — HALEP1</div>
+            <div class="stat-value text-amber-600" id="rate-current-halep">—</div>
+          </article>
+        </div>
+
+        <section class="panel overflow-hidden">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>تاريخ السريان</th>
+                  <th>المنشأة</th>
+                  <th>من</th>
+                  <th>إلى</th>
+                  <th>السعر</th>
+                  <th>المصدر</th>
+                  <th>بواسطة</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody id="rates-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="rate-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">إضافة سعر صرف</h3>
+      <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="rate-modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">المنشأة *</label><select id="r-property" class="field-input"></select></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="field-label">من عملة</label><div class="field-input bg-slate-50 font-extrabold">USD</div></div>
+        <div><label class="field-label">إلى عملة</label><div class="field-input bg-slate-50 font-extrabold">SYP</div></div>
+      </div>
+      <div><label class="field-label">السعر *</label><input id="r-rate" type="number" min="0" step="0.000001" class="field-input" placeholder="11500" /></div>
+      <div><label class="field-label">تاريخ السريان *</label><input id="r-date" type="date" class="field-input" /></div>
+      <div>
+        <label class="field-label">المصدر</label>
+        <select id="r-source" class="field-select">
+          <option value="manual">يدوي</option>
+          <option value="central">تسعير مركزي</option>
+          <option value="exchange-office">مكتب صرافة</option>
+          <option value="bank">بنك</option>
+          <option value="api">واجهة برمجية (API)</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button class="btn btn-ghost" data-action="close-modal" data-target="rate-modal">إلغاء</button>
+      <button class="btn btn-primary" id="r-save-btn">حفظ السعر</button>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/finance-data.js"></script>
+  <script src="../assets/js/app.js?v=fin3"></script>
+  <script src="../assets/js/finance-transactions.js?v=fin3"></script>
+</body>
+</html>
