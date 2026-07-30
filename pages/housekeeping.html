@@ -454,17 +454,17 @@
 
   <script src="../assets/js/app.js?v=hk11"></script>
   <script>
-    (function  {
+    (function () {
       const grid = document.getElementById('room-grid');
-      const cards =  => [...grid.querySelectorAll('.room-card')];
+      const cards = () => [...grid.querySelectorAll('.room-card')];
       const empty = document.getElementById('hk-empty');
       const range = document.getElementById('hk-range');
       const search = document.getElementById('hk-search');
       let statusF = 'all';
       let hkF = 'all-hk';
 
-      function setCounts {
-        const all = cards;
+      function setCounts() {
+        const all = cards();
         const map = {
           all: all.length,
           vacant: all.filter(c => c.dataset.status === 'vacant').length,
@@ -481,8 +481,8 @@
       }
 
       function match(card) {
-        const q = (search.value || '').trim.toLowerCase;
-        const hay = [card.dataset.room, card.dataset.type, card.dataset.guest, card.textContent].join(' ').toLowerCase;
+        const q = (search.value || '').trim().toLowerCase();
+        const hay = [card.dataset.room, card.dataset.type, card.dataset.guest, card.textContent].join(' ').toLowerCase();
         if (q && !hay.includes(q)) return false;
         if (statusF !== 'all' && card.dataset.status !== statusF) return false;
         if (hkF === 'clean' && card.dataset.hk !== 'clean') return false;
@@ -491,9 +491,9 @@
         return true;
       }
 
-      function apply {
+      function apply() {
         let n = 0;
-        cards.forEach(card => {
+        cards().forEach(card => {
           const ok = match(card);
           card.classList.toggle('hide', !ok);
           if (ok) n += 1;
@@ -510,7 +510,7 @@
           btn.classList.add('is-on');
           if (group === 'status') statusF = btn.dataset.f;
           else hkF = btn.dataset.f;
-          apply;
+          apply();
         });
       }
       bindPills('status-pills', 'status');
@@ -522,9 +522,9 @@
         if (card) document.getElementById('room-num').textContent = card.dataset.room;
       });
 
-      setCounts;
-      apply;
-    });
+      setCounts();
+      apply();
+    })();
   </script>
 </body>
 </html>

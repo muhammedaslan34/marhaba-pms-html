@@ -110,13 +110,13 @@
   </div>
   <script src="../assets/js/app.js"></script>
   <script>
-    document.getElementById('theme-toggle').addEventListener('click',  => {
+    document.getElementById('theme-toggle').addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
       document.body.classList.toggle('bg-slate-900');
       document.body.classList.toggle('text-slate-100');
       PMS.toast('تبديل المظهر (تجريبي)');
     });
-    document.getElementById('lang-en').addEventListener('click',  => {
+    document.getElementById('lang-en').addEventListener('click', () => {
       document.documentElement.lang = 'en';
       document.documentElement.dir = 'ltr';
       document.getElementById('lang-en').classList.add('btn-secondary');
@@ -125,7 +125,7 @@
       document.getElementById('lang-ar').classList.remove('btn-secondary');
       PMS.toast('Direction set to LTR — copy still Arabic in this prototype');
     });
-    document.getElementById('lang-ar').addEventListener('click',  => {
+    document.getElementById('lang-ar').addEventListener('click', () => {
       document.documentElement.lang = 'ar';
       document.documentElement.dir = 'rtl';
       document.getElementById('lang-ar').classList.add('btn-secondary');

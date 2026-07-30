@@ -33,7 +33,7 @@
             <p class="text-slate-800 font-extrabold text-lg mt-1">30 يوليو → 5 أغسطس · MADINAH1</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <div class="view-toggle" id="avail-switcher">
+            <div class="view-toggle" id="avail-switcher" data-tabs data-tabs-target="avail-views">
               <button type="button" class="view-toggle-btn is-active" data-tab="timeline" title="المخطط الزمني" aria-label="المخطط الزمني">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h14" stroke-linecap="round"/><rect x="14" y="10" width="6" height="4" rx="1"/></svg>
               </button>
@@ -850,7 +850,7 @@
 
   <script src="../assets/js/app.js"></script>
   <script>
-    (function  {
+    (function () {
       const switcher = document.getElementById('avail-switcher');
       const panelsRoot = document.getElementById('avail-views');
       const popover = document.getElementById('avail-popover');
@@ -868,13 +868,13 @@
 
       if (switcher) {
         switcher.querySelectorAll('[data-tab]').forEach((btn) => {
-          btn.addEventListener('click',  => switchView(btn.dataset.tab));
+          btn.addEventListener('click', () => switchView(btn.dataset.tab));
         });
       }
 
       if (range) {
         range.querySelectorAll('.btn').forEach((btn) => {
-          btn.addEventListener('click',  => {
+          btn.addEventListener('click', () => {
             range.querySelectorAll('.btn').forEach((b) => {
               const on = b === btn;
               b.classList.toggle('btn-secondary', on);
@@ -886,7 +886,7 @@
       }
 
       document.querySelectorAll('[data-action="toggle-group"]').forEach((btn) => {
-        btn.addEventListener('click',  => {
+        btn.addEventListener('click', () => {
           const group = btn.closest('.avail-group');
           if (!group) return;
           const open = !group.classList.contains('is-open');
@@ -922,7 +922,7 @@
 
       function placePopover(anchor) {
         if (!popover) return;
-        const rect = anchor.getBoundingClientRect;
+        const rect = anchor.getBoundingClientRect();
         const pad = 10;
         const width = popover.offsetWidth || 320;
         const height = popover.offsetHeight || 260;
@@ -942,7 +942,7 @@
         placePopover(anchor);
       }
 
-      function closePopover {
+      function closePopover() {
         if (!popover) return;
         popover.classList.remove('is-open');
         popover.setAttribute('aria-hidden', 'true');
@@ -951,17 +951,17 @@
       document.addEventListener('click', (e) => {
         const stay = e.target.closest('.avail-stay, .avail-cal-day[data-guest]');
         if (stay) {
-          e.preventDefault;
-          e.stopPropagation;
+          e.preventDefault();
+          e.stopPropagation();
           openPopover(stay);
           return;
         }
         if (e.target.closest('[data-action="close-popover"]')) {
-          closePopover;
+          closePopover();
           return;
         }
         if (popover && popover.classList.contains('is-open') && !e.target.closest('#avail-popover')) {
-          closePopover;
+          closePopover();
         }
         const showTimeline = e.target.closest('[data-action="show-timeline"]');
         if (showTimeline) {
@@ -980,12 +980,12 @@
       });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closePopover;
+        if (e.key === 'Escape') closePopover();
       });
-      window.addEventListener('resize',  => {
-        if (popover && popover.classList.contains('is-open')) closePopover;
+      window.addEventListener('resize', () => {
+        if (popover && popover.classList.contains('is-open')) closePopover();
       });
-    });
+    })();
   </script>
 </body>
 </html>

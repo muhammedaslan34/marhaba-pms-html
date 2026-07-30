@@ -226,7 +226,7 @@
   </div>
   <script src="../assets/js/app.js"></script>
   <script>
-    (function  {
+    (function () {
       let step = 1;
       const max = 4;
       const meta = {
@@ -238,7 +238,7 @@
       const sections = [...document.querySelectorAll('#wizard [data-step]')];
       const labels = [...document.querySelectorAll('#wizard-steps .wizard-step')];
 
-      function render {
+      function render() {
         const pct = Math.round((step / max) * 100);
         sections.forEach((s) => s.classList.toggle('hidden', Number(s.dataset.step) !== step));
         labels.forEach((l, i) => {
@@ -260,25 +260,25 @@
         document.getElementById('wizard-next').textContent = step === max ? 'إنشاء الحجز' : 'التالي';
       }
 
-      document.getElementById('wizard-next').addEventListener('click',  => {
-        if (step < max) { step += 1; render; }
+      document.getElementById('wizard-next').addEventListener('click', () => {
+        if (step < max) { step += 1; render(); }
         else { PMS.toast('تم إنشاء الحجز (تجريبي)'); location.href = 'reservation-detail.html'; }
       });
-      document.getElementById('wizard-prev').addEventListener('click',  => {
-        if (step > 1) { step -= 1; render; }
+      document.getElementById('wizard-prev').addEventListener('click', () => {
+        if (step > 1) { step -= 1; render(); }
       });
-      document.getElementById('pick-guest').addEventListener('click',  => {
+      document.getElementById('pick-guest').addEventListener('click', () => {
         document.getElementById('selected-guest').classList.remove('hidden');
         PMS.toast('تم اختيار النزيل');
       });
-      document.getElementById('change-guest').addEventListener('click',  => {
+      document.getElementById('change-guest').addEventListener('click', () => {
         document.getElementById('selected-guest').classList.add('hidden');
       });
-      document.getElementById('new-guest-toggle').addEventListener('click',  => {
+      document.getElementById('new-guest-toggle').addEventListener('click', () => {
         document.getElementById('new-guest-form').classList.toggle('hidden');
       });
-      render;
-    });
+      render();
+    })();
   </script>
 </body>
 </html>

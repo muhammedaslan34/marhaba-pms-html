@@ -100,7 +100,7 @@
   </div>
   <script src="../assets/js/app.js"></script>
   <script>
-  (function  {
+  (function () {
     const COUNTRIES = [
       { iso: 'SA', name: 'السعودية', nameEn: 'Saudi Arabia', dial: '+966', flag: '🇸🇦' },
       { iso: 'AE', name: 'الإمارات', nameEn: 'United Arab Emirates', dial: '+971', flag: '🇦🇪' },
@@ -193,15 +193,15 @@
       let selected = DEFAULT;
       let query = '';
 
-      function render {
-        const q = query.trim.toLowerCase;
+      function render() {
+        const q = query.trim().toLowerCase();
         const items = COUNTRIES.filter(function (c) {
           if (!q) return true;
           return (
-            c.name.toLowerCase.includes(q) ||
-            c.nameEn.toLowerCase.includes(q) ||
+            c.name.toLowerCase().includes(q) ||
+            c.nameEn.toLowerCase().includes(q) ||
             c.dial.replace('+', '').includes(q.replace('+', '')) ||
-            c.iso.toLowerCase === q
+            c.iso.toLowerCase() === q
           );
         });
 
@@ -228,8 +228,8 @@
         codeTextEl.textContent = c.dial;
         root.dataset.dialCode = c.dial;
         root.dataset.iso = c.iso;
-        close;
-        render;
+        close();
+        render();
       }
 
       function getScrollParent(el) {
@@ -242,21 +242,21 @@
         return null;
       }
 
-      function open {
+      function open() {
         dropdown.classList.add('is-open');
         codeBtn.setAttribute('aria-expanded', 'true');
         query = '';
         searchInput.value = '';
-        render;
-        ensureRoomBelow;
-        positionDropdown;
-        setTimeout(function  { searchInput.focus; }, 30);
+        render();
+        ensureRoomBelow();
+        positionDropdown();
+        setTimeout(function () { searchInput.focus(); }, 30);
       }
 
       // Scroll the modal body so the field sits high enough to fit the dropdown beneath it
-      function ensureRoomBelow {
+      function ensureRoomBelow() {
         const needed = 340; // approx dropdown height + gap
-        const rect = root.getBoundingClientRect;
+        const rect = root.getBoundingClientRect();
         const overflow = (rect.bottom + needed + 8) - window.innerHeight;
         if (overflow > 0) {
           const scroller = getScrollParent(root);
@@ -264,8 +264,8 @@
         }
       }
 
-      function positionDropdown {
-        const rect = root.getBoundingClientRect;
+      function positionDropdown() {
+        const rect = root.getBoundingClientRect();
         const fieldW = rect.width;
 
         // Width: match the field, but never below 17rem
@@ -285,36 +285,36 @@
         dropdown.style.left = left + 'px';
       }
 
-      function close {
+      function close() {
         dropdown.classList.remove('is-open');
         codeBtn.setAttribute('aria-expanded', 'false');
       }
 
-      function toggle {
-        if (dropdown.classList.contains('is-open')) close;
-        else open;
+      function toggle() {
+        if (dropdown.classList.contains('is-open')) close();
+        else open();
       }
 
       codeBtn.addEventListener('click', function (e) {
-        e.preventDefault;
-        toggle;
+        e.preventDefault();
+        toggle();
       });
 
       // Reposition on any scroll (capture catches nested scroll containers) + resize
-      document.addEventListener('scroll', function  {
-        if (dropdown.classList.contains('is-open')) positionDropdown;
+      document.addEventListener('scroll', function () {
+        if (dropdown.classList.contains('is-open')) positionDropdown();
       }, true);
-      window.addEventListener('resize', function  {
-        if (dropdown.classList.contains('is-open')) positionDropdown;
+      window.addEventListener('resize', function () {
+        if (dropdown.classList.contains('is-open')) positionDropdown();
       });
 
-      searchInput.addEventListener('input', function  {
+      searchInput.addEventListener('input', function () {
         query = searchInput.value;
-        render;
+        render();
       });
 
       searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { close; codeBtn.focus; }
+        if (e.key === 'Escape') { close(); codeBtn.focus(); }
       });
 
       listEl.addEventListener('click', function (e) {
@@ -326,7 +326,7 @@
 
       listEl.addEventListener('keydown', function (e) {
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-        e.preventDefault;
+        e.preventDefault();
         const items = Array.from(listEl.querySelectorAll('[data-iso]'));
         if (!items.length) return;
         const idx = items.indexOf(listEl.querySelector('[data-iso].is-selected'));
@@ -338,12 +338,12 @@
       });
 
       document.addEventListener('click', function (e) {
-        if (!root.contains(e.target) && !dropdown.contains(e.target)) close;
+        if (!root.contains(e.target) && !dropdown.contains(e.target)) close();
       });
 
       apply(DEFAULT);
     });
-  });
+  })();
   </script>
 </body>
 </html>

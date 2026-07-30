@@ -36,7 +36,7 @@
             <p class="text-slate-800 font-extrabold mt-1">8 حجوزات نشطة اليوم</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <div class="view-toggle" data-tabs id="view-switcher">
+            <div class="view-toggle" data-tabs data-tabs-target="res-views" id="view-switcher">
               <button type="button" class="view-toggle-btn is-active" data-tab="table" title="جدول" aria-label="عرض الجدول">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
               </button>
@@ -434,12 +434,12 @@
   <script src="../assets/js/app.js"></script>
   <script>
     // Sync icon view switcher with panels (switcher is outside the panels root)
-    (function  {
+    (function () {
       const switcher = document.getElementById('view-switcher');
       const panelsRoot = document.getElementById('res-views');
       if (!switcher || !panelsRoot) return;
       switcher.querySelectorAll('[data-tab]').forEach((btn) => {
-        btn.addEventListener('click',  => {
+        btn.addEventListener('click', () => {
           const id = btn.dataset.tab;
           switcher.querySelectorAll('[data-tab]').forEach((b) => b.classList.toggle('is-active', b === btn));
           panelsRoot.querySelectorAll('[data-tab-panel]').forEach((panel) => {
@@ -447,7 +447,7 @@
           });
         });
       });
-    });
+    })();
   </script>
 </body>
 </html>

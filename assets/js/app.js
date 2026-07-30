@@ -409,7 +409,12 @@
 
   function initTabs() {
     document.querySelectorAll("[data-tabs]").forEach((root) => {
-      const buttons = root.querySelectorAll("[data-tab]");
+      const buttons = [...root.querySelectorAll("[data-tab]")].filter(
+        (btn) => btn.closest("[data-tabs]") === root
+      );
+      const panelsRoot = root.dataset.tabsTarget
+        ? document.getElementById(root.dataset.tabsTarget)
+        : root;
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const id = btn.dataset.tab;
@@ -421,7 +426,8 @@
               b.classList.toggle("btn-ghost", !active);
             }
           });
-          root.querySelectorAll("[data-tab-panel]").forEach((panel) => {
+          if (!panelsRoot) return;
+          panelsRoot.querySelectorAll("[data-tab-panel]").forEach((panel) => {
             panel.classList.toggle("hidden", panel.dataset.tabPanel !== id);
           });
         });
