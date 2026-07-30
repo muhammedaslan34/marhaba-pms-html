@@ -300,6 +300,11 @@ body {
   border-radius: 0.85rem;
   background: #fff;
 }
+/* Free up header space for the page title on narrow screens — lang/theme
+   toggles are secondary and still reachable once the viewport has room. */
+@media (max-width: 639px) {
+  .header-switchers { display: none; }
+}
 .header-icon-btn {
   display: inline-flex;
   align-items: center;
@@ -2562,6 +2567,6 @@ html.dark .property-select-menu {
     transform: translateX(110%);
     transition: transform 0.25s ease;
   }
-  [dir="rtl"] .sidebar { transform: translateX(-110%); }
+  [dir="rtl"] .sidebar { transform: translateX(110%); }
   .sidebar.is-open { transform: translateX(0); }
 }

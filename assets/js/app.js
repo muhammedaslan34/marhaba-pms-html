@@ -736,7 +736,10 @@
             ${themeIcon}
           </button>
         </div>
-        <a href="reservation-new.html" class="btn btn-primary btn-sm">حجز جديد</a>
+        <a href="reservation-new.html" class="btn btn-primary btn-sm" title="حجز جديد">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+          <span class="hidden sm:inline">حجز جديد</span>
+        </a>
         <button type="button" class="relative btn btn-ghost btn-sm !px-2.5" data-action="toggle-notifications" aria-label="الإشعارات">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/><path d="M10 19a2 2 0 0 0 4 0" stroke-linecap="round"/></svg>
           <span class="absolute top-1.5 end-1.5 w-1.5 h-1.5 rounded-full bg-red-500"></span>
