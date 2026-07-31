@@ -62,9 +62,57 @@
           <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3">
             <div class="flex flex-wrap items-center gap-2">
               <button type="button" class="btn btn-secondary btn-sm">اليوم</button>
-              <input type="date" class="field-input w-auto" value="2026-07-30" />
+              <div class="dp-field" data-datepicker data-placeholder="من تاريخ">
+                <button type="button" class="field-input dp-trigger" id="avail-from" aria-haspopup="dialog" aria-label="من تاريخ">
+                  <span class="dp-text">07/30/2026</span>
+                  <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                </button>
+                <input type="hidden" name="from" value="2026-07-30" id="avail-from-val" />
+                <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ البداية">
+                  <div class="dp-head">
+                    <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                      <span data-dp-month-label>يوليو 2026</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="dp-nav">
+                      <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                      <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="dp-months" aria-label="اختيار الشهر"></div>
+                  <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                  <div class="dp-foot">
+                    <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                    <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                  </div>
+                </div>
+              </div>
               <span class="text-slate-400 font-bold">→</span>
-              <input type="date" class="field-input w-auto" value="2026-08-05" />
+              <div class="dp-field" data-datepicker data-placeholder="إلى تاريخ">
+                <button type="button" class="field-input dp-trigger" id="avail-to" aria-haspopup="dialog" aria-label="إلى تاريخ">
+                  <span class="dp-text">08/05/2026</span>
+                  <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                </button>
+                <input type="hidden" name="to" value="2026-08-05" id="avail-to-val" />
+                <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ النهاية">
+                  <div class="dp-head">
+                    <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                      <span data-dp-month-label>أغسطس 2026</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="dp-nav">
+                      <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                      <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="dp-months" aria-label="اختيار الشهر"></div>
+                  <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                  <div class="dp-foot">
+                    <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                    <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                  </div>
+                </div>
+              </div>
               <div class="avail-range-toggle" id="avail-range">
                 <button type="button" class="btn btn-sm btn-secondary is-active">7ي</button>
                 <button type="button" class="btn btn-sm btn-ghost">14ي</button>
