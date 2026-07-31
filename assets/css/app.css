@@ -1,4 +1,4 @@
-/* Solvfast PMS — design system */
+/* Marhaba PMS — design system */
 :root {
   --color-primary: #0027B7;
   --color-primary-hover: #0030d4;
@@ -3684,3 +3684,30 @@ html.dark .overlay { background: rgba(2, 6, 16, 0.65); }
 html.dark .property-pick-card { background: #111827; }
 html.dark .property-pick-card:hover { border-color: #334155; }
 html.dark .property-pick-card.is-active { background: rgba(0, 39, 183, 0.30); }
+
+/* ── Housekeeping page (hk-*) ── */
+html.dark .hk-card { background: #111827; border-color: #1f2a3d; }
+html.dark .hk-card[data-hk="dirty"] { background: linear-gradient(180deg, rgba(245, 158, 11, 0.10) 0%, #111827 48%); }
+html.dark .hk-filter { background: #111827; color: #94a3b8; }
+html.dark .hk-card-pill { background: #1f2a3d; color: #cbd5e1; }
+
+/* ── Availability page (avail-*) ── */
+html.dark .avail-popover,
+html.dark .avail-cal-day,
+html.dark .avail-range-toggle { background: #111827; }
+html.dark .avail-card-stat { background: #0d1526; }
+html.dark .avail-cal-chip,
+html.dark .avail-chevron { background: #1f2a3d; color: #cbd5e1; }
+html.dark .avail-board-table tbody .avail-sticky { background: #0d1526; }
+html.dark .avail-room-row .avail-sticky,
+html.dark .avail-group.is-open .avail-type-row .avail-sticky { background: #0d1526; }
+html.dark .avail-group.is-open .avail-type-row td { background: #0d1526; }
+html.dark .avail-board-table tbody td { border-bottom-color: #1f2a3d; }
+html.dark .avail-type-row:hover td { background: rgba(0, 39, 183, 0.12); }
+html.dark .avail-ok { background: rgba(16, 185, 129, 0.18); color: #34d399; }
+html.dark .avail-low { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
+html.dark .avail-full { background: rgba(239, 68, 68, 0.18); color: #f87171; }
+
+/* ── Roles & Permissions page ── */
+html.dark .role-preset-item { background: #111827; }
+html.dark .perm-check { background: #1f2a3d; }

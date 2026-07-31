@@ -1,8 +1,8 @@
 {
-  "name": "solvfast-pms",
+  "name": "marhaba-pms",
   "version": "1.0.0",
   "private": true,
-  "description": "Solvfast PMS — static front-end",
+  "description": "Marhaba PMS — static front-end",
   "scripts": {
     "start": "npx --yes serve . -l 4173",
     "build:css": "tailwindcss -i ./src/input.css -o ./assets/css/tailwind.css --minify",

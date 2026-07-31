@@ -1,5 +1,5 @@
 /**
- * Solvfast PMS — multi-property mock data, persistence & access control.
+ * Marhaba PMS — multi-property mock data, persistence & access control.
  * Loaded before app.js on every page. Everything here is client-side/demo only.
  */
 (function () {

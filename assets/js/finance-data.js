@@ -1,5 +1,5 @@
 /**
- * Solvfast PMS — multi-currency finance (income & expenses) mock data.
+ * Marhaba PMS — multi-currency finance (income & expenses) mock data.
  * Loaded after pms-data.js (reuses PMSData for property access control).
  */
 (function () {

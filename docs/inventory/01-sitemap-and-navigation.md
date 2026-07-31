@@ -1,6 +1,6 @@
-# Solvfast PMS — Sitemap & Navigation Hierarchy
+# Marhaba PMS — Sitemap & Navigation Hierarchy
 
-**Source:** https://pmsdemo.solvfaster.com/pms/  
+**Source:** https://pmsdemo.marhaba.com/pms/  
 **Inspected:** 2026-07-30  
 **Locale observed:** Arabic (`lang=ar`, `dir=rtl`)  
 **Property:** فندق المدينة بلازا (MADINAH1)  
@@ -34,7 +34,7 @@
 ## Sidebar navigation hierarchy
 
 ```
-Solvfast PMS
+Marhaba PMS
 ├── الرئيسية                          → /pms
 ├── عمليات اليوم (group label)
 │   ├── الحجوزات                      → /pms/reservations
@@ -68,7 +68,7 @@ Group labels (عمليات اليوم / المالية / الإدارة) are sec
 
 | Element | Observed behavior |
 |---------|-------------------|
-| Brand | “S” mark + “Solvfast PMS” in sidebar |
+| Brand | “S” mark + “Marhaba PMS” in sidebar |
 | Breadcrumb area | `PMS` + current page title |
 | Property selector | “فندق المدينة بلازا” (header) — click did not expose alternate properties in this session |
 | Quick create | Header “جديد” → links to `/pms/reservations/new` |

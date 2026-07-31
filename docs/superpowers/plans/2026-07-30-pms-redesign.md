@@ -2,7 +2,7 @@
 
 > **For agentic workers:** Use Approach A — one HTML file per page, shared assets.
 
-**Goal:** Ship a complete static HTML/Tailwind/vanilla-JS redesign of Solvfast PMS mapped 1:1 to the inventory.
+**Goal:** Ship a complete static HTML/Tailwind/vanilla-JS redesign of Marhaba PMS mapped 1:1 to the inventory.
 
 **Tech:** Tailwind CDN + `assets/css/app.css` + `assets/js/app.js` · RTL Arabic · primary `#0027B7`
 

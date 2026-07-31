@@ -1,6 +1,6 @@
-# Solvfast PMS — Frontend Redesign
+# Marhaba PMS — Frontend Redesign
 
-Static HTML redesign of the Solvfast hotel PMS demo (`pmsdemo.solvfaster.com`), built from a full live inventory (2026-07-30).
+Static HTML redesign of the Marhaba hotel PMS demo (`pmsdemo.marhaba.com`), built from a full live inventory (2026-07-30).
 
 ## Stack
 

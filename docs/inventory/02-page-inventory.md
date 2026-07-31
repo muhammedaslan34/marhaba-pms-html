@@ -12,7 +12,7 @@ Sample data and UI elements observed 2026-07-30. Demo hotel: **فندق المد
 | Fields | Email, Password |
 | Actions | Sign In |
 | States | Console error observed on load (non-blocking); success redirects to `/pms` |
-| Language | English labels on login (“Solvfast PMS”, “Sign in to continue”) |
+| Language | English labels on login (“Marhaba PMS”, “Sign in to continue”) |
 
 ---
 

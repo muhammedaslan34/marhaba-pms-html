@@ -1,4 +1,4 @@
-# Solvfast PMS Frontend Redesign — Design Spec (Draft)
+# Marhaba PMS Frontend Redesign — Design Spec (Draft)
 
 **Date:** 2026-07-30  
 **Status:** Awaiting user approval before implementation  
@@ -124,7 +124,7 @@ Shared: `assets/css` (Tailwind via CDN + theme), `assets/js/app.js` (shell, side
 
 ## Out of scope for HTML prototype
 
-- Live API binding to solvfaster demo
+- Live API binding to marhaba demo
 - Persisting mutations
 - Auth beyond a visual login page
 
