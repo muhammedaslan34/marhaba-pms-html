@@ -5,7 +5,6 @@
   const NAV = [
     { group: null, id: "dashboard", href: "dashboard.html", label: "الرئيسية", icon: "home" },
     { group: "عمليات اليوم", id: "reservations", href: "reservations.html", label: "الحجوزات", icon: "calendar" },
-    { group: null, id: "checkin", href: "checkin.html", label: "الوصول والمغادرة", icon: "door" },
     { group: null, id: "guests", href: "guests.html", label: "النزلاء", icon: "users" },
     { group: null, id: "availability", href: "availability.html", label: "التوفر", icon: "grid" },
     { group: null, id: "housekeeping", href: "housekeeping.html", label: "التدبير الفندقي", icon: "sparkles" },

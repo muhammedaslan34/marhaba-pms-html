@@ -296,11 +296,20 @@
           </div>
 
           <div class="hidden" data-tab-panel="cards">
-            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div class="flex items-center justify-between gap-3 flex-wrap mb-3">
+              <p class="text-sm text-slate-500 font-bold">عدد البطاقات بكل صف</p>
+              <div class="view-toggle" id="cards-density" role="group" aria-label="كثافة البطاقات بكل صف">
+                <button type="button" class="view-toggle-btn" data-cols="2" title="2 بكل صف" aria-label="2 بكل صف">2</button>
+                <button type="button" class="view-toggle-btn is-active" data-cols="3" title="3 بكل صف" aria-label="3 بكل صف">3</button>
+                <button type="button" class="view-toggle-btn" data-cols="4" title="4 بكل صف" aria-label="4 بكل صف">4</button>
+                <button type="button" class="view-toggle-btn" data-cols="5" title="5 بكل صف" aria-label="5 بكل صف">5</button>
+                <button type="button" class="view-toggle-btn" data-cols="6" title="6 بكل صف" aria-label="6 بكل صف">6</button>
+              </div>
+            </div>
+            <div class="res-cards-grid" id="res-cards-grid" data-cols="3">
               <article class="res-card" data-tone="success" data-res="RES-2026-00049" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ا</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">ابراهيم</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00049 · 966•••297</div>
@@ -325,7 +334,6 @@
               <article class="res-card" data-tone="warning" data-res="RES-2026-00046" data-guest="ابراهيم" data-phone="966297" data-room="Double" data-checkin="2026-07-29" data-checkout="2026-07-30" data-status="unconfirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ا</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">ابراهيم</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00046 · 966•••297</div>
@@ -350,7 +358,6 @@
               <article class="res-card" data-tone="primary" data-res="RES-2026-00043" data-guest="Ebrahim Al-desouki" data-phone="685657" data-room="Twin" data-checkin="2026-07-27" data-checkout="2026-07-29" data-status="confirmed" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">E</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">Ebrahim Al-desouki</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00043 · 685•••657</div>
@@ -375,7 +382,6 @@
               <article class="res-card" data-tone="info" data-res="RES-2026-00041" data-guest="ابرهيم" data-phone="051421" data-room="Single" data-checkin="2026-08-03" data-checkout="2026-08-05" data-status="confirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ا</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">ابرهيم</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00041 · 051•••421</div>
@@ -400,7 +406,6 @@
               <article class="res-card" data-tone="danger" data-res="RES-2026-00037" data-guest="عمر خالد الغامدي" data-phone="055009" data-room="Twin" data-checkin="2026-07-29" data-checkout="2026-08-01" data-status="inhouse" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ع</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">عمر خالد الغامدي</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00037 · 055•••009</div>
@@ -425,7 +430,6 @@
               <article class="res-card" data-tone="success" data-res="RES-2026-00039" data-guest="LISTFIX GUEST" data-phone="050111" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="inhouse" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">L</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">LISTFIX GUEST</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00039 · 050•••111</div>
@@ -450,7 +454,6 @@
               <article class="res-card" data-tone="success" data-res="RES-2026-00036" data-guest="ريم فهد الدوسري" data-phone="055008" data-room="Double" data-checkin="2026-07-30" data-checkout="2026-08-02" data-status="inhouse" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ر</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">ريم فهد الدوسري</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00036 · 055•••008</div>
@@ -475,7 +478,6 @@
               <article class="res-card" data-tone="primary" data-res="RES-2026-00035" data-guest="محمد سعد العتيبي" data-phone="055007" data-room="Twin" data-checkin="2026-07-30" data-checkout="2026-07-31" data-status="confirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">م</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">محمد سعد العتيبي</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00035 · 055•••007</div>
@@ -500,7 +502,6 @@
               <article class="res-card" data-tone="info" data-res="RES-2026-00034" data-guest="لطيفة أحمد الزهراني" data-phone="055010" data-room="Single" data-checkin="2026-07-28" data-checkout="2026-07-30" data-status="confirmed" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ل</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">لطيفة أحمد الزهراني</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00034 · 055•••010</div>
@@ -525,7 +526,6 @@
               <article class="res-card" data-tone="slate" data-res="RES-2026-00033" data-guest="عبدالرحمن" data-phone="966541" data-room="Double" data-checkin="2026-07-25" data-checkout="2026-07-28" data-status="confirmed" data-balance="credit">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">ع</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">عبدالرحمن</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00033 · 966•••541</div>
@@ -549,7 +549,6 @@
               <article class="res-card" data-tone="warning" data-res="RES-2026-00032" data-guest="سارة محمد" data-phone="050333" data-room="Twin" data-checkin="2026-08-01" data-checkout="2026-08-04" data-status="unconfirmed" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">س</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">سارة محمد</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00032 · 050•••333</div>
@@ -574,7 +573,6 @@
               <article class="res-card" data-tone="danger" data-res="RES-2026-00031" data-guest="خالد يوسف" data-phone="054221" data-room="Double" data-checkin="2026-07-20" data-checkout="2026-07-22" data-status="cancelled" data-balance="due">
                 <div class="res-card-top">
                   <div class="flex items-center gap-3 min-w-0">
-                    <div class="res-avatar">خ</div>
                     <div class="min-w-0">
                       <div class="font-extrabold text-slate-800 truncate">خالد يوسف</div>
                       <div class="text-xs text-slate-500 font-bold truncate">RES-2026-00031 · 054•••221</div>
@@ -713,6 +711,31 @@
       });
     })();
 
+    // ---- Cards density: columns per row (2–6) with persistence ----
+    (function () {
+      const grid = document.getElementById('res-cards-grid');
+      const toggle = document.getElementById('cards-density');
+      if (!grid || !toggle) return;
+      const KEY = 'res-cards-cols';
+      const clamp = (n) => (Number.isFinite(n) && n >= 2 && n <= 6 ? n : 3);
+      const apply = (cols) => {
+        grid.setAttribute('data-cols', String(cols));
+        toggle.querySelectorAll('[data-cols]').forEach((b) => {
+          b.classList.toggle('is-active', Number(b.dataset.cols) === cols);
+        });
+      };
+      let saved = parseInt(localStorage.getItem(KEY), 10);
+      saved = Number.isFinite(saved) ? clamp(saved) : 3;
+      apply(saved);
+      toggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-cols]');
+        if (!btn || !toggle.contains(btn)) return;
+        const cols = clamp(parseInt(btn.dataset.cols, 10));
+        apply(cols);
+        try { localStorage.setItem(KEY, String(cols)); } catch (_) {}
+      });
+    })();
+
     // ---- Filters: chips + search + drawer (status / date range) ----
     (function () {
       const TODAY = '2026-07-30';
@@ -721,7 +744,7 @@
       const items = Array.from(root.querySelectorAll('tr[data-res], article.res-card[data-res]'));
       const uniqueItems = Array.from(root.querySelectorAll('tbody tr[data-res]'));
       const tableBody = root.querySelector('tbody');
-      const cardsGrid = root.querySelector('[data-tab-panel="cards"] .grid');
+      const cardsGrid = root.querySelector('#res-cards-grid');
       const chips = document.getElementById('res-chips');
       const searchInput = document.getElementById('res-search');
       const totalEl = document.getElementById('res-total');

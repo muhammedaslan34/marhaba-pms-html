@@ -56,7 +56,7 @@ Sample data and UI elements observed 2026-07-30. Demo hotel: **فندق المد
 - Search existing guest (name / phone / ID)
 - Match list: name, masked phone, prior stays count, “اختيار هذا النزيل”
 - “لا أحد منهم — إضافة نزيل جديد” / “إضافة نزيل جديد”
-- New guest fields: الاسم الكامل*, الهاتف, البريد, الجنسية, نوع الهوية (جواز سفر / هوية / إقامة / هوية خليجية / هوية / إخراج قيد), رقم الهوية
+- New guest fields: الاسم الكامل*, الهاتف, البريد, الجنسية, نوع الهوية (جواز سفر / هوية / إقامة / دفتر عائلة / هوية / إخراج قيد), رقم الهوية
 - Validation hint: “أدخل هاتفاً أو بريداً” when advancing without contact
 
 ### Step 2 — Stay

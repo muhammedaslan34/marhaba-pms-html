@@ -692,6 +692,17 @@ html.dark .phone-dropdown-search input {
   color: #fff;
   box-shadow: 0 6px 14px rgba(22, 163, 74, 0.25);
 }
+.icon-btn.is-warning {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+  color: #B45309;
+}
+.icon-btn.is-warning:hover {
+  background: #D97706;
+  border-color: #D97706;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(217, 119, 6, 0.25);
+}
 .icon-btn.is-danger,
 .icon-btn.is-close {
   background: #FEF2F2;
@@ -2920,6 +2931,24 @@ html.dark .fin-filters {
   color: #fff;
   box-shadow: 0 6px 14px rgba(0, 39, 183, 0.25);
 }
+
+/* ─── Reservation cards grid (density selector) ─── */
+.res-cards-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .res-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) {
+  .res-cards-grid[data-cols="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .res-cards-grid[data-cols="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .res-cards-grid[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .res-cards-grid[data-cols="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .res-cards-grid[data-cols="6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.res-cards-grid > .res-card { min-width: 0; }
 
 /* ─── Reservation cards ─── */
 .res-card {
