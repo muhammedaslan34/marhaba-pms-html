@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>السعر الأساسي — Marhaba PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=setup2" />
+</head>
+<body class="app-bg font-sans" data-page="setup-base-rate" data-title="السعر الأساسي"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التهيئة","href":"setup.html"},{"label":"السعر الأساسي"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الوحدات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">تعيين السعر الأساسي لكل نوع وحدة</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-action="toast" data-message="تم حفظ الإعدادات (تجريبي)">حفظ الإعدادات</button>
+        </div>
+        <section class="panel p-5 space-y-4">
+          <div>
+            <h2 class="font-extrabold text-lg">أسعار الأنواع</h2>
+            <p class="text-sm text-slate-500">العملة الافتراضية: ل.س</p>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="field-label">غرفة مفردة</label><input class="field-input" type="number" value="150000" placeholder="" /></div>
+            <div><label class="field-label">غرفة مزدوجة</label><input class="field-input" type="number" value="220000" placeholder="" /></div>
+            <div><label class="field-label">جناح</label><input class="field-input" type="number" value="450000" placeholder="" /></div>
+            <div class="flex items-center justify-between gap-4 py-3 border-b border-slate-100 last:border-0">
+              <div><div class="font-semibold">يشمل الإفطار</div></div>
+              <label class="toggle"><input type="checkbox" checked /><span></span></label>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js?v=setup2"></script>
+  <script src="../assets/js/setup-pages.js?v=setup1"></script>
+  <script>
+    /* settings form — mutations simulated via toasts */
+  </script>
+</body>
+</html>

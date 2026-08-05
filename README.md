@@ -81,6 +81,8 @@ npx wrangler deploy
 | `/pms/cashier` | `pages/cashier.html` | Done |
 | `/pms/reports` | `pages/reports.html` | Done |
 | `/pms/settings` | `pages/settings.html` | Done |
+| `/setup` (hub) | `pages/setup.html` | Done |
+| `/setup/*` company/units/financial/… | `pages/setup-*.html` (45 screens) | Done |
 
 ## Docs
 

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حالة الغرف — Marhaba PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css" />
+</head>
+<body class="app-bg font-sans" data-page="units-setup" data-title="حالة الغرف"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التوفر","href":"availability.html"},{"label":"حالة الغرف"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">حالة الغرف</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">إدارة غرف المنشأة وأنواعها وأسعارها</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-action="open-modal" data-target="room-modal" id="open-add-room">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            إضافة غرفة
+          </button>
+        </div>
+
+        <section class="panel p-4">
+          <div class="prop-toolbar">
+            <div class="search-input flex-1 min-w-[12rem]">
+              <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+              <input type="search" id="room-search" class="field-input" placeholder="ابحث برقم الغرفة أو الطابق أو النوع…" />
+            </div>
+            <select id="filter-status" class="field-select w-auto">
+              <option value="all">كل الحالات</option>
+              <option value="vacant">شاغرة</option>
+              <option value="occupied">مشغولة</option>
+              <option value="cleaning">تنظيف</option>
+              <option value="maintenance">صيانة</option>
+              <option value="blocked">مغلقة</option>
+            </select>
+            <select id="filter-type" class="field-select w-auto">
+              <option value="all">كل الأنواع</option>
+            </select>
+            <select id="filter-class" class="field-select w-auto">
+              <option value="all">كل التصنيفات</option>
+              <option value="Economic">اقتصادية</option>
+              <option value="Business">أعمال</option>
+              <option value="Luxury">فاخرة</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel overflow-hidden">
+          <div class="table-wrap">
+            <table class="data-table" data-no-pager>
+              <thead>
+                <tr>
+                  <th>الغرفة</th>
+                  <th>الطابق / البلوك</th>
+                  <th>النوع</th>
+                  <th>السعة</th>
+                  <th>الأسرّة</th>
+                  <th>الإطلالة</th>
+                  <th>التصنيف</th>
+                  <th>الأسعار</th>
+                  <th>الحالة</th>
+                  <th class="text-center">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="rooms-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="empty-state hidden" id="rooms-empty">
+          <div class="state-block-icon" style="margin:0 auto 1rem;">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-3a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v3" stroke-linejoin="round"/><path d="M3 18h18M5 12V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M9 12V7M15 12V7" stroke-linecap="round"/></svg>
+          </div>
+          <p class="font-extrabold text-slate-700" id="rooms-empty-title">لا توجد غرف بعد</p>
+          <p class="text-sm text-slate-500 font-semibold mt-1" id="rooms-empty-desc">ابدأ بإضافة أول غرفة للمنشأة الحالية.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / edit room modal -->
+  <div id="room-modal" class="modal is-wide">
+    <div>
+      <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+        <div>
+          <h3 class="font-extrabold" id="room-modal-title">إضافة غرفة</h3>
+          <p class="text-xs text-slate-500 font-semibold mt-0.5">الحقول المؤشّرة بـ * إلزامية.</p>
+        </div>
+        <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="room-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <form id="room-form" class="p-5 space-y-6" autocomplete="off">
+        <!-- HOTEL + ROOM TYPE -->
+        <fieldset class="space-y-3">
+          <legend class="form-section-legend">المنشأة ونوع الغرفة</legend>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label">المنشأة *</label>
+              <select id="f-propertyId" class="field-select"></select>
+            </div>
+            <div>
+              <label class="field-label">نوع الغرفة *</label>
+              <select id="f-roomTypeId" class="field-select">
+                <option value="">اختر النوع…</option>
+              </select>
+              <p class="text-xs text-slate-400 font-semibold mt-1">يملأ السعة والأسرّة والإطلالة افتراضياً، ويمكنك تعديلها.</p>
+            </div>
+            <div>
+              <label class="field-label">سعة الغرفة (ضيوف) *</label>
+              <input id="f-capacity" type="number" min="1" class="field-input" value="2" />
+            </div>
+            <div>
+              <label class="field-label">الإطلالة</label>
+              <input id="f-view" class="field-input" placeholder="مثال: Sea View" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- BEDS -->
+        <fieldset class="space-y-3">
+          <legend class="form-section-legend">الأسرّة</legend>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label">عدد الأسرّة المفردة</label>
+              <input id="f-singleBeds" type="number" min="0" class="field-input" value="0" />
+            </div>
+            <div>
+              <label class="field-label">عدد الأسرّة المزدوجة</label>
+              <input id="f-doubleBeds" type="number" min="0" class="field-input" value="1" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ROOM -->
+        <fieldset class="space-y-3">
+          <legend class="form-section-legend">بيانات الغرفة</legend>
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div>
+              <label class="field-label">رقم الغرفة *</label>
+              <input id="f-number" class="field-input" placeholder="مثال: 104" />
+            </div>
+            <div>
+              <label class="field-label">الطابق *</label>
+              <input id="f-floor" type="number" min="0" class="field-input" value="1" />
+            </div>
+            <div>
+              <label class="field-label">البلوك</label>
+              <input id="f-block" class="field-input" placeholder="مثال: A" />
+            </div>
+            <div>
+              <label class="field-label">حالة الغرفة</label>
+              <select id="f-status" class="field-select">
+                <option value="vacant">شاغرة</option>
+                <option value="occupied">مشغولة</option>
+                <option value="cleaning">تنظيف</option>
+                <option value="maintenance">صيانة</option>
+                <option value="blocked">مغلقة</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">التصنيف</label>
+              <select id="f-classification" class="field-select">
+                <option value="Economic">اقتصادية</option>
+                <option value="Business">أعمال</option>
+                <option value="Luxury">فاخرة</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">تحويلة الهاتف</label>
+              <input id="f-phoneExtension" class="field-input" placeholder="مثال: 1104" />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-4 gap-3">
+            <label class="room-pick !py-3"><span class="font-bold text-sm">قفل إلكتروني</span><input type="checkbox" id="f-electronicLock" class="w-5 h-5 accent-primary" checked /></label>
+            <label class="room-pick !py-3"><span class="font-bold text-sm">قابلة للدمج</span><input type="checkbox" id="f-canMerge" class="w-5 h-5 accent-primary" /></label>
+            <div>
+              <label class="field-label">المطبخ</label>
+              <select id="f-kitchen" class="field-select">
+                <option value="Without">بدون</option>
+                <option value="Private">خاص</option>
+                <option value="Shared">مشترك</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">الردهة</label>
+              <select id="f-hall" class="field-select">
+                <option value="Without">بدون</option>
+                <option value="Private">خاص</option>
+                <option value="Shared">مشترك</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label">المساحة (م²)</label>
+              <input id="f-unitArea" type="number" min="0" step="0.1" class="field-input" placeholder="مثال: 30" />
+            </div>
+            <div>
+              <label class="field-label">المرافق (افصل بفاصلة)</label>
+              <input id="f-amenities" class="field-input" placeholder="Wi-Fi, Mini Bar, Air Conditioning" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- PRICE -->
+        <fieldset class="space-y-3">
+          <legend class="form-section-legend">التسعير (السعر القياسي / الليلة)</legend>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label">السعر بالليرة السورية (SYP) *</label>
+              <input id="f-standardRateSyp" type="number" min="0" class="field-input" placeholder="مثال: 80000" />
+            </div>
+            <div>
+              <label class="field-label">السعر بالدولار (USD) *</label>
+              <input id="f-standardRateUsd" type="number" min="0" step="0.01" class="field-input" placeholder="مثال: 30" />
+            </div>
+          </div>
+        </fieldset>
+
+        <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3">نسخة تجريبية — تُحفظ الغرفة محلياً في هذا المتصفح فقط.</p>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+          <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="room-modal">إلغاء</button>
+          <button type="submit" class="btn btn-primary min-w-[8rem]" id="room-submit-btn">حفظ الغرفة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      const PD = PMSData;
+
+      const STATUS_LABELS = {
+        vacant: { label: "شاغرة", cls: "badge-success" },
+        occupied: { label: "مشغولة", cls: "badge-primary" },
+        cleaning: { label: "تنظيف", cls: "badge-info" },
+        maintenance: { label: "صيانة", cls: "badge-warning" },
+        blocked: { label: "مغلقة", cls: "badge-neutral" },
+      };
+      const CLASS_LABELS = { Economic: "اقتصادية", Business: "أعمال", Luxury: "فاخرة" };
+      const KITCHEN_LABELS = { Without: "بدون", Private: "خاص", Shared: "مشترك" };
+      const HALL_LABELS = { Without: "بدون", Private: "خاص", Shared: "مشترك" };
+
+      const $ = function (id) { return document.getElementById(id); };
+      const val = function (id) { return ($(id) ? $(id).value : "").trim(); };
+      const num = function (id) { return Number($(id) ? $(id).value : 0) || 0; };
+
+      function assignedProperties() {
+        return PD.getAssignedProperties(PD.getCurrentUser());
+      }
+
+      function currentPropertyId() {
+        const sel = PD.getSelectedPropertyId();
+        if (sel && sel !== "all") return sel;
+        return assignedProperties()[0]?.id || null;
+      }
+
+      function nextRoomId(propertyId) {
+        const rooms = PD.getRoomsByProperty(propertyId);
+        const n = rooms.length + 1;
+        const seq = String(100 + n);
+        return "R-" + propertyId + "-" + seq;
+      }
+
+      function populatePropertySelect() {
+        const sel = $("f-propertyId");
+        const current = currentPropertyId();
+        sel.innerHTML = assignedProperties().map(function (p) {
+          const isSel = p.id === current ? " selected" : "";
+          return '<option value="' + p.id + '"' + isSel + ">" + p.name + " (" + p.code + ")</option>";
+        }).join("");
+      }
+
+      function populateTypeFilter() {
+        const filter = $("filter-type");
+        const types = PD.getRoomTypes();
+        const existing = Array.from(filter.querySelectorAll("option")).map(function (o) { return o.value; });
+        types.forEach(function (t) {
+          if (existing.indexOf(t.id) === -1) {
+            const opt = document.createElement("option");
+            opt.value = t.id;
+            opt.textContent = t.label;
+            filter.appendChild(opt);
+          }
+        });
+      }
+
+      function populateRoomTypeSelect() {
+        const sel = $("f-roomTypeId");
+        sel.innerHTML = '<option value="">اختر النوع…</option>';
+        PD.getRoomTypes().forEach(function (t) {
+          const opt = document.createElement("option");
+          opt.value = t.id;
+          opt.textContent = t.label;
+          sel.appendChild(opt);
+        });
+      }
+
+      function applyRoomTypeDefaults() {
+        const id = val("f-roomTypeId");
+        const t = PD.getRoomTypeById(id);
+        if (!t) return;
+        if (!$("f-capacity").dataset.touched) $("f-capacity").value = t.capacity;
+        if (!$("f-view").dataset.touched) $("f-view").value = t.view;
+        if (!$("f-singleBeds").dataset.touched) $("f-singleBeds").value = t.singleBeds;
+        if (!$("f-doubleBeds").dataset.touched) $("f-doubleBeds").value = t.doubleBeds;
+      }
+
+      function statusBadge(status) {
+        const s = STATUS_LABELS[status] || STATUS_LABELS.vacant;
+        return '<span class="badge ' + s.cls + '">' + s.label + "</span>";
+      }
+
+      function bedsLabel(r) {
+        const parts = [];
+        if (r.singleBeds) parts.push(r.singleBeds + " مفرد");
+        if (r.doubleBeds) parts.push(r.doubleBeds + " مزدوج");
+        return parts.join(" · ") || "—";
+      }
+
+      function formatRate(r) {
+        const syp = r.standardRateSyp ? new Intl.NumberFormat("en-US").format(r.standardRateSyp) + " SYP" : null;
+        const usd = r.standardRateUsd ? "$" + new Intl.NumberFormat("en-US").format(r.standardRateUsd) : null;
+        const parts = [syp, usd].filter(Boolean);
+        return parts.length ? '<div class="font-bold text-primary">' + parts[0] + "</div>" +
+          (parts[1] ? '<div class="text-xs text-slate-500 font-semibold mt-0.5">' + parts[1] + "</div>" : "") : "—";
+      }
+
+      function rowHtml(r) {
+        const t = PD.getRoomTypeById(r.roomTypeId);
+        return (
+          "<tr data-id=\"" + r.id + "\">" +
+          "<td><div class=\"font-extrabold text-slate-800\">" + r.number + "</div>" +
+          '<div class="text-xs text-slate-400 font-semibold">' + (r.block ? "بلوك " + r.block : "—") + "</div></td>" +
+          "<td>" + r.floor + "</td>" +
+          "<td>" + (t ? t.label : "—") + "</td>" +
+          "<td>" + r.capacity + "</td>" +
+          "<td>" + bedsLabel(r) + "</td>" +
+          "<td>" + (r.view || "—") + "</td>" +
+          "<td>" + (CLASS_LABELS[r.classification] || r.classification || "—") + "</td>" +
+          "<td class=\"font-bold text-primary\">" + formatRate(r) + "</td>" +
+          "<td>" + statusBadge(r.status) + "</td>" +
+          '<td><div class="flex justify-center gap-1">' +
+          '<button type="button" class="icon-btn is-edit" data-action="edit-room" data-id="' + r.id + '" title="تعديل" aria-label="تعديل">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3z" stroke-linejoin="round"/></svg>' +
+          "</button>" +
+          '<button type="button" class="icon-btn is-danger" data-action="delete-room" data-id="' + r.id + '" title="حذف" aria-label="حذف">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          "</button>" +
+          "</div></td>" +
+          "</tr>"
+        );
+      }
+
+      function filteredRooms() {
+        const pid = currentPropertyId();
+        const q = val("room-search").toLowerCase();
+        const status = $("filter-status").value;
+        const type = $("filter-type").value;
+        const cls = $("filter-class").value;
+        return PD.getRoomsByProperty(pid).filter(function (r) {
+          if (status !== "all" && r.status !== status) return false;
+          if (type !== "all" && r.roomTypeId !== type) return false;
+          if (cls !== "all" && r.classification !== cls) return false;
+          if (q) {
+            const t = PD.getRoomTypeById(r.roomTypeId);
+            const hay = [r.number, r.floor, r.block, r.view, t ? t.label : ""].join(" ").toLowerCase();
+            if (hay.indexOf(q) === -1) return false;
+          }
+          return true;
+        });
+      }
+
+      function render() {
+        const list = filteredRooms();
+        $("rooms-body").innerHTML = list.map(rowHtml).join("");
+        const empty = $("rooms-empty");
+        empty.classList.toggle("hidden", list.length > 0);
+        if (list.length === 0) {
+          $("rooms-empty-title").textContent = "لا توجد غرف مطابقة";
+          $("rooms-empty-desc").textContent = "جرّب تعديل البحث أو الفلاتر، أو أضف غرفة جديدة.";
+        }
+      }
+
+      function resetForm() {
+        const form = $("room-form");
+        form.reset();
+        delete form.dataset.editId;
+        $("room-modal-title").textContent = "إضافة غرفة";
+        $("room-submit-btn").textContent = "حفظ الغرفة";
+        ["f-capacity", "f-view", "f-singleBeds", "f-doubleBeds"].forEach(function (id) {
+          const el = $(id);
+          if (el) delete el.dataset.touched;
+        });
+        populatePropertySelect();
+        populateRoomTypeSelect();
+        $("f-status").value = "vacant";
+        $("f-classification").value = "Business";
+        $("f-kitchen").value = "Without";
+        $("f-hall").value = "Without";
+        $("f-electronicLock").checked = true;
+        $("f-canMerge").checked = false;
+        $("f-capacity").value = 2;
+        $("f-singleBeds").value = 0;
+        $("f-doubleBeds").value = 1;
+        $("f-floor").value = 1;
+      }
+
+      function fillForm(r) {
+        const form = $("room-form");
+        form.dataset.editId = r.id;
+        $("room-modal-title").textContent = "تعديل الغرفة " + r.number;
+        $("room-submit-btn").textContent = "حفظ التعديلات";
+        $("f-propertyId").value = r.propertyId;
+        populateRoomTypeSelect();
+        $("f-roomTypeId").value = r.roomTypeId || "";
+        $("f-capacity").value = r.capacity || 2;
+        $("f-view").value = r.view || "";
+        $("f-singleBeds").value = r.singleBeds || 0;
+        $("f-doubleBeds").value = r.doubleBeds || 0;
+        $("f-number").value = r.number || "";
+        $("f-floor").value = r.floor || 1;
+        $("f-block").value = r.block || "";
+        $("f-status").value = r.status || "vacant";
+        $("f-classification").value = r.classification || "Business";
+        $("f-phoneExtension").value = r.phoneExtension || "";
+        $("f-electronicLock").checked = !!r.electronicLock;
+        $("f-canMerge").checked = !!r.canMerge;
+        $("f-kitchen").value = r.kitchen || "Without";
+        $("f-hall").value = r.hall || "Without";
+        $("f-unitArea").value = r.unitArea || "";
+        $("f-amenities").value = (r.amenities || []).join(", ");
+        $("f-standardRateSyp").value = r.standardRateSyp || "";
+        $("f-standardRateUsd").value = r.standardRateUsd || "";
+      }
+
+      function collect() {
+        const amenText = val("f-amenities");
+        return {
+          propertyId: val("f-propertyId"),
+          roomTypeId: val("f-roomTypeId"),
+          capacity: num("f-capacity"),
+          view: val("f-view"),
+          singleBeds: num("f-singleBeds"),
+          doubleBeds: num("f-doubleBeds"),
+          number: val("f-number"),
+          floor: num("f-floor"),
+          block: val("f-block"),
+          status: val("f-status"),
+          classification: val("f-classification"),
+          phoneExtension: val("f-phoneExtension"),
+          electronicLock: $("f-electronicLock").checked,
+          canMerge: $("f-canMerge").checked,
+          kitchen: val("f-kitchen"),
+          hall: val("f-hall"),
+          unitArea: val("f-unitArea") ? num("f-unitArea") : null,
+          amenities: amenText ? amenText.split(",").map(function (s) { return s.trim(); }).filter(Boolean) : [],
+          standardRateSyp: num("f-standardRateSyp"),
+          standardRateUsd: num("f-standardRateUsd"),
+        };
+      }
+
+      function validate(d) {
+        if (!d.propertyId) return "اختر المنشأة.";
+        if (!d.number) return "رقم الغرفة إلزامي.";
+        if (!d.roomTypeId) return "اختر نوع الغرفة.";
+        if (d.capacity < 1) return "سعة الغرفة يجب أن تكون نازلاً واحداً على الأقل.";
+        if (!d.standardRateSyp && !d.standardRateUsd) return "أدخل سعراً واحداً على الأقل (SYP أو USD).";
+        const pid = currentPropertyId();
+        const dup = PD.getRoomsByProperty(d.propertyId).some(function (r) {
+          return r.number === d.number && r.id !== ($("room-form").dataset.editId || null);
+        });
+        if (dup) return "رقم الغرفة \"" + d.number + "\" مستخدم بالفعل في هذه المنشأة.";
+        return null;
+      }
+
+      function submit(e) {
+        e.preventDefault();
+        const d = collect();
+        const err = validate(d);
+        if (err) { PMS.toast(err); return; }
+        const form = $("room-form");
+        if (form.dataset.editId) {
+          PD.updateRoom(form.dataset.editId, d);
+          PMS.toast("تم حفظ تعديلات الغرفة " + d.number);
+        } else {
+          d.id = nextRoomId(d.propertyId);
+          PD.addRoom(d);
+          PMS.toast("تمت إضافة الغرفة " + d.number);
+        }
+        PMS.closeModal("room-modal");
+        render();
+      }
+
+      // ─── Wire up ──────────────────────────────────────────────────────
+      $("room-search").addEventListener("input", render);
+      $("filter-status").addEventListener("change", render);
+      $("filter-type").addEventListener("change", render);
+      $("filter-class").addEventListener("change", render);
+
+      $("f-roomTypeId").addEventListener("change", applyRoomTypeDefaults);
+      ["f-capacity", "f-view", "f-singleBeds", "f-doubleBeds"].forEach(function (id) {
+        const el = $(id);
+        if (el) el.addEventListener("input", function () { el.dataset.touched = "1"; });
+      });
+
+      $("open-add-room").addEventListener("click", function () {
+        resetForm();
+      });
+
+      $("room-form").addEventListener("submit", submit);
+
+      document.body.addEventListener("click", function (e) {
+        const editBtn = e.target.closest('[data-action="edit-room"]');
+        if (editBtn) {
+          const r = PD.getRooms().find(function (x) { return x.id === editBtn.dataset.id; });
+          if (r) { fillForm(r); PMS.openModal("room-modal"); }
+          return;
+        }
+        const delBtn = e.target.closest('[data-action="delete-room"]');
+        if (delBtn) {
+          const r = PD.getRooms().find(function (x) { return x.id === delBtn.dataset.id; });
+          if (!r) return;
+          if (r.status === "occupied") { PMS.toast("لا يمكن حذف غرفة مشغولة حالياً."); return; }
+          if (confirm("حذف الغرفة " + r.number + "؟ لا يمكن التراجع.")) {
+            PD.deleteRoom(r.id);
+            PMS.toast("تم حذف الغرفة " + r.number);
+            render();
+          }
+          return;
+        }
+      });
+
+      populateTypeFilter();
+      populatePropertySelect();
+      populateRoomTypeSelect();
+      render();
+    })();
+  </script>
+</body>
+</html>

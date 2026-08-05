@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قواعد الحجز — Marhaba PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=setup2" />
+</head>
+<body class="app-bg font-sans" data-page="setup-reservation-rules" data-title="قواعد الحجز"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التهيئة","href":"setup.html"},{"label":"قواعد الحجز"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">القواعد</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">قيود ومدد الحجز الافتراضية</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-action="toast" data-message="تم حفظ الإعدادات (تجريبي)">حفظ الإعدادات</button>
+        </div>
+        <section class="panel p-5 space-y-4">
+          <div>
+            <h2 class="font-extrabold text-lg">القواعد</h2>
+            
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="field-label">الحد الأدنى لليالي</label><input class="field-input" type="number" value="1" placeholder="" /></div>
+            <div><label class="field-label">الحد الأقصى لليالي</label><input class="field-input" type="number" value="30" placeholder="" /></div>
+            <div class="flex items-center justify-between gap-4 py-3 border-b border-slate-100 last:border-0">
+              <div><div class="font-semibold">السماح بالحجز المتداخل</div></div>
+              <label class="toggle"><input type="checkbox"  /><span></span></label>
+            </div>
+            <div class="flex items-center justify-between gap-4 py-3 border-b border-slate-100 last:border-0">
+              <div><div class="font-semibold">طلب دفعة مقدمة</div></div>
+              <label class="toggle"><input type="checkbox" checked /><span></span></label>
+            </div>
+            <div><label class="field-label">نسبة الدفعة المقدمة</label><input class="field-input" type="number" value="30" placeholder="" /></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js?v=setup2"></script>
+  <script src="../assets/js/setup-pages.js?v=setup1"></script>
+  <script>
+    /* settings form — mutations simulated via toasts */
+  </script>
+</body>
+</html>

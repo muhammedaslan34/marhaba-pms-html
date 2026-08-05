@@ -6,7 +6,17 @@
     { group: null, id: "dashboard", href: "dashboard.html", label: "الرئيسية", icon: "home" },
     { group: "عمليات اليوم", id: "reservations", href: "reservations.html", label: "الحجوزات", icon: "calendar" },
     { group: null, id: "guests", href: "guests.html", label: "النزلاء", icon: "users" },
-    { group: null, id: "availability", href: "availability.html", label: "التوفر", icon: "grid" },
+    {
+      group: null,
+      id: "availability",
+      href: "availability.html",
+      label: "التوفر",
+      icon: "grid",
+      children: [
+        { id: "availability", href: "availability.html", label: "التوفر" },
+        { id: "units-setup", href: "units-setup.html", label: "حالة الغرف" },
+      ],
+    },
     { group: null, id: "housekeeping", href: "housekeeping.html", label: "التدبير الفندقي", icon: "sparkles" },
     { group: "المالية", id: "payments", href: "payments.html", label: "الدفعات", icon: "wallet" },
     {
@@ -28,6 +38,131 @@
     { group: null, id: "users", href: "users.html", label: "المستخدمون", icon: "userCog" },
     { group: null, id: "roles", href: "roles-permissions.html", label: "الأدوار والصلاحيات", icon: "shield" },
     { group: "الإدارة", id: "settings", href: "settings.html", label: "الإعدادات", icon: "settings" },
+    { group: "الإدارة", id: "setup", href: "setup.html", label: "التهيئة", icon: "toolbox" },
+  ];
+
+  /** Setup-mode sidebar (replaces main NAV while browsing /setup pages) */
+  const SETUP_NAV = [
+    {
+      id: "setup-company",
+      label: "الشركة",
+      icon: "building",
+      children: [
+        { id: "setup-properties", href: "setup-properties.html", label: "المنشآت" },
+        { id: "setup-property-info", href: "setup-property-info.html", label: "معلومات المنشأة" },
+        { id: "setup-users", href: "setup-users.html", label: "المستخدمون" },
+        { id: "setup-roles", href: "setup-roles.html", label: "الأدوار" },
+      ],
+    },
+    {
+      id: "setup-blocks-floors",
+      label: "البلوكات والطوابق",
+      icon: "layers",
+      children: [
+        { id: "setup-blocks", href: "setup-blocks.html", label: "البلوكات" },
+        { id: "setup-floors", href: "setup-floors.html", label: "الطوابق" },
+      ],
+    },
+    {
+      id: "setup-units",
+      label: "الوحدات",
+      icon: "bed",
+      children: [
+        { id: "setup-unit-type-customization", href: "setup-unit-type-customization.html", label: "تخصيص الأنواع" },
+        { id: "setup-unit-amenities", href: "setup-unit-amenities.html", label: "مرافق الوحدات" },
+        { id: "setup-unit-setup", href: "setup-unit-setup.html", label: "تهيئة الوحدات" },
+        { id: "setup-unit-merge-settings", href: "setup-unit-merge-settings.html", label: "إعدادات الدمج" },
+        { id: "setup-base-rate", href: "setup-base-rate.html", label: "السعر الأساسي" },
+        { id: "setup-seasonal-rate", href: "setup-seasonal-rate.html", label: "السعر الموسمي" },
+        { id: "setup-special-rate", href: "setup-special-rate.html", label: "السعر الخاص" },
+        { id: "setup-rate-plans", href: "setup-rate-plans.html", label: "خطط الأسعار" },
+      ],
+    },
+    {
+      id: "setup-financial",
+      label: "المالية",
+      icon: "wallet",
+      children: [
+        { id: "setup-bank-accounts", href: "setup-bank-accounts.html", label: "الحسابات البنكية" },
+        { id: "setup-cost-centers", href: "setup-cost-centers.html", label: "مراكز التكلفة" },
+        { id: "setup-security-deposit", href: "setup-security-deposit.html", label: "التأمينات" },
+        { id: "setup-taxes-fees", href: "setup-taxes-fees.html", label: "الضرائب والرسوم" },
+        { id: "setup-currencies", href: "setup-currencies.html", label: "العملات" },
+        { id: "setup-payment-methods", href: "setup-payment-methods.html", label: "طرق الدفع" },
+        { id: "setup-discount-types", href: "setup-discount-types.html", label: "أنواع الخصم" },
+      ],
+    },
+    {
+      id: "setup-general",
+      label: "إعدادات عامة",
+      icon: "sliders",
+      children: [
+        { id: "setup-date-time-settings", href: "setup-date-time-settings.html", label: "إعدادات التاريخ والوقت" },
+        { id: "setup-reservation-sources", href: "setup-reservation-sources.html", label: "مصادر الحجز" },
+        { id: "setup-guest-classes", href: "setup-guest-classes.html", label: "فئات النزلاء" },
+        { id: "setup-loyalty-program-settings", href: "setup-loyalty-program-settings.html", label: "برنامج الولاء" },
+        { id: "setup-sms-auto-send", href: "setup-sms-auto-send.html", label: "إرسال SMS التلقائي" },
+        { id: "setup-property-facilities", href: "setup-property-facilities.html", label: "مرافق المنشآت" },
+      ],
+    },
+    {
+      id: "setup-reporting",
+      label: "التقارير",
+      icon: "chart",
+      children: [
+        { id: "setup-numbering-options", href: "setup-numbering-options.html", label: "خيارات الترقيم" },
+        { id: "setup-printing-options", href: "setup-printing-options.html", label: "خيارات الطباعة" },
+      ],
+    },
+    {
+      id: "setup-outlets",
+      label: "المنافذ",
+      icon: "store",
+      children: [
+        { id: "setup-outlet-setup", href: "setup-outlet-setup.html", label: "تهيئة المنافذ" },
+        { id: "setup-items-categories", href: "setup-items-categories.html", label: "فئات الأصناف" },
+        { id: "setup-items", href: "setup-items.html", label: "الأصناف" },
+      ],
+    },
+    {
+      id: "setup-rules",
+      label: "القواعد",
+      icon: "scroll",
+      children: [
+        { id: "setup-terms-conditions", href: "setup-terms-conditions.html", label: "الشروط والأحكام" },
+        { id: "setup-penalties", href: "setup-penalties.html", label: "الغرامات" },
+        { id: "setup-reservation-rules", href: "setup-reservation-rules.html", label: "قواعد الحجز" },
+        { id: "setup-cancel-no-show-reasons", href: "setup-cancel-no-show-reasons.html", label: "أسباب الإلغاء وعدم الحضور" },
+        { id: "setup-change-unit-reasons", href: "setup-change-unit-reasons.html", label: "أسباب تغيير الوحدة" },
+        { id: "setup-night-audit-settings", href: "setup-night-audit-settings.html", label: "إعدادات المراجعة الليلية" },
+        { id: "setup-guest-feedback-metrics", href: "setup-guest-feedback-metrics.html", label: "مقاييس تقييم النزلاء" },
+      ],
+    },
+    {
+      id: "setup-hk",
+      label: "التدبير الفندقي",
+      icon: "sparkles",
+      children: [
+        { id: "setup-housekeepers", href: "setup-housekeepers.html", label: "قائمة المنظّفين" },
+        { id: "setup-housekeeping-task-types", href: "setup-housekeeping-task-types.html", label: "أنواع المهام" },
+      ],
+    },
+    {
+      id: "setup-subscriptions",
+      href: "setup-subscriptions.html",
+      label: "الاشتراكات",
+      icon: "plug",
+    },
+    {
+      id: "setup-supplies",
+      label: "مستلزمات النزلاء",
+      icon: "package",
+      children: [
+        { id: "setup-supplies-categories", href: "setup-supplies-categories.html", label: "فئات المستلزمات" },
+        { id: "setup-guest-supplies", href: "setup-guest-supplies.html", label: "مستلزمات النزلاء" },
+        { id: "setup-supplies-unit-usages", href: "setup-supplies-unit-usages.html", label: "استخدامات الوحدات" },
+      ],
+    },
   ];
 
   // Multi-property identity/data lives in pms-data.js (loaded before this file).
@@ -675,6 +810,14 @@
     userCog: '<circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 19c0-2.8 2.7-5 6-5s6 2.2 6 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="18" cy="17" r="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M18 13.3v.9M18 19.8v.9M21.2 17h-.9M15.7 17h-.9M20.3 14.7l-.6.6M16.3 18.7l-.6.6M20.3 19.3l-.6-.6M16.3 15.3l-.6-.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
     shield: '<path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
     cashFlow: '<path d="M3 7h13M3 7l3-3M3 7l3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 17H8m13 0-3-3m3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+    toolbox: '<rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 13h18M12 13v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+    bed: '<path d="M3 18V9a2 2 0 0 1 2-2h6v7H3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 14h10v4H3M11 7h6a2 2 0 0 1 2 2v5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 18v2M21 18v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    sliders: '<path d="M4 7h10M18 7h2M12 17h8M4 17h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/>',
+    store: '<path d="M4 10h16v10H4V10Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 10 5.5 4h13L21 10M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
+    scroll: '<path d="M8 5h9a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 21a2.5 2.5 0 0 1 0-5h1V5a2 2 0 0 0-2 2v1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 9h5M11 13h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    plug: '<path d="M9 7v4M15 7v4M8 11h8v2a4 4 0 0 1-8 0v-2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 17v4M7 3v4M17 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    package: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 12 4 7.5M12 12l8-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
   };
 
   function icon(name) {
@@ -690,17 +833,14 @@
     return isMac() ? "⌘K" : "Ctrl+K";
   }
 
-  function renderSidebar(active) {
-    let html = `
-      <div class="sidebar-brand">
-        <div class="sidebar-logo">
-          <img src="https://app.marhaba-syria.sy/assets/img/logo-syria.svg" alt="Marhaba Syria" />
-        </div>
-      </div>
-      <nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="القائمة الرئيسية">`;
+  function isSetupPage(page) {
+    return page === "setup" || String(page || "").indexOf("setup-") === 0;
+  }
 
+  function renderNavItems(items, active) {
+    let html = "";
     let lastGroup = undefined;
-    NAV.forEach((item) => {
+    items.forEach((item) => {
       if (item.group && item.group !== lastGroup) {
         html += `<div class="nav-group">${item.group}</div>`;
         lastGroup = item.group;
@@ -715,7 +855,11 @@
       if (children.length) {
         html += `<div class="sidebar-branch${branchOpen ? " is-open" : ""}${childActive ? " has-active" : ""}" data-nav-branch="${item.id}">`;
         html += `<div class="sidebar-branch-head">`;
-        html += `<a class="sidebar-link${childActive ? " is-branch-active" : ""}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${icon(item.icon)}<span>${item.label}</span></a>`;
+        if (item.href) {
+          html += `<a class="sidebar-link${childActive ? " is-branch-active" : ""}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${item.icon ? icon(item.icon) : ""}<span>${item.label}</span></a>`;
+        } else {
+          html += `<button type="button" class="sidebar-link sidebar-link-label${childActive ? " is-branch-active" : ""}" data-action="toggle-nav-branch" data-nav="${item.id}" title="${item.label}">${item.icon ? icon(item.icon) : ""}<span>${item.label}</span></button>`;
+        }
         html += `<button type="button" class="sidebar-branch-toggle" data-action="toggle-nav-branch" aria-expanded="${branchOpen ? "true" : "false"}" aria-label="إظهار أو إخفاء ${item.label}">`;
         html += `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
         html += `</button></div>`;
@@ -729,9 +873,37 @@
       }
 
       const activeClass = item.id === active ? " is-active" : "";
-      html += `<a class="sidebar-link${activeClass}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${icon(item.icon)}<span>${item.label}</span></a>`;
+      html += `<a class="sidebar-link${activeClass}" href="${item.href}" data-nav="${item.id}" title="${item.label}">${item.icon ? icon(item.icon) : ""}<span>${item.label}</span></a>`;
     });
+    return html;
+  }
 
+  function renderSidebar(active) {
+    const setupMode = isSetupPage(active);
+    let html = `
+      <div class="sidebar-brand">
+        <div class="sidebar-logo">
+          <img src="https://app.marhaba-syria.sy/assets/img/logo-syria.svg" alt="Marhaba Syria" />
+        </div>
+      </div>`;
+
+    if (setupMode) {
+      html += `
+      <div class="sidebar-setup-bar">
+        <a href="dashboard.html" class="sidebar-back-link" title="العودة للقائمة الرئيسية">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>القائمة الرئيسية</span>
+        </a>
+        <a href="setup.html" class="sidebar-setup-title${active === "setup" ? " is-active" : ""}" data-nav="setup">التهيئة</a>
+      </div>
+      <nav class="flex-1 overflow-y-auto px-3 py-3" aria-label="قائمة التهيئة">`;
+      html += renderNavItems(SETUP_NAV, active);
+      html += `</nav>`;
+      return html;
+    }
+
+    html += `<nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="القائمة الرئيسية">`;
+    html += renderNavItems(NAV, active);
     html += `</nav>`;
     return html;
   }

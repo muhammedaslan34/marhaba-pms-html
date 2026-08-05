@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تخصيص الأنواع — Marhaba PMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: { DEFAULT: '#0027B7', soft: '#EEF2FF' }, secondary: '#079DD8' },
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="../assets/css/app.css?v=setup2" />
+</head>
+<body class="app-bg font-sans" data-page="setup-unit-type-customization" data-title="تخصيص الأنواع"
+  data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"التهيئة","href":"setup.html"},{"label":"تخصيص الأنواع"}]'>
+  <div class="min-h-screen lg:flex">
+    <aside id="app-sidebar"></aside>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header id="app-header"></header>
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
+        <div class="page-hero">
+          <div>
+            <p class="page-kicker">الوحدات</p>
+            <p class="text-slate-800 font-extrabold mt-1 text-lg">تخصيص أنواع الوحدات وطاقاتها</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-action="open-modal" data-target="setup-item-modal">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            إضافة نوع
+          </button>
+        </div>
+        <section class="panel p-4">
+          <div class="flex flex-col sm:flex-row gap-3 sm:items-end">
+            <div class="flex-1">
+              <label class="field-label" for="setup-search">بحث</label>
+              <div class="search-input">
+                <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                <input type="search" id="setup-search" class="field-input" placeholder="ابحث…" />
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        <section class="panel overflow-hidden">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>النوع</th><th>الرمز</th><th>بالغون</th><th>أطفال</th><th>الحالة</th><th class="text-center">إجراءات</th></tr></thead>
+              <tbody id="setup-tbody"></tbody>
+            </table>
+          </div>
+          <div id="setup-tbody-empty" class="empty-state hidden p-8 text-center">
+            <p class="font-extrabold" data-empty-title>لا توجد عناصر بعد</p>
+            <p class="text-sm text-slate-500 mt-1" data-empty-desc>ابدأ بإضافة أول عنصر.</p>
+          </div>
+          <div class="px-4 py-3 border-t border-slate-100 text-sm text-slate-500">المعروض: <span data-visible-count>0</span></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div id="setup-item-modal" class="modal">
+  <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+    <h3 class="font-extrabold">إضافة نوع</h3>
+    <button class="icon-btn" title="إغلاق" aria-label="إغلاق" data-action="close-modal" data-target="setup-item-modal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <form id="setup-item-modal-form" class="p-5 space-y-4">
+    <div><label class="field-label">اسم النوع *</label><input class="field-input" name="name" type="text" placeholder="" required /></div>
+    <div><label class="field-label">الرمز *</label><input class="field-input" name="code" type="text" placeholder="" required /></div>
+    <div><label class="field-label">البالغون</label><input class="field-input" name="adults" type="number" placeholder=""  /></div>
+    <div><label class="field-label">الأطفال</label><input class="field-input" name="children" type="number" placeholder=""  /></div>
+    <div class="flex items-center justify-between gap-3 py-1"><div><div class="font-semibold text-sm">نشط</div></div><label class="toggle"><input type="checkbox" name="active" checked /><span></span></label></div>
+    <div class="pt-2 flex justify-end gap-2 border-t border-slate-100">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="setup-item-modal">إلغاء</button>
+      <button type="submit" class="btn btn-primary">حفظ</button>
+    </div>
+  </form>
+</div>
+  <script src="../assets/js/pms-data.js"></script>
+  <script src="../assets/js/app.js?v=setup2"></script>
+  <script src="../assets/js/setup-pages.js?v=setup1"></script>
+  <script>
+    Setup.crud({
+      table: 'setup-tbody',
+      search: 'setup-search',
+      empty: 'setup-tbody-empty',
+      rows: [
+  {
+    "name": "غرفة مفردة",
+    "code": "SGL",
+    "adults": "1",
+    "children": "0",
+    "status": "نشط"
+  },
+  {
+    "name": "غرفة مزدوجة",
+    "code": "DBL",
+    "adults": "2",
+    "children": "1",
+    "status": "نشط"
+  },
+  {
+    "name": "جناح",
+    "code": "STE",
+    "adults": "3",
+    "children": "2",
+    "status": "نشط"
+  }
+],
+      columns: [
+        { key: 'name', label: 'النوع' },
+        { key: 'code', label: 'الرمز' },
+        { key: 'adults', label: 'بالغون' },
+        { key: 'children', label: 'أطفال' },
+        { key: 'status', label: 'الحالة', render: function(r){return Setup.badge(r.status, r.status==='نشط'||r.status==='مفعّل'?'badge-success':(r.status==='معطّل'||r.status==='غير مفعّل'?'badge-danger':'badge-neutral'));} }
+      ]
+    });
+    Setup.bindFormSubmit('setup-item-modal-form', 'تم الحفظ (تجريبي)');
+  </script>
+</body>
+</html>

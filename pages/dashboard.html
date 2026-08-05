@@ -22,7 +22,7 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=dash4" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=dash5" />
 </head>
 <body class="app-bg font-sans" data-page="dashboard" data-title="الرئيسية"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الرئيسية"}]'>
@@ -33,14 +33,179 @@
       <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
         <div class="page-hero">
           <div>
-            <p class="page-kicker">نظرة عامة على اليوم</p>
-            <p class="text-slate-800 font-extrabold text-lg mt-1">30 يوليو 2026 · <span id="dash-property-label">MADINAH1</span></p>
+            <p class="page-kicker">لوحة المعلومات</p>
+            <p class="text-slate-800 font-extrabold text-lg mt-1">بإمكانك الاطلاع وإدارة المنشأة بأكملها في لمحة</p>
+            <p class="text-sm text-slate-500 mt-1">30 يوليو 2026 · <span id="dash-property-label">MADINAH1</span></p>
           </div>
           <div class="flex flex-wrap gap-2">
             <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
             <a href="reservations.html" class="btn btn-secondary">تسجيل الدخول</a>
           </div>
         </div>
+
+        <!-- Live Marhaba ops cards (missing from previous redesign) -->
+        <section class="dash-ops" aria-label="ملخص العمليات اليومية">
+          <div class="dash-ops-col space-y-5">
+            <div class="dash-group">
+              <h2 class="dash-group-title">حالات حجوزات اليوم</h2>
+              <div class="grid grid-cols-2 gap-3">
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">وصول اليوم</div>
+                    <div class="dash-metric-value" id="dash-today-arrivals">0</div>
+                  </div>
+                  <span class="dash-metric-dot" id="dash-today-arrivals-dot" aria-hidden="true">0</span>
+                </article>
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مسجل دخول</div>
+                    <div class="dash-metric-value" id="dash-today-checkedin">0</div>
+                  </div>
+                  <span class="dash-metric-dot" id="dash-today-checkedin-dot" aria-hidden="true">0</span>
+                </article>
+                <article class="dash-metric" data-tone="warning">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مغادرة اليوم</div>
+                    <div class="dash-metric-value" id="dash-today-departures">0</div>
+                  </div>
+                  <span class="dash-metric-dot" id="dash-today-departures-dot" aria-hidden="true">0</span>
+                </article>
+                <article class="dash-metric" data-tone="danger">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مسجل خروج</div>
+                    <div class="dash-metric-value" id="dash-today-checkedout">0</div>
+                  </div>
+                  <span class="dash-metric-dot" id="dash-today-checkedout-dot" aria-hidden="true">0</span>
+                </article>
+
+              </div>
+            </div>
+
+            <div class="dash-group">
+              <h2 class="dash-group-title">خدمة الغرف</h2>
+              <div class="grid grid-cols-2 gap-3">
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">شاغرة وغير نظيفة</div>
+                    <div class="dash-metric-value" id="dash-hk-vacant-dirty">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16"/><path d="M7 20V11l5-7 5 7v9" stroke-linejoin="round"/><path d="M10 14h4" stroke-linecap="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="danger">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مؤجرة وغير نظيفة</div>
+                    <div class="dash-metric-value" id="dash-hk-rented-dirty">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16"/><path d="M7 20V11l5-7 5 7v9" stroke-linejoin="round"/><path d="M10 14h4" stroke-linecap="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">شاغرة نظيفة</div>
+                    <div class="dash-metric-value" id="dash-hk-vacant-clean">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="primary">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مؤجرة نظيفة</div>
+                    <div class="dash-metric-value" id="dash-hk-rented-clean">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-ops-col space-y-5">
+            <div class="dash-group">
+              <h2 class="dash-group-title">رصيد الصندوق</h2>
+              <div class="grid grid-cols-2 gap-3">
+                <article class="dash-metric" data-tone="primary">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">الرصيد الحالي</div>
+                    <div class="dash-metric-value" id="dash-cash-syp">0 ل.س</div>
+                  </div>
+                  <span class="dash-metric-icon dash-metric-currency" aria-hidden="true">ل.س</span>
+                </article>
+                <article class="dash-metric" data-tone="danger">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">الرصيد الحالي</div>
+                    <div class="dash-metric-value" id="dash-cash-usd">0 د.أ</div>
+                  </div>
+                  <span class="dash-metric-icon dash-metric-currency" aria-hidden="true">د.أ</span>
+                </article>
+              </div>
+            </div>
+
+            <div class="dash-group">
+              <h2 class="dash-group-title">الملخص المالي لليوم</h2>
+              <div class="grid grid-cols-2 gap-3">
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">دائن</div>
+                    <div class="dash-metric-value" id="dash-bal-credit">0.00 ل.س</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="danger">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">مدين</div>
+                    <div class="dash-metric-value" id="dash-bal-debit">0.00 ل.س</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="success">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">اجمالي الايراد</div>
+                    <div class="dash-metric-value" id="dash-fin-revenue">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M12 10v8" stroke-linecap="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="warning">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">السندات لأمر</div>
+                    <div class="dash-metric-value" id="dash-fin-promissory">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-linejoin="round"/><path d="M14 3v6h6M9 13h6M9 17h4" stroke-linecap="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="secondary">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">المقبوضات</div>
+                    <div class="dash-metric-value" id="dash-fin-receipts">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h14v16H5z" stroke-linejoin="round"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>
+                  </span>
+                </article>
+                <article class="dash-metric" data-tone="danger">
+                  <div class="dash-metric-body">
+                    <div class="dash-metric-label">المصروفات</div>
+                    <div class="dash-metric-value" id="dash-fin-expenses">0</div>
+                  </div>
+                  <span class="dash-metric-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M9 15l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section class="grid grid-cols-2 xl:grid-cols-5 gap-3 sm:gap-4">
           <article class="stat-card col-span-2 xl:col-span-1" data-tone="primary">
@@ -505,6 +670,142 @@
         });
       }
 
+      function setTxt(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      }
+
+      function setDot(id, n) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = String(n);
+      }
+
+      function aggregateReservationBalances(ids) {
+        // Demo balances aligned with live Marhaba dashboard semantics
+        let credit = 0;
+        let debit = 0;
+        const recs = PD.getVisibleRecords(PD.reservations).filter(function (r) {
+          return ids.indexOf(r.propertyId) !== -1;
+        });
+        recs.forEach(function (r) {
+          if (r.status === "checked-in") debit += 5000;
+          if (r.status === "confirmed") credit += 0;
+        });
+        if (!recs.length) debit = 10000;
+        return { credit: credit, debit: -Math.abs(debit || 10000) };
+      }
+
+      function aggregateTodayStatuses(ids) {
+        const recs = PD.getVisibleRecords(PD.reservations).filter(function (r) {
+          return ids.indexOf(r.propertyId) !== -1;
+        });
+        const arrivals = recs.filter(function (r) { return r.status === "confirmed" || r.status === "unconfirmed"; }).length;
+        const checkedIn = recs.filter(function (r) { return r.status === "checked-in"; }).length;
+        const departures = Math.max(0, Math.min(checkedIn, Math.round(checkedIn * 0.4)));
+        const checkedOut = recs.filter(function (r) { return r.status === "checked-out"; }).length;
+        const staying = Math.max(0, checkedIn - departures);
+        return {
+          arrivals: arrivals || 2,
+          checkedIn: checkedIn || 1,
+          departures: departures,
+          checkedOut: checkedOut,
+          staying: staying,
+        };
+      }
+
+      function aggregateHousekeeping(ids) {
+        const tasks = (PD.housekeepingTasks || []).filter(function (t) {
+          return ids.indexOf(t.propertyId) !== -1;
+        });
+        let vacantDirty = tasks.filter(function (t) { return t.status === "dirty"; }).length;
+        let rentedDirty = tasks.filter(function (t) { return t.status === "rented-dirty"; }).length;
+        let vacantClean = 0;
+        let rentedClean = 0;
+        const dirtyRooms = new Set(tasks.filter(function (t) { return t.status === "dirty" || t.status === "rented-dirty"; }).map(function (t) { return t.room; }));
+        // Also count rooms in cleaning/vacant dirty-ish states
+        ids.forEach(function (id) {
+          const rooms = PD.getRoomsByProperty(id) || [];
+          vacantDirty += rooms.filter(function (r) { return r.status === "cleaning" || r.status === "vacant"; }).length ? 0 : 0;
+          vacantDirty += rooms.filter(function (r) { return r.status === "cleaning"; }).length;
+          rooms.forEach(function (r) {
+            if (dirtyRooms.has(r.number)) return;
+            if (r.status === "vacant") vacantClean += 1;
+            else if (r.status === "occupied") rentedClean += 1;
+          });
+        });
+        if (!vacantDirty && !rentedDirty) vacantDirty = 4;
+        return { vacantDirty: vacantDirty, rentedDirty: rentedDirty, vacantClean: vacantClean, rentedClean: rentedClean };
+      }
+
+      function aggregateCashBalances(ids) {
+        let syp = 0;
+        let usd = 0;
+        if (FD && FD.getCashboxes) {
+          FD.getCashboxes().forEach(function (c) {
+            if (ids.indexOf(c.propertyId) === -1) return;
+            if (c.type !== "cash" || c.status !== "active") return;
+            const bal = Number(c.balance) || 0;
+            if (c.currency === "USD") usd += bal;
+            else syp += bal;
+          });
+        }
+        if (!syp && !usd) { syp = 150678; usd = 215369.8; }
+        return { syp: syp, usd: usd };
+      }
+
+      function aggregateDailyFinance(ids) {
+        let revenue = 0;
+        let expenses = 0;
+        let receipts = 0;
+        const promissory = 0;
+        if (FD && FD.getTransactions) {
+          FD.getTransactions().forEach(function (t) {
+            if (ids.indexOf(t.propertyId) === -1) return;
+            if (t.transactionDate !== TODAY || t.status === "cancelled") return;
+            const amt = Number(t.amount) || 0;
+            if (t.type === "income" && t.status === "confirmed") {
+              revenue += amt;
+              receipts += amt;
+            }
+            if (t.type === "expense" && t.status === "confirmed") expenses += amt;
+          });
+        }
+        if (!revenue) revenue = 4000;
+        return { revenue: revenue, promissory: promissory, receipts: receipts, expenses: expenses };
+      }
+
+      function renderOpsCards(ids) {
+        const bal = aggregateReservationBalances(ids);
+        setTxt("dash-bal-credit", fmtMoney(bal.credit, "SYP") + " ل.س");
+        setTxt("dash-bal-debit", fmtMoney(bal.debit, "SYP") + " ل.س");
+
+        const st = aggregateTodayStatuses(ids);
+        setTxt("dash-today-arrivals", st.arrivals);
+        setTxt("dash-today-checkedin", st.checkedIn);
+        setTxt("dash-today-departures", st.departures);
+        setTxt("dash-today-checkedout", st.checkedOut);
+        setDot("dash-today-arrivals-dot", st.arrivals);
+        setDot("dash-today-checkedin-dot", st.checkedIn);
+        setDot("dash-today-departures-dot", st.departures);
+        setDot("dash-today-checkedout-dot", st.checkedOut);
+
+        const hk = aggregateHousekeeping(ids);
+        setTxt("dash-hk-vacant-dirty", hk.vacantDirty);
+        setTxt("dash-hk-rented-dirty", hk.rentedDirty);
+        setTxt("dash-hk-vacant-clean", hk.vacantClean);
+        setTxt("dash-hk-rented-clean", hk.rentedClean);
+
+        const cash = aggregateCashBalances(ids);
+        setTxt("dash-cash-syp", fmtMoney(cash.syp, "SYP") + " ل.س");
+        setTxt("dash-cash-usd", fmtMoney(cash.usd, "USD") + " د.أ");
+
+        const fin = aggregateDailyFinance(ids);
+        setTxt("dash-fin-revenue", fmtMoney(fin.revenue, "SYP"));
+        setTxt("dash-fin-promissory", fmtMoney(fin.promissory, "SYP"));
+        setTxt("dash-fin-receipts", fmtMoney(fin.receipts, "SYP"));
+        setTxt("dash-fin-expenses", fmtMoney(fin.expenses, "SYP"));
+      }
+
       function render() {
         const sel = PD.getSelectedPropertyId();
         const label = document.getElementById("dash-property-label");
@@ -525,6 +826,8 @@
         document.getElementById("dash-stat-revenue-usd").textContent = fmtMoney(money.revenueUsd, "USD");
         document.getElementById("dash-stat-due-syp").textContent = fmtMoney(money.dueSyp, "SYP");
         document.getElementById("dash-stat-due-usd").textContent = fmtMoney(money.dueUsd, "USD");
+
+        renderOpsCards(ids);
 
         if (typeof Chart !== "undefined") {
           const seed = hashSeed(ids.join(","));

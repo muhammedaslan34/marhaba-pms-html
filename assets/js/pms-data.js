@@ -8,8 +8,12 @@
   const LS_PROPERTIES = "pmsProperties";
   const LS_USERS = "pmsUsers";
   const LS_ROOMS = "pmsRooms";
+  const LS_ROOMS_VERSION = "pmsRoomsVersion";
   const LS_SELECTED_PROPERTY = "selectedPropertyId";
   const CURRENT_USER_ID = "m.aslan@dpmena.com";
+
+  // Bump when the seed room schema changes so stored rooms are re-seeded.
+  const ROOMS_SCHEMA_VERSION = 3;
 
   // ─── Default seed data ────────────────────────────────────────────────
   const DEFAULT_PROPERTIES = [
@@ -403,13 +407,83 @@
     { id: "GST-06", propertyId: "HALEP1", name: "LISTFIX GUEST", phone: "0500222111" },
   ];
 
+  // ─── Room catalogs ───────────────────────────────────────────────────
+  // Status values understood across the app (housekeeping keeps its own
+  // "dirty/rented-dirty" task labels, but room.status uses this enum).
+  const ROOM_STATUSES = ["vacant", "occupied", "cleaning", "maintenance", "blocked"];
+  const ROOM_CLASSIFICATIONS = ["Economic", "Business", "Luxury"];
+  const KITCHEN_TYPES = ["Without", "Private", "Shared"];
+  const HALL_TYPES = ["Without", "Private", "Shared"];
+
+  // Room types are reference records (id + label + defaults) so the "Add room"
+  // form can prefill capacity/beds/view when a type is chosen. A room stores
+  // the type id in `roomType` plus its own concrete bed/view numbers.
+  const ROOM_TYPES = [
+    { id: "standard", label: "Standard", capacity: 2, singleBeds: 0, doubleBeds: 1, view: "City View" },
+    { id: "deluxe", label: "Deluxe", capacity: 2, singleBeds: 0, doubleBeds: 1, view: "Sea View" },
+    { id: "twin", label: "Twin", capacity: 2, singleBeds: 2, doubleBeds: 0, view: "City View" },
+    { id: "suite", label: "Suite", capacity: 4, singleBeds: 2, doubleBeds: 1, view: "Sea View" },
+    { id: "family", label: "Family", capacity: 4, singleBeds: 2, doubleBeds: 1, view: "Garden View" },
+  ];
+
   const ROOMS = [
-    { id: "R-101", propertyId: "HOMS1", number: "101", status: "occupied" },
-    { id: "R-102", propertyId: "HOMS1", number: "102", status: "vacant" },
-    { id: "R-103", propertyId: "HOMS1", number: "103", status: "dirty" },
-    { id: "R-201", propertyId: "HALEP1", number: "201", status: "occupied" },
-    { id: "R-202", propertyId: "HALEP1", number: "202", status: "vacant" },
-    { id: "R-203", propertyId: "HALEP1", number: "203", status: "maintenance" },
+    {
+      id: "R-101", propertyId: "HOMS1", number: "101", status: "occupied",
+      roomTypeId: "deluxe", capacity: 2, view: "Sea View", singleBeds: 0, doubleBeds: 1,
+      floor: 1, block: "A", classification: "Luxury", phoneExtension: "1101",
+      electronicLock: true, canMerge: false, kitchen: "Without", hall: "Without",
+      unitArea: 32, amenities: ["Wi-Fi", "Mini Bar", "Air Conditioning", "Smart TV"],
+      standardRateSyp: 95000, standardRateUsd: 35,
+    },
+    {
+      id: "R-102", propertyId: "HOMS1", number: "102", status: "vacant",
+      roomTypeId: "twin", capacity: 2, view: "City View", singleBeds: 2, doubleBeds: 0,
+      floor: 1, block: "A", classification: "Business", phoneExtension: "1102",
+      electronicLock: true, canMerge: true, kitchen: "Without", hall: "Without",
+      unitArea: 28, amenities: ["Wi-Fi", "Air Conditioning", "Smart TV"],
+      standardRateSyp: 75000, standardRateUsd: 28,
+    },
+    {
+      id: "R-103", propertyId: "HOMS1", number: "103", status: "cleaning",
+      roomTypeId: "standard", capacity: 2, view: "City View", singleBeds: 0, doubleBeds: 1,
+      floor: 1, block: "A", classification: "Economic", phoneExtension: "1103",
+      electronicLock: true, canMerge: false, kitchen: "Without", hall: "Without",
+      unitArea: 24, amenities: ["Wi-Fi", "Air Conditioning"],
+      standardRateSyp: 55000, standardRateUsd: 20,
+    },
+    // Showcase room — full data, matches the "Create a Hotel Room" template.
+    {
+      id: "R-104", propertyId: "HOMS1", number: "104", status: "vacant",
+      roomTypeId: "deluxe", capacity: 2, view: "Sea View", singleBeds: 0, doubleBeds: 1,
+      floor: 1, block: "A", classification: "Business", phoneExtension: "1104",
+      electronicLock: true, canMerge: false, kitchen: "Private", hall: "Without",
+      unitArea: 30, amenities: ["Wi-Fi", "Mini Bar", "Air Conditioning", "Smart TV", "Safe", "Coffee Machine"],
+      standardRateSyp: 80000, standardRateUsd: 30,
+    },
+    {
+      id: "R-201", propertyId: "HALEP1", number: "201", status: "occupied",
+      roomTypeId: "suite", capacity: 4, view: "City View", singleBeds: 2, doubleBeds: 1,
+      floor: 2, block: "B", classification: "Luxury", phoneExtension: "2201",
+      electronicLock: true, canMerge: false, kitchen: "Private", hall: "Private",
+      unitArea: 55, amenities: ["Wi-Fi", "Mini Bar", "Air Conditioning", "Smart TV", "Safe", "Living Area"],
+      standardRateSyp: 140000, standardRateUsd: 52,
+    },
+    {
+      id: "R-202", propertyId: "HALEP1", number: "202", status: "vacant",
+      roomTypeId: "standard", capacity: 2, view: "City View", singleBeds: 0, doubleBeds: 1,
+      floor: 2, block: "B", classification: "Economic", phoneExtension: "2202",
+      electronicLock: true, canMerge: false, kitchen: "Without", hall: "Without",
+      unitArea: 22, amenities: ["Wi-Fi", "Air Conditioning"],
+      standardRateSyp: 50000, standardRateUsd: 18,
+    },
+    {
+      id: "R-203", propertyId: "HALEP1", number: "203", status: "maintenance",
+      roomTypeId: "twin", capacity: 2, view: "Garden View", singleBeds: 2, doubleBeds: 0,
+      floor: 2, block: "B", classification: "Business", phoneExtension: "2203",
+      electronicLock: true, canMerge: true, kitchen: "Without", hall: "Without",
+      unitArea: 26, amenities: ["Wi-Fi", "Air Conditioning", "Smart TV"],
+      standardRateSyp: 70000, standardRateUsd: 26,
+    },
   ];
 
   const PAYMENTS = [
@@ -479,19 +553,31 @@
 
   function getRooms() {
     let list = readJSON(LS_ROOMS, null);
-    if (!list) {
+    let version = null;
+    try { version = localStorage.getItem(LS_ROOMS_VERSION); } catch (_) {}
+    if (!list || Number(version) !== ROOMS_SCHEMA_VERSION) {
       list = ROOMS.slice();
       writeJSON(LS_ROOMS, list);
+      try { localStorage.setItem(LS_ROOMS_VERSION, String(ROOMS_SCHEMA_VERSION)); } catch (_) {}
     }
     return list;
   }
 
   function saveRooms(list) {
     writeJSON(LS_ROOMS, list);
+    try { localStorage.setItem(LS_ROOMS_VERSION, String(ROOMS_SCHEMA_VERSION)); } catch (_) {}
   }
 
   function getRoomsByProperty(propertyId) {
     return getRooms().filter(function (r) { return r.propertyId === propertyId; });
+  }
+
+  function getRoomTypes() {
+    return ROOM_TYPES.slice();
+  }
+
+  function getRoomTypeById(id) {
+    return ROOM_TYPES.find(function (t) { return t.id === id; }) || null;
   }
 
   function addRoom(room) {
@@ -650,6 +736,13 @@
     PERMISSION_MATRIX: PERMISSION_MATRIX,
     PROPERTY_TYPES: ["Hotel", "Serviced Apartment", "Furnished Apartment", "Resort"],
 
+    // room catalogs
+    ROOM_STATUSES: ROOM_STATUSES,
+    ROOM_CLASSIFICATIONS: ROOM_CLASSIFICATIONS,
+    KITCHEN_TYPES: KITCHEN_TYPES,
+    HALL_TYPES: HALL_TYPES,
+    ROOM_TYPES: ROOM_TYPES,
+
     // raw operational data (already tagged with propertyId)
     reservations: RESERVATIONS,
     guests: GUESTS,
@@ -663,6 +756,8 @@
     addRoom: addRoom,
     updateRoom: updateRoom,
     deleteRoom: deleteRoom,
+    getRoomTypes: getRoomTypes,
+    getRoomTypeById: getRoomTypeById,
 
     // properties
     getProperties: getProperties,
