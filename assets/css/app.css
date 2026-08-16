@@ -4499,6 +4499,12 @@ html.dark .res-detail-hero-dot { background: #475569; }
   color: #475569;
   white-space: nowrap;
 }
+.res-date-chip[dir="ltr"] {
+  font-weight: 800;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
 .res-date-chip b {
   font-size: 0.92rem;
   font-weight: 800;
