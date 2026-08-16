@@ -1,0 +1,134 @@
+Goal: implement the static HTML redesign for the PMS `/setup` area inside this repository, using the existing project design system and page conventions.
+
+You are working in: D:\Projects\html\PMSDEMO
+
+Important constraints:
+- Do NOT commit anything. Edit the working tree only.
+- Arabic-first output only. All page copy, labels, buttons, tabs, table headers, helper text, and breadcrumbs must be Arabic.
+- This project is static HTML + Tailwind CDN + shared CSS/JS. No backend, no live API, no destructive actions.
+- Reuse existing patterns from the repository rather than inventing a new shell.
+- Keep the implementation consistent with existing files such as `pages/settings.html`, `pages/users.html`, `pages/properties.html`, `pages/property-new.html`, `pages/property-detail.html`, `pages/finance-categories.html`, and the shared shell in `assets/js/app.js`.
+- Respect RTL and existing component classes (`panel`, `btn`, `field-input`, `field-select`, `data-table`, `badge`, drawers/modals, chips, tabs, etc.).
+- If the live system showed broken Arabic i18n keys, DO NOT switch to English in the final pages. Supply a sensible Arabic label from hotel/PMS domain context.
+- Prefer shared/reusable UI patterns over page-specific one-off styling.
+
+Current repo facts:
+- Main shared nav and shell are in `assets/js/app.js`.
+- Shared styling is in `assets/css/app.css`.
+- Existing pages live in `pages/`.
+- Existing npm scripts:
+  - `npm start`
+  - `npm run build:css`
+  - `npm run build`
+
+Implementation scope:
+1. Add a setup section to the shared navigation in `assets/js/app.js` that reflects the PMS setup area and supports nested items.
+2. Create static Arabic HTML pages for the setup area using file names under `pages/` with a consistent `setup-*.html` scheme.
+3. Reuse as much shared CSS and JS behavior as possible. Add only the minimal new CSS needed to `assets/css/app.css`.
+4. Update docs/page map (`README.md` and inventory docs if needed) so the new setup pages are discoverable.
+
+Setup groups and target pages to implement:
+
+Company
+- `pages/setup-properties.html` for Properties
+- `pages/setup-property-info.html` for Property Info
+- `pages/setup-users.html` for Users
+- `pages/setup-roles.html` for Roles
+
+Blocks & Floors
+- `pages/setup-blocks.html` for Blocks
+- `pages/setup-floors.html` for Floors
+
+Units
+- `pages/setup-unit-type-customization.html` for Type Customization
+- `pages/setup-unit-amenities.html` for Units Amenities
+- `pages/setup-unit-setup.html` for Unit Setup
+- `pages/setup-unit-merge-settings.html` for Merge Settings
+- `pages/setup-base-rate.html` for Base Rate
+- `pages/setup-seasonal-rate.html` for Seasonal Rate
+- `pages/setup-special-rate.html` for Special Rate
+- `pages/setup-rate-plans.html` for Rate Plans
+
+Financial
+- `pages/setup-bank-accounts.html` for Bank Accounts
+- `pages/setup-cost-centers.html` for Cost Centers
+- `pages/setup-security-deposit.html` for Security Deposit
+- `pages/setup-taxes-fees.html` for Taxes & Fees
+- `pages/setup-currencies.html` for Currencies
+- `pages/setup-payment-methods.html` for Payment Methods
+- `pages/setup-discount-types.html` for Discount Types
+
+General Settings
+- `pages/setup-date-time-settings.html` for Date/Time Settings
+- `pages/setup-reservation-sources.html` for Reservation Sources
+- `pages/setup-guest-classes.html` for Guest Classes
+- `pages/setup-loyalty-program-settings.html` for Loyalty Program Settings
+- `pages/setup-sms-auto-send.html` for SMS Auto Send
+- `pages/setup-property-facilities.html` for Properties' Facilities
+
+Reporting
+- `pages/setup-numbering-options.html` for Numbering Options
+- `pages/setup-printing-options.html` for Printing Options
+
+Outlets
+- `pages/setup-outlet-setup.html` for Outlet Setup
+- `pages/setup-items-categories.html` for Items Categories
+- `pages/setup-items.html` for Items
+
+Rules
+- `pages/setup-terms-conditions.html` for Terms & Conditions
+- `pages/setup-penalties.html` for Penalties
+- `pages/setup-reservation-rules.html` for Reservation
+- `pages/setup-cancel-no-show-reasons.html` for Cancel / No Show Reasons
+- `pages/setup-change-unit-reasons.html` for Change Unit Reasons
+- `pages/setup-night-audit-settings.html` for Night Audit Settings
+- `pages/setup-guest-feedback-metrics.html` for Guest Feedback Metrics
+
+Housekeeping Settings
+- `pages/setup-housekeepers.html` for Housekeepers List
+- `pages/setup-housekeeping-task-types.html` for Task Types
+
+Subscriptions
+- `pages/setup-subscriptions.html`
+
+Guest Supplies
+- `pages/setup-supplies-categories.html` for Supplies Categories
+- `pages/setup-guest-supplies.html` for Guest Supplies
+- `pages/setup-supplies-unit-usages.html` for Supplies Unit Usages
+
+UI/content requirements:
+- Every page must have realistic Arabic breadcrumbs, page title, descriptive helper text, primary actions, filters/search where appropriate, and either forms, cards, or tables matching the page type.
+- For list-style pages, include an "add/create" action and a complete static add/edit form via modal or drawer.
+- For configuration pages, include the relevant settings fields, toggles, selects, and explanatory copy.
+- For tables, include realistic Arabic column headers and 3-8 static sample rows.
+- For forms, include realistic Arabic labels and placeholders.
+- Preserve consistency with the existing Marhaba PMS visual language.
+
+Suggested page archetypes:
+- CRUD list + modal/drawer: blocks, floors, amenities, bank accounts, cost centers, taxes/fees, payment methods, discount types, reservation sources, guest classes, facilities, outlets, item categories, items, penalties, reasons, housekeepers, task types, supplies categories, guest supplies, supplies unit usages.
+- Rich settings form: property info, merge settings, date/time settings, loyalty settings, SMS auto send, numbering options, printing options, reservation rules, night audit settings, subscriptions.
+- Matrix/table-heavy: roles, rate plans, guest feedback metrics.
+- Wizard or complex structured forms where fitting: unit setup, base/seasonal/special rates.
+
+Implementation guidance for shared navigation:
+- Extend `assets/js/app.js` so the setup area appears as a grouped branch in Arabic and links to the new files.
+- Keep existing navigation intact.
+- Use nested children to mirror the setup hierarchy.
+
+Implementation guidance for docs:
+- Update `README.md` page map with the new setup pages.
+- If you touch inventory docs, keep edits concise and aligned with the current documentation style.
+
+Definition of done for this implementation pass:
+- New setup pages exist and are wired together.
+- Shared nav can reach them.
+- Pages visually match the project’s existing redesign language.
+- Arabic-only copy throughout.
+- No backend logic added.
+
+Validation:
+- Run `npm run build` after implementation and report the result.
+- In your final report, include:
+  1. summary of changed files
+  2. whether `npm run build` passed
+  3. any gaps, assumptions, or pages implemented from shared pattern rather than exact live capture

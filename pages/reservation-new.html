@@ -18,7 +18,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=prop1" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=resnew17" />
 </head>
 <body class="app-bg font-sans" data-page="reservations" data-title="حجز جديد"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الحجوزات","href":"reservations.html"},{"label":"حجز جديد"}]'>
@@ -26,437 +26,704 @@
     <aside id="app-sidebar"></aside>
     <div class="flex-1 min-w-0 flex flex-col">
       <header id="app-header"></header>
-      <main class="flex-1 p-4 sm:p-6 lg:p-8">
-        <div class="wizard-shell space-y-5">
-          <div class="page-hero">
+      <main class="flex-1 res-new res-new--wide">
+
+        <!-- Full-width top bar -->
+        <div class="res-new-topbar">
+          <div class="res-new-topbar-main">
             <div>
-              <p class="page-kicker">إنشاء حجز خطوة بخطوة</p>
-              <p class="text-slate-800 font-extrabold mt-1 text-lg" id="step-headline">اختيار النزيل</p>
+              <p class="page-kicker mb-1">إنشاء حجز</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <h1 class="text-xl font-extrabold text-slate-900">حجز جديد</h1>
+                <span class="badge badge-primary">فندق المدينة بلازا</span>
+                <span class="badge badge-neutral">MADINAH1</span>
+              </div>
             </div>
+            <div class="res-new-topbar-meta" id="topbar-meta">
+              <span dir="ltr">12 → 13 Aug 2026</span>
+              <span class="res-new-dot"></span>
+              <span>1 ليلة</span>
+              <span class="res-new-dot"></span>
+              <span>1 بالغ</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
             <a href="reservations.html" class="btn btn-ghost btn-sm">إلغاء</a>
+            <button type="button" class="btn btn-primary btn-sm hidden sm:inline-flex" id="create-res-top" disabled>إنشاء الحجز</button>
           </div>
+        </div>
 
-          <div class="wizard-progress" id="wizard-progress">
-            <div class="wizard-progress-top">
-              <span class="wizard-progress-label" id="step-label">الخطوة 1 من 4</span>
-              <span class="wizard-progress-pct" id="step-pct">25%</span>
-            </div>
-            <div class="wizard-bar" aria-hidden="true"><span id="step-bar" style="width:25%"></span></div>
-            <div class="wizard-steps" id="wizard-steps">
-              <div class="wizard-step is-active" data-step-label="1">
-                <div class="wizard-step-num">1</div>
-                <div class="wizard-step-title">النزيل</div>
-                <div class="wizard-step-desc">بحث أو إضافة</div>
+        <div class="res-new-layout">
+
+          <!-- MAIN: stay + rooms -->
+          <div class="res-new-main">
+
+            <!-- Stay -->
+            <section class="res-new-card">
+              <div class="res-new-card-head">
+                <h2>الإقامة</h2>
+                <span class="res-new-pill" id="stay-nights-badge">1 ليلة</span>
               </div>
-              <div class="wizard-step" data-step-label="2">
-                <div class="wizard-step-num">2</div>
-                <div class="wizard-step-title">الإقامة</div>
-                <div class="wizard-step-desc">التواريخ والعدد</div>
-              </div>
-              <div class="wizard-step" data-step-label="3">
-                <div class="wizard-step-num">3</div>
-                <div class="wizard-step-title">الغرف</div>
-                <div class="wizard-step-desc">التوفر والأسعار</div>
-              </div>
-              <div class="wizard-step" data-step-label="4">
-                <div class="wizard-step-num">4</div>
-                <div class="wizard-step-title">المراجعة</div>
-                <div class="wizard-step-desc">تأكيد الحجز</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="wizard-panel" id="wizard">
-            <div class="wizard-panel-head">
-              <h2 class="font-extrabold text-lg text-slate-800" id="panel-title">النزيل</h2>
-              <p class="text-sm text-slate-500 font-semibold mt-1" id="panel-desc">ابحث عن نزيل موجود أو أضف نزيلاً جديداً لتجنّب التكرار.</p>
-            </div>
-
-            <div class="wizard-panel-body">
-              <section data-step="1" class="space-y-5">
-                <div>
-                  <label class="field-label" for="guest-search">بحث عن نزيل</label>
-                  <div class="search-input">
-                    <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
-                    <input type="search" class="field-input" placeholder="الاسم أو الهاتف أو رقم الهوية" id="guest-search" />
-                  </div>
-                </div>
-
-                <div class="guest-result">
-                  <div class="flex items-center gap-3 min-w-0">
-                    <div class="guest-avatar">ا</div>
-                    <div class="min-w-0">
-                      <div class="font-extrabold text-slate-800">ابراهيم</div>
-                      <div class="text-sm text-slate-500 font-semibold">••••9297 · 3 إقامات سابقة</div>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-secondary btn-sm" id="pick-guest">اختيار هذا النزيل</button>
-                </div>
-
-                <div id="selected-guest" class="hidden rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-                  <div class="flex items-center justify-between gap-3">
-                    <div class="flex items-center gap-3">
-                      <div class="guest-avatar !bg-emerald-600">ا</div>
-                      <div>
-                        <div class="text-xs font-bold text-emerald-700 mb-0.5">تم اختيار النزيل</div>
-                        <div class="font-extrabold text-slate-800">ابراهيم</div>
-                        <div class="text-sm text-slate-600 font-semibold">966564179297</div>
-                      </div>
-                    </div>
-                    <button type="button" class="btn btn-ghost btn-sm" id="change-guest">تغيير</button>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-3">
-                  <div class="h-px flex-1 bg-slate-200"></div>
-                  <span class="text-xs font-bold text-slate-400">أو</span>
-                  <div class="h-px flex-1 bg-slate-200"></div>
-                </div>
-
-                <button type="button" class="btn btn-ghost w-full sm:w-auto" id="new-guest-toggle">+ إضافة نزيل جديد</button>
-                <div id="new-guest-form" class="hidden grid sm:grid-cols-2 gap-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
-                  <div class="sm:col-span-2"><label class="field-label">الاسم الكامل *</label><input class="field-input" placeholder="مثال: أحمد السالم" /></div>
-                  <div>
-                    <label class="field-label">الهاتف</label>
-                    <div class="phone-field" data-phone-field>
-                      <button type="button" class="phone-code-btn" data-ss-trigger aria-expanded="false" aria-haspopup="listbox">
-                        <span data-ss-flag><img class="flag-img" src="https://flagcdn.com/w40/sa.png" width="24" height="18" alt="SA" /></span>
-                        <span data-ss-text>+966</span>
-                        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                      </button>
-                      <input type="tel" class="phone-input" placeholder="5xxxxxxxx" inputmode="numeric" />
-                      <div class="phone-dropdown" data-ss-dropdown role="listbox">
-                        <div class="phone-dropdown-search search-input">
-                          <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
-                          <input type="search" placeholder="ابحث عن دولة أو رمز…" data-ss-search />
-                        </div>
-                        <div class="phone-dropdown-list" data-ss-list></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div><label class="field-label">البريد الإلكتروني</label><input type="email" class="field-input" placeholder="name@example.com" /></div>
-                  <div>
-                    <label class="field-label">الجنسية</label>
-                    <div data-nationality-field>
-                      <button type="button" class="ss-select-btn" data-ss-trigger aria-expanded="false" aria-haspopup="listbox">
-                        <span data-ss-flag><img class="flag-img" src="https://flagcdn.com/w40/sy.png" width="24" height="18" alt="SY" /></span>
-                        <span class="ss-select-text" data-ss-text>سوري</span>
-                        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                      </button>
-                      <div class="phone-dropdown" data-ss-dropdown role="listbox">
-                        <div class="phone-dropdown-search search-input">
-                          <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
-                          <input type="search" placeholder="ابحث عن الجنسية…" data-ss-search />
-                        </div>
-                        <div class="phone-dropdown-list" data-ss-list></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="field-label">نوع الهوية</label>
-                    <select class="field-select"><option>جواز سفر</option><option>هوية / إقامة</option><option>دفتر عائلة</option><option>إخراج قيد</option></select>
-                  </div>
-                  <div class="sm:col-span-2"><label class="field-label">رقم الهوية</label><input class="field-input" placeholder="رقم الهوية / الإقامة / الجواز" /></div>
-                </div>
-              </section>
-
-              <section data-step="2" class="hidden space-y-5">
-                <div class="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="field-label">الفندق</label>
-                    <div class="field-input bg-primary-soft/40 border-primary/15 font-bold text-primary">فندق المدينة بلازا</div>
-                  </div>
-                  <div>
-                    <label class="field-label">المصدر</label>
-                    <select class="field-select"><option>مباشر</option><option>بوكينج</option><option>إكسبيديا</option><option>وكيل</option></select>
-                  </div>
-                  <div>
-                    <label class="field-label" for="checkin-date">تاريخ الوصول</label>
-                    <div class="dp-field" data-datepicker data-placeholder="اختر تاريخ الوصول">
-                      <button type="button" class="field-input dp-trigger" id="checkin-date" aria-haspopup="dialog" aria-label="تاريخ الوصول">
-                        <span class="dp-text">08/10/2026</span>
-                        <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
-                      </button>
-                      <input type="hidden" name="checkin" value="2026-08-10" data-stay-date="checkin" />
-                      <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ الوصول">
-                        <div class="dp-head">
-                          <button type="button" class="dp-month-btn" data-dp-month-toggle>
-                            <span data-dp-month-label>أغسطس 2026</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                          </button>
-                          <div class="dp-nav">
-                            <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </button>
-                            <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="dp-months" aria-label="اختيار الشهر"></div>
-                        <div class="dp-calendar">
-                          <div class="dp-days" data-dp-days></div>
-                        </div>
-                        <div class="dp-foot">
-                          <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
-                          <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="field-label" for="checkout-date">تاريخ المغادرة</label>
-                    <div class="dp-field" data-datepicker data-placeholder="اختر تاريخ المغادرة">
-                      <button type="button" class="field-input dp-trigger" id="checkout-date" aria-haspopup="dialog" aria-label="تاريخ المغادرة">
+              <div class="res-new-card-body">
+                <div class="res-new-dates-row">
+                  <label class="res-new-field">
+                    <span class="field-label">تاريخ الوصول</span>
+                    <div class="dp-field res-new-date-field" data-datepicker data-placeholder="اختر تاريخ الوصول">
+                      <button type="button" class="field-input dp-trigger dir-ltr" id="checkin-trigger" aria-haspopup="dialog" aria-label="تاريخ الوصول">
                         <span class="dp-text">08/12/2026</span>
                         <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
                       </button>
-                      <input type="hidden" name="checkout" value="2026-08-12" data-stay-date="checkout" />
-                      <div class="dp-popover" role="dialog" aria-label="اختيار تاريخ المغادرة">
+                      <input type="hidden" id="checkin" value="2026-08-12" />
+                      <div class="dp-popover" role="dialog" aria-label="تاريخ الوصول">
                         <div class="dp-head">
                           <button type="button" class="dp-month-btn" data-dp-month-toggle>
                             <span data-dp-month-label>أغسطس 2026</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                           </button>
                           <div class="dp-nav">
-                            <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </button>
-                            <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </button>
+                            <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                            <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                           </div>
                         </div>
                         <div class="dp-months" aria-label="اختيار الشهر"></div>
-                        <div class="dp-calendar">
-                          <div class="dp-days" data-dp-days></div>
-                        </div>
+                        <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
                         <div class="dp-foot">
                           <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
                           <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
                         </div>
                       </div>
                     </div>
+                  </label>
+                  <div class="res-new-date-arrow" aria-hidden="true">→</div>
+                  <label class="res-new-field">
+                    <span class="field-label">تاريخ المغادرة</span>
+                    <div class="dp-field res-new-date-field" data-datepicker data-placeholder="اختر تاريخ المغادرة">
+                      <button type="button" class="field-input dp-trigger dir-ltr" id="checkout-trigger" aria-haspopup="dialog" aria-label="تاريخ المغادرة">
+                        <span class="dp-text">08/13/2026</span>
+                        <svg class="dp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
+                      </button>
+                      <input type="hidden" id="checkout" value="2026-08-13" />
+                      <div class="dp-popover" role="dialog" aria-label="تاريخ المغادرة">
+                        <div class="dp-head">
+                          <button type="button" class="dp-month-btn" data-dp-month-toggle>
+                            <span data-dp-month-label>أغسطس 2026</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </button>
+                          <div class="dp-nav">
+                            <button type="button" class="dp-nav-btn" data-dp-prev aria-label="الشهر السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                            <button type="button" class="dp-nav-btn" data-dp-next aria-label="الشهر التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                          </div>
+                        </div>
+                        <div class="dp-months" aria-label="اختيار الشهر"></div>
+                        <div class="dp-calendar"><div class="dp-days" data-dp-days></div></div>
+                        <div class="dp-foot">
+                          <button type="button" class="dp-foot-btn" data-dp-clear>مسح</button>
+                          <button type="button" class="dp-foot-btn" data-dp-today>اليوم</button>
+                        </div>
+                      </div>
+                    </div>
+                  </label>
+                  <div class="res-new-quick-chips">
+                    <span class="text-xs font-bold text-slate-500">مدة سريعة</span>
+                    <button type="button" class="res-chip is-active res-quick-nights" data-nights="1">ليلة</button>
+                    <button type="button" class="res-chip res-quick-nights" data-nights="2">ليلتان</button>
+                    <button type="button" class="res-chip res-quick-nights" data-nights="3">3 ليالٍ</button>
+                    <button type="button" class="res-chip res-quick-nights" data-nights="7">أسبوع</button>
                   </div>
+                </div>
+
+                <div class="res-new-fields-grid mt-5">
                   <div>
-                    <label class="field-label">البالغون</label>
-                    <input type="number" class="field-input" value="2" min="1" />
+                    <span class="field-label mb-2 block">عدد النزلاء</span>
+                    <div class="flex flex-wrap gap-4">
+                      <div>
+                        <span class="field-label text-xs">البالغون</span>
+                        <div class="res-stepper" data-stepper="adults" data-min="1">
+                          <button type="button" class="res-stepper-btn" data-delta="-1">−</button>
+                          <input type="number" class="res-stepper-val" value="1" min="1" readonly />
+                          <button type="button" class="res-stepper-btn" data-delta="1">+</button>
+                        </div>
+                      </div>
+                      <div>
+                        <span class="field-label text-xs">الأطفال</span>
+                        <div class="res-stepper" data-stepper="children" data-min="0">
+                          <button type="button" class="res-stepper-btn" data-delta="-1">−</button>
+                          <input type="number" class="res-stepper-val" value="0" min="0" readonly />
+                          <button type="button" class="res-stepper-btn" data-delta="1">+</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <label class="field-label">الأطفال</label>
-                    <input type="number" class="field-input" value="0" min="0" />
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label class="field-label" for="visit-purpose">غرض الزيارة <span class="text-red-500">*</span></label>
-                    <select id="visit-purpose" class="field-select" required>
-                      <option value="" selected disabled>اختر غرض الزيارة</option>
-                      <option value="tourism">سياحة</option>
-                      <option value="family">عائلة أو أصدقاء</option>
-                      <option value="religious">ديني</option>
-                      <option value="work">عمل</option>
-                      <option value="sports">رياضي</option>
-                      <option value="leisure">ترفيه</option>
-                      <option value="other">أخرى</option>
-                      <option value="diwan">موظف ديوان</option>
-                      <option value="client-block">حجر عميل</option>
-                      <option value="moh">موظف وزارة الصحة</option>
+                  <label>
+                    <span class="field-label">مصدر الحجز</span>
+                    <select class="field-select" id="source">
+                      <option value="Direct">مباشر</option>
+                      <option value="Booking">بوكينج</option>
+                      <option value="Expedia">إكسبيديا</option>
+                      <option value="Agent">وكيل</option>
                     </select>
-                  </div>
-                </div>
-                <div id="stay-summary" class="rounded-2xl bg-sky-50 border border-sky-100 p-4 text-sm font-semibold text-sky-800">
-                  مدة الإقامة المتوقعة: <strong id="stay-nights">ليلتان</strong> · <span id="stay-range">10 → 12 أغسطس 2026</span>
-                </div>
-              </section>
-
-              <section data-step="3" class="hidden space-y-4">
-                <div class="flex items-center justify-between gap-3">
-                  <p class="text-sm text-slate-500 font-semibold">التوفر المباشر لمدة الإقامة</p>
-                  <span class="badge badge-primary">MADINAH1</span>
-                </div>
-                <div class="space-y-3">
-                  <label class="room-pick">
-                    <div>
-                      <div class="font-extrabold text-slate-800">Double Room · Haram View</div>
-                      <div class="text-sm text-slate-500 font-semibold mt-1">600 / ليلة · <span class="room-pick-badge">متاح 11</span></div>
-                    </div>
-                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="0" />
                   </label>
-                  <label class="room-pick !border-primary/30 !bg-primary-soft/30">
-                    <div>
-                      <div class="font-extrabold text-slate-800">Single Room · Kaaba View</div>
-                      <div class="text-sm text-slate-500 font-semibold mt-1">350 / ليلة · <span class="room-pick-badge">متاح 3</span></div>
-                    </div>
-                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="1" />
+                  <label>
+                    <span class="field-label">غرض الزيارة</span>
+                    <select class="field-select" id="purpose">
+                      <option value="">اختر غرض الزيارة</option>
+                      <option value="Tourism">سياحة</option>
+                      <option value="Business">عمل</option>
+                      <option value="Medical">علاج</option>
+                      <option value="Family">زيارة عائلية</option>
+                      <option value="Umrah">عمرة</option>
+                      <option value="Hajj">حج</option>
+                      <option value="Other">أخرى</option>
+                    </select>
                   </label>
-                  <label class="room-pick">
-                    <div>
-                      <div class="font-extrabold text-slate-800">Twin Room · Haram View</div>
-                      <div class="text-sm text-slate-500 font-semibold mt-1">850 / ليلة · <span class="room-pick-badge">متاح 11</span></div>
-                    </div>
-                    <input type="number" class="field-input w-20 text-center font-extrabold" min="0" value="0" />
-                  </label>
-                </div>
-                <div class="rounded-2xl bg-primary text-white p-4 flex items-center justify-between gap-3">
-                  <span class="font-bold opacity-90">الإجمالي التقديري</span>
-                  <span class="text-2xl font-extrabold tracking-tight">700</span>
-                </div>
-              </section>
-
-              <section data-step="4" class="hidden space-y-4">
-                <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-extrabold shrink-0">✓</div>
                   <div>
-                    <div class="font-extrabold text-emerald-900">جاهز للمراجعة</div>
-                    <div class="text-sm text-emerald-800 font-semibold mt-0.5">راجع التفاصيل قبل إنشاء الحجز.</div>
+                    <span class="field-label mb-2 block">الحالة</span>
+                    <div class="res-seg">
+                      <button type="button" class="res-seg-btn is-active" data-status="confirmed">مؤكد</button>
+                      <button type="button" class="res-seg-btn" data-status="unconfirmed">غير مؤكد</button>
+                    </div>
                   </div>
                 </div>
-                <dl class="grid sm:grid-cols-2 gap-3">
-                  <div class="summary-tile"><dt>النزيل</dt><dd>ابراهيم</dd></div>
-                  <div class="summary-tile"><dt>المصدر</dt><dd>مباشر</dd></div>
-                  <div class="summary-tile"><dt>غرض الزيارة</dt><dd id="summary-purpose">—</dd></div>
-                  <div class="summary-tile"><dt>الإقامة</dt><dd>10 Aug → 12 Aug 2026</dd></div>
-                  <div class="summary-tile"><dt>الغرف</dt><dd>Single Room ×1</dd></div>
-                  <div class="summary-tile sm:col-span-2 !bg-primary-soft !border-primary/15">
-                    <dt>الإجمالي</dt>
-                    <dd class="text-primary text-xl">700</dd>
-                  </div>
-                </dl>
-                <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-100 rounded-xl p-3">نسخة تجريبية — لن يُنشأ حجز حقيقي على الخادم.</p>
-              </section>
-            </div>
+              </div>
+            </section>
 
-            <div class="wizard-panel-foot">
-              <button type="button" class="btn btn-ghost" id="wizard-prev">السابق</button>
-              <button type="button" class="btn btn-primary min-w-[8.5rem]" id="wizard-next">التالي</button>
-            </div>
+            <!-- Rooms -->
+            <section class="res-new-card res-rooms-card">
+              <div class="res-new-card-head">
+                <div>
+                  <h2>الغرف والتوفر</h2>
+                  <p class="text-xs text-slate-500 font-semibold mt-0.5" id="rooms-avail-label">التوافق المباشر · 1 ليلة</p>
+                </div>
+                <div class="res-rooms-head-controls">
+                  <div class="res-seg res-seg-sm">
+                    <button type="button" class="res-seg-btn is-active" data-mode="type">حسب النوع</button>
+                    <button type="button" class="res-seg-btn" data-mode="number">حسب الرقم</button>
+                  </div>
+                  <select class="field-select res-rooms-currency" id="currency">
+                    <option value="USD">USD $</option>
+                    <option value="SYP">SYP ل.س</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="res-new-card-body !p-0">
+                <div id="rooms-by-type" class="table-wrap res-rooms-table-wrap">
+                  <table class="data-table res-new-room-table">
+                    <thead>
+                      <tr>
+                        <th>نوع الغرفة</th>
+                        <th class="text-center">التوفر</th>
+                        <th>سعر الليلة</th>
+                        <th class="text-center">العدد</th>
+                        <th class="text-end">المجموع</th>
+                      </tr>
+                    </thead>
+                    <tbody id="rooms-table-body"></tbody>
+                  </table>
+                </div>
+                <div id="rooms-by-number" class="hidden res-rooms-by-number">
+                  <div class="res-rooms-floor">
+                    <div class="res-rooms-floor-head">الطابق 1</div>
+                    <div class="res-room-number-grid">
+                      <button type="button" class="res-room-num is-available" data-room="101" data-type="غرفة مفردة">101</button>
+                      <button type="button" class="res-room-num is-available" data-room="102" data-type="غرفة مزدوجة">102</button>
+                      <button type="button" class="res-room-num is-available" data-room="109" data-type="غرفة مزدوجة">109</button>
+                    </div>
+                  </div>
+                  <div class="res-rooms-floor">
+                    <div class="res-rooms-floor-head">الطابق 2</div>
+                    <div class="res-room-number-grid">
+                      <button type="button" class="res-room-num is-busy" disabled data-room="201">201</button>
+                      <button type="button" class="res-room-num is-available" data-room="203" data-type="غرفة توأم">203</button>
+                      <button type="button" class="res-room-num is-available" data-room="204" data-type="Apartment">204</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="res-rooms-footer" id="rooms-footer">
+                <div class="res-rooms-footer-empty">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linejoin="round"/></svg>
+                  <span>اختر الغرف من الجدول أو حدّد أرقاماً مباشرة</span>
+                </div>
+              </div>
+            </section>
           </div>
+
+          <!-- SIDEBAR: guest + summary -->
+          <aside class="res-new-aside">
+
+            <section class="res-new-card">
+              <div class="res-new-card-head">
+                <h2>النزيل</h2>
+                <span class="text-xs font-bold text-slate-500" id="guest-summary-line">لم يُختر</span>
+              </div>
+              <div class="res-new-card-body space-y-3">
+                <div class="search-input">
+                  <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3" stroke-linecap="round"/></svg>
+                  <input type="search" id="guest-search" class="field-input" placeholder="اسم · هاتف · هوية" autocomplete="off" />
+                </div>
+
+                <div id="guest-results" class="space-y-2 hidden">
+                  <button type="button" class="res-guest-pick" data-guest='{"name":"ابراهيم","phone":"966564179297","stays":3}'>
+                    <div class="guest-avatar">ا</div>
+                    <div class="min-w-0 flex-1 text-start">
+                      <div class="font-extrabold text-sm">ابراهيم</div>
+                      <div class="text-xs text-slate-500">•••9297 · 3 إقامات</div>
+                    </div>
+                  </button>
+                  <button type="button" class="res-guest-pick" data-guest='{"name":"محمد سعد العتيبي","phone":"0551234007","stays":1}'>
+                    <div class="guest-avatar">م</div>
+                    <div class="min-w-0 flex-1 text-start">
+                      <div class="font-extrabold text-sm">محمد سعد العتيبي</div>
+                      <div class="text-xs text-slate-500">•••4007 · 1 إقامة</div>
+                    </div>
+                  </button>
+                </div>
+
+                <div id="guest-empty" class="res-guest-empty py-8">
+                  <div class="text-sm font-bold text-slate-500">ابحث أو أضف نزيلاً</div>
+                </div>
+
+                <div id="guest-selected" class="hidden res-guest-selected">
+                  <div class="guest-avatar !bg-emerald-600">ا</div>
+                  <div class="min-w-0 flex-1">
+                    <div class="text-xs font-bold text-emerald-700">تم الاختيار</div>
+                    <div class="font-extrabold" id="guest-selected-name">—</div>
+                    <div class="text-xs text-slate-500 dir-ltr" id="guest-selected-phone">—</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm" id="guest-clear">×</button>
+                </div>
+
+                <button type="button" class="btn btn-soft w-full" id="new-guest-toggle">+ نزيل جديد</button>
+
+                <div id="new-guest-form" class="hidden space-y-3 pt-2 border-t border-slate-100">
+                  <input class="field-input" id="new-guest-name" placeholder="الاسم الكامل *" />
+                  <input type="tel" class="field-input dir-ltr" id="new-guest-phone" placeholder="الهاتف" />
+                  <input type="email" class="field-input" id="new-guest-email" placeholder="البريد" />
+                  <button type="button" class="btn btn-primary btn-sm w-full" id="new-guest-save">حفظ النزيل</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="res-new-card res-new-summary">
+              <div class="res-new-card-head">
+                <h2>الملخص</h2>
+                <span class="badge badge-success" id="review-status-badge">مؤكد</span>
+              </div>
+              <div class="res-new-card-body">
+                <dl class="res-new-summary-list">
+                  <div><dt>النزيل</dt><dd id="review-guest">—</dd></div>
+                  <div><dt>التواريخ</dt><dd dir="ltr" id="review-dates">2026-08-12 → 13</dd></div>
+                  <div><dt>الغرف</dt><dd id="review-rooms">—</dd></div>
+                  <div><dt>المصدر</dt><dd id="review-source">مباشر</dd></div>
+                  <div><dt>الغرض</dt><dd id="review-purpose">—</dd></div>
+                </dl>
+
+                <div class="res-new-totals">
+                  <div class="res-new-total-row">
+                    <span>الإجمالي</span>
+                    <strong id="review-total">0 $</strong>
+                  </div>
+                  <div class="res-new-total-row">
+                    <span>الخصم</span>
+                    <div class="flex items-center gap-1">
+                      <input type="number" class="field-input !py-1 !w-20 !text-sm" id="discount" value="0" min="0" />
+                      <span class="text-xs font-bold text-slate-400" id="review-currency-label">$</span>
+                    </div>
+                  </div>
+                  <div class="res-new-total-row is-grand">
+                    <span>المطلوب</span>
+                    <strong id="sticky-total">0 $</strong>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-primary w-full mt-4" id="create-res" disabled>إنشاء الحجز</button>
+                <p class="text-xs text-center text-slate-500 font-semibold mt-2" id="create-hint">أكمل النزيل والغرف</p>
+              </div>
+            </section>
+          </aside>
         </div>
       </main>
     </div>
   </div>
+
   <script src="../assets/js/pms-data.js"></script>
-  <script src="../assets/js/app.js?v=prop2"></script>
+  <script src="../assets/js/app.js"></script>
   <script>
     (function () {
-      let step = 1;
-      const max = 4;
-      const meta = {
-        1: { title: 'النزيل', desc: 'ابحث عن نزيل موجود أو أضف نزيلاً جديداً لتجنّب التكرار.', headline: 'اختيار النزيل' },
-        2: { title: 'الإقامة', desc: 'حدد تواريخ الوصول والمغادرة وعدد الضيوف ومصدر الحجز.', headline: 'تفاصيل الإقامة' },
-        3: { title: 'الغرف', desc: 'اختر أنواع الغرف والكميات حسب التوفر الحالي.', headline: 'اختيار الغرف' },
-        4: { title: 'المراجعة', desc: 'راجع ملخص الحجز ثم أكّد الإنشاء.', headline: 'مراجعة وتأكيد' },
+      const ROOM_TYPES = [
+        { id: 'apt-haram', name: 'Apartment', cat: 'apt', catLabel: 'شقة', view: 'إطلالة الحرم', viewKey: 'haram', rate: 900, avail: 2, capacity: 4 },
+        { id: 'dbl-haram', name: 'غرفة مزدوجة', view: 'إطلالة الحرم', rate: 600, avail: 5 },
+        { id: 'dbl-kaaba', name: 'غرفة مزدوجة', view: 'إطلالة الكعبة', rate: 600, avail: 3 },
+        { id: 'sgl-haram', name: 'غرفة مفردة', view: 'إطلالة الحرم', rate: 350, avail: 5 },
+        { id: 'sgl-kaaba', name: 'غرفة مفردة', view: 'إطلالة الكعبة', rate: 350, avail: 3 },
+        { id: 'twn-haram', name: 'غرفة توأم', view: 'إطلالة الحرم', rate: 850, avail: 5 },
+        { id: 'twn-kaaba', name: 'غرفة توأم', view: 'إطلالة الكعبة', rate: 850, avail: 3 },
+      ];
+
+      const ROOM_META = {
+        apt: { cat: 'apt', catLabel: 'شقة', capacity: 4 },
+        dbl: { cat: 'dbl', catLabel: '\u0645\u0632\u062f\u0648\u062c\u0629', capacity: 2 },
+        sgl: { cat: 'sgl', catLabel: 'مفردة', capacity: 1 },
+        twn: { cat: 'twn', catLabel: 'توأم', capacity: 2 },
       };
-      const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-      const sections = [...document.querySelectorAll('#wizard [data-step]')];
-      const labels = [...document.querySelectorAll('#wizard-steps .wizard-step')];
+      ROOM_TYPES.forEach((r) => {
+        const prefix = r.id.split('-')[0];
+        const meta = ROOM_META[prefix] || ROOM_META.dbl;
+        Object.assign(r, meta, { viewKey: r.id.endsWith('kaaba') ? 'kaaba' : 'haram' });
+      });
 
-      function parseISO(value) {
-        if (!value) return null;
-        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
-        if (!m) return null;
-        return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      const state = { guest: null, status: 'confirmed', mode: 'type', currency: 'USD', rooms: {}, pickedNumbers: new Set() };
+      const $ = (id) => document.getElementById(id);
+      const sym = () => (state.currency === 'SYP' ? 'ل.س' : '$');
+
+      function parseDate(v) {
+        if (!v) return null;
+        const p = v.split('-').map(Number);
+        return new Date(p[0], p[1] - 1, p[2]);
       }
-
+      function fmtISO(d) { return d.toISOString().slice(0, 10); }
+      function fmtDisplay(iso) {
+        if (!iso) return '';
+        const [y, m, d] = iso.split('-');
+        return `${m}/${d}/${y}`;
+      }
+      function setDateValue(id, iso) {
+        const input = $(id);
+        if (!input) return;
+        input.value = iso;
+        const field = input.closest('[data-datepicker]');
+        const textEl = field?.querySelector('.dp-text');
+        if (textEl && iso) {
+          textEl.textContent = fmtDisplay(iso);
+          textEl.classList.remove('is-empty');
+        } else if (textEl) {
+          textEl.textContent = field?.dataset.placeholder || 'اختر التاريخ';
+          textEl.classList.add('is-empty');
+        }
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      function ensureCheckoutAfterCheckin() {
+        const ci = parseDate($('checkin').value);
+        if (!ci) return;
+        const minCo = new Date(ci);
+        minCo.setDate(minCo.getDate() + 1);
+        const co = parseDate($('checkout').value);
+        if (!co || co < minCo) setDateValue('checkout', fmtISO(minCo));
+      }
+      function nightsBetween(a, b) {
+        if (!a || !b || b <= a) return 0;
+        return Math.round((b - a) / 86400000);
+      }
       function nightsLabel(n) {
-        if (n <= 0) return '—';
         if (n === 1) return 'ليلة';
         if (n === 2) return 'ليلتان';
         if (n >= 3 && n <= 10) return n + ' ليالٍ';
         return n + ' ليلة';
       }
+      function getNights() {
+        return nightsBetween(parseDate($('checkin').value), parseDate($('checkout').value));
+      }
 
-      function updateStaySummary() {
-        const checkin = parseISO(document.querySelector('[data-stay-date="checkin"]')?.value);
-        const checkout = parseISO(document.querySelector('[data-stay-date="checkout"]')?.value);
-        const nightsEl = document.getElementById('stay-nights');
-        const rangeEl = document.getElementById('stay-range');
-        if (!checkin || !checkout || checkout <= checkin) {
-          if (nightsEl) nightsEl.textContent = '—';
-          if (rangeEl) rangeEl.textContent = 'حدد تاريخي الوصول والمغادرة';
+      function availTone(avail) {
+        if (avail <= 0) return 'full';
+        if (avail <= 2) return 'low';
+        return 'ok';
+      }
+
+      function filteredRooms() {
+        return ROOM_TYPES;
+      }
+
+      function renderRooms() {
+        const s = sym();
+        const nights = getNights();
+        const rows = filteredRooms();
+        $('rooms-table-body').innerHTML = rows.length ? rows.map((r) => {
+          const qty = state.rooms[r.id]?.qty || 0;
+          const rate = state.rooms[r.id]?.rate ?? r.rate;
+          const hasQty = qty > 0;
+          const sub = qty ? qty * rate * nights : 0;
+          const tone = availTone(r.avail);
+          const fillPct = Math.min(100, Math.round((qty / r.avail) * 100));
+          return `<tr class="res-room-tr${hasQty ? ' is-selected' : ''}" data-room-id="${r.id}" data-view-key="${r.viewKey || ''}">
+            <td>
+              <div class="res-room-type-cell">
+                <span class="res-room-cat is-${r.cat || 'dbl'}">${r.catLabel || r.name.charAt(0)}</span>
+                <div class="min-w-0">
+                  <span class="res-room-type-name">${r.name}</span>
+                  <div class="res-room-type-sub">
+                    <span class="badge res-room-view is-${r.viewKey || 'haram'}">${r.view || ''}</span>
+                    <span class="res-room-type-meta">${r.capacity || 2} نزيل</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="text-center">
+              <div class="res-avail-meter" title="${r.avail} متاح">
+                <span class="avail-cell avail-${tone}">${r.avail}</span>
+                <div class="res-avail-bar"><span style="width:${fillPct}%"></span></div>
+              </div>
+            </td>
+            <td>
+              <div class="res-rate-input">
+                <span class="res-rate-prefix">${s}</span>
+                <input type="number" class="res-room-rate" value="${rate}" min="0" data-room-id="${r.id}" aria-label="سعر الليلة" />
+              </div>
+            </td>
+            <td>
+              <div class="res-stepper res-stepper-sm res-stepper-room mx-auto" data-room-stepper="${r.id}" data-min="0" data-max="${r.avail}">
+                <button type="button" class="res-stepper-btn" data-delta="-1"${qty <= 0 ? ' disabled' : ''}>−</button>
+                <input type="number" class="res-stepper-val" value="${qty}" readonly aria-label="عدد الغرف" />
+                <button type="button" class="res-stepper-btn" data-delta="1"${qty >= r.avail ? ' disabled' : ''}>+</button>
+              </div>
+            </td>
+            <td class="text-end">
+              <span class="res-room-subtotal${hasQty ? ' has-value' : ''}" data-subtotal="${r.id}">${sub.toLocaleString()} ${s}</span>
+            </td>
+          </tr>`;
+        }).join('') : `<tr class="res-room-empty"><td colspan="5">لا توجد أنواع غرف لهذا الفلتر</td></tr>`;
+      }
+
+      function syncRoomsToolbar() {
+        const nights = getNights();
+        const s = sym();
+        let selectedQty = 0;
+        const picks = [];
+        ROOM_TYPES.forEach((r) => {
+          const item = state.rooms[r.id];
+          if (!item?.qty) return;
+          selectedQty += item.qty;
+          picks.push({ r, item, sub: item.qty * item.rate * nights });
+        });
+
+        const footer = $('rooms-footer');
+        if (!selectedQty && !state.pickedNumbers.size) {
+          footer.innerHTML = `<div class="res-rooms-footer-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linejoin="round"/></svg>
+            <span>اختر الغرف من الجدول أو حدّد أرقاماً مباشرة</span>
+          </div>`;
           return;
         }
-        const nights = Math.round((checkout - checkin) / 86400000);
-        if (nightsEl) nightsEl.textContent = nightsLabel(nights);
-        if (rangeEl) {
-          rangeEl.textContent =
-            checkin.getDate() + ' → ' + checkout.getDate() + ' ' + monthsAr[checkout.getMonth()] + ' ' + checkout.getFullYear();
-        }
+
+        const chips = picks.map(({ r, item, sub }) =>
+          `<span class="res-rooms-pick">${r.name} ×${item.qty} <strong>${sub.toLocaleString()} ${s}</strong></span>`
+        ).join('');
+        const pickedNums = [...state.pickedNumbers].map((n) => `<span class="res-rooms-pick is-num">#${n}</span>`).join('');
+        const grand = picks.reduce((t, p) => t + p.sub, 0);
+        footer.innerHTML = `<div class="res-rooms-footer-active">
+          <div class="res-rooms-footer-picks">${chips}${pickedNums}</div>
+          <div class="res-rooms-footer-total">
+            <span>مجموع الغرف</span>
+            <strong>${grand.toLocaleString()} ${s}</strong>
+          </div>
+        </div>`;
       }
 
-      function render() {
-        const pct = Math.round((step / max) * 100);
-        sections.forEach((s) => s.classList.toggle('hidden', Number(s.dataset.step) !== step));
-        labels.forEach((l, i) => {
-          const n = i + 1;
-          l.classList.toggle('is-active', n === step);
-          l.classList.toggle('is-done', n < step);
-          const num = l.querySelector('.wizard-step-num');
-          if (num) num.innerHTML = n < step ? '✓' : String(n);
+      function calcTotal() {
+        const nights = getNights();
+        let total = 0;
+        const lines = [];
+        ROOM_TYPES.forEach((r) => {
+          const item = state.rooms[r.id];
+          if (!item?.qty) return;
+          total += item.qty * item.rate * nights;
+          lines.push(`${r.name} ×${item.qty}`);
         });
-        document.getElementById('step-bar').style.width = pct + '%';
-        document.getElementById('step-pct').textContent = pct + '%';
-        document.getElementById('step-label').textContent = 'الخطوة ' + step + ' من ' + max;
-        document.getElementById('panel-title').textContent = meta[step].title;
-        document.getElementById('panel-desc').textContent = meta[step].desc;
-        document.getElementById('step-headline').textContent = meta[step].headline;
-        const prev = document.getElementById('wizard-prev');
-        prev.disabled = step === 1;
-        prev.classList.toggle('opacity-40', step === 1);
-        document.getElementById('wizard-next').textContent = step === max ? 'إنشاء الحجز' : 'التالي';
+        return { total, lines, nights };
       }
 
-      document.getElementById('wizard-next').addEventListener('click', () => {
-        if (step === 2) {
-          const purpose = document.getElementById('visit-purpose');
-          if (!purpose.value) {
-            purpose.focus();
-            PMS.toast('يرجى اختيار غرض الزيارة');
-            return;
-          }
-          const checkin = document.querySelector('[data-stay-date="checkin"]')?.value;
-          const checkout = document.querySelector('[data-stay-date="checkout"]')?.value;
-          if (!checkin || !checkout) {
-            PMS.toast('يرجى اختيار تاريخ الوصول والمغادرة');
-            return;
-          }
-          if (checkout <= checkin) {
-            PMS.toast('تاريخ المغادرة يجب أن يكون بعد الوصول');
-            return;
-          }
-        }
-        if (step < max) {
-          step += 1;
-          if (step === 4) {
-            const purpose = document.getElementById('visit-purpose');
-            const summary = document.getElementById('summary-purpose');
-            if (summary) {
-              summary.textContent = purpose.options[purpose.selectedIndex]?.text || '—';
-            }
-          }
-          render();
-        }
-        else { PMS.toast('تم إنشاء الحجز (تجريبي)'); location.href = 'reservation-detail.html'; }
-      });
-      document.getElementById('wizard-prev').addEventListener('click', () => {
-        if (step > 1) { step -= 1; render(); }
-      });
-      document.getElementById('pick-guest').addEventListener('click', () => {
-        document.getElementById('selected-guest').classList.remove('hidden');
-        PMS.toast('تم اختيار النزيل');
-      });
-      document.getElementById('change-guest').addEventListener('click', () => {
-        document.getElementById('selected-guest').classList.add('hidden');
-      });
-      document.getElementById('new-guest-toggle').addEventListener('click', () => {
-        document.getElementById('new-guest-form').classList.toggle('hidden');
+      function syncUI() {
+        const nights = getNights();
+        const ci = $('checkin').value;
+        const co = $('checkout').value;
+        const adults = Number(document.querySelector('[data-stepper="adults"] .res-stepper-val').value);
+        const children = Number(document.querySelector('[data-stepper="children"] .res-stepper-val').value);
+        const s = sym();
+        const { total, lines } = calcTotal();
+        const discount = Number($('discount').value) || 0;
+        const net = Math.max(0, total - discount);
+
+        $('stay-nights-badge').textContent = nightsLabel(nights);
+        $('rooms-avail-label').textContent = 'التوافق المباشر · ' + nightsLabel(nights);
+        $('topbar-meta').innerHTML = `<span dir="ltr">${ci} → ${co}</span><span class="res-new-dot"></span><span>${nightsLabel(nights)}</span><span class="res-new-dot"></span><span>${adults} بالغ</span>`;
+
+        $('review-dates').textContent = ci + ' → ' + co.split('-').slice(1).join('-');
+        $('review-guest').textContent = state.guest?.name || '—';
+        $('review-rooms').textContent = lines.length ? lines.join(' · ') : '—';
+        $('review-source').textContent = $('source').selectedOptions[0]?.text || '—';
+        $('review-purpose').textContent = $('purpose').selectedOptions[0]?.text || '—';
+        $('review-total').textContent = total.toLocaleString() + ' ' + s;
+        $('sticky-total').textContent = net.toLocaleString() + ' ' + s;
+        $('review-currency-label').textContent = s;
+        $('guest-summary-line').textContent = state.guest?.name || 'لم يُختر';
+        $('review-status-badge').textContent = state.status === 'confirmed' ? 'مؤكد' : 'غير مؤكد';
+        $('review-status-badge').className = 'badge ' + (state.status === 'confirmed' ? 'badge-success' : 'badge-warning');
+
+        document.querySelectorAll('[data-subtotal]').forEach((el) => {
+          const id = el.dataset.subtotal;
+          const item = state.rooms[id];
+          const sub = item?.qty ? item.qty * item.rate * nights : 0;
+          el.textContent = sub.toLocaleString() + ' ' + s;
+          el.classList.toggle('has-value', !!item?.qty);
+          el.closest('tr')?.classList.toggle('is-selected', !!item?.qty);
+          const bar = el.closest('tr')?.querySelector('.res-avail-bar span');
+          const room = ROOM_TYPES.find((r) => r.id === id);
+          if (bar && room) bar.style.width = Math.min(100, Math.round(((item?.qty || 0) / room.avail) * 100)) + '%';
+        });
+
+        syncRoomsToolbar();
+
+        const valid = nights > 0 && state.guest && lines.length > 0;
+        ['create-res', 'create-res-top'].forEach((id) => {
+          const btn = $(id);
+          if (!btn) return;
+          btn.disabled = !valid;
+          btn.classList.toggle('opacity-50', !valid);
+        });
+        $('create-hint').textContent = valid ? 'جاهز للإنشاء' : 'أكمل النزيل والغرف';
+      }
+
+      document.querySelectorAll('.res-quick-nights').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.res-quick-nights').forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const ci = parseDate($('checkin').value) || new Date();
+          const co = new Date(ci);
+          co.setDate(co.getDate() + Number(btn.dataset.nights));
+          setDateValue('checkout', fmtISO(co));
+          syncUI();
+        });
       });
 
-      document.querySelectorAll('[data-stay-date]').forEach((input) => {
-        input.addEventListener('change', updateStaySummary);
+      document.body.addEventListener('click', (e) => {
+        const btn = e.target.closest('.res-stepper-btn');
+        if (!btn) return;
+        const wrap = btn.closest('.res-stepper');
+        const input = wrap.querySelector('.res-stepper-val');
+        const min = Number(wrap.dataset.min ?? 0);
+        const max = wrap.dataset.max ? Number(wrap.dataset.max) : Infinity;
+        let v = Math.max(min, Math.min(max, Number(input.value) + Number(btn.dataset.delta)));
+        input.value = v;
+        const roomId = wrap.dataset.roomStepper;
+        if (roomId) {
+          if (!state.rooms[roomId]) state.rooms[roomId] = { qty: 0, rate: ROOM_TYPES.find((r) => r.id === roomId).rate };
+          state.rooms[roomId].qty = v;
+        }
+        wrap.querySelector('[data-delta="-1"]').disabled = v <= min;
+        wrap.querySelector('[data-delta="1"]').disabled = v >= max;
+        syncUI();
       });
 
-      updateStaySummary();
-      render();
+      document.body.addEventListener('input', (e) => {
+        if (!e.target.classList.contains('res-room-rate')) return;
+        const id = e.target.dataset.roomId;
+        if (!state.rooms[id]) state.rooms[id] = { qty: 0, rate: Number(e.target.value) };
+        else state.rooms[id].rate = Number(e.target.value);
+        syncUI();
+      });
+
+      document.querySelectorAll('[data-status]').forEach((btn) => {
+        if (!btn.classList.contains('res-seg-btn')) return;
+        btn.addEventListener('click', () => {
+          if (!btn.dataset.status) return;
+          btn.parentElement.querySelectorAll('.res-seg-btn').forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          state.status = btn.dataset.status;
+          syncUI();
+        });
+      });
+
+      document.querySelectorAll('[data-mode]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          btn.parentElement.querySelectorAll('.res-seg-btn').forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          state.mode = btn.dataset.mode;
+          $('rooms-by-type').classList.toggle('hidden', state.mode !== 'type');
+          $('rooms-by-number').classList.toggle('hidden', state.mode !== 'number');
+        });
+      });
+
+      $('guest-search').addEventListener('input', () => {
+        const show = $('guest-search').value.trim().length >= 2;
+        $('guest-results').classList.toggle('hidden', !show);
+        $('guest-empty').classList.toggle('hidden', show);
+      });
+
+      document.querySelectorAll('.res-guest-pick').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.guest = JSON.parse(btn.dataset.guest);
+          $('guest-selected-name').textContent = state.guest.name;
+          $('guest-selected-phone').textContent = state.guest.phone;
+          $('.res-guest-selected .guest-avatar').textContent = state.guest.name[0];
+          $('guest-selected').classList.remove('hidden');
+          $('guest-results').classList.add('hidden');
+          $('guest-empty').classList.add('hidden');
+          PMS.toast('تم اختيار النزيل');
+          syncUI();
+        });
+      });
+
+      $('guest-clear').addEventListener('click', () => {
+        state.guest = null;
+        $('guest-selected').classList.add('hidden');
+        $('guest-empty').classList.remove('hidden');
+        $('guest-search').value = '';
+        syncUI();
+      });
+
+      $('new-guest-toggle').addEventListener('click', () => $('new-guest-form').classList.toggle('hidden'));
+      $('new-guest-save').addEventListener('click', () => {
+        const name = $('new-guest-name').value.trim();
+        if (!name) return PMS.toast('أدخل اسم النزيل');
+        state.guest = { name, phone: $('new-guest-phone').value.trim() };
+        $('guest-selected-name').textContent = name;
+        $('guest-selected-phone').textContent = state.guest.phone || '—';
+        $('.res-guest-selected .guest-avatar').textContent = name[0];
+        $('guest-selected').classList.remove('hidden');
+        $('guest-empty').classList.add('hidden');
+        $('new-guest-form').classList.add('hidden');
+        PMS.toast('تم إضافة النزيل');
+        syncUI();
+      });
+
+      function onChange() { syncUI(); }
+      ['checkin', 'checkout', 'source', 'purpose', 'currency'].forEach((id) => {
+        $(id).addEventListener('change', () => {
+          if (id === 'currency') {
+            state.currency = $('currency').value;
+            renderRooms();
+          }
+          if (id === 'checkin') ensureCheckoutAfterCheckin();
+          if (id === 'checkin' || id === 'checkout') renderRooms();
+          syncUI();
+        });
+      });
+      $('discount').addEventListener('input', syncUI);
+
+      function submit() {
+        if ($('create-res').disabled) return;
+        if (!$('purpose').value) return PMS.toast('اختر غرض الزيارة');
+        PMS.toast('تم إنشاء الحجز (تجريبي)');
+        location.href = 'reservation-detail.html';
+      }
+      $('create-res').addEventListener('click', submit);
+      $('create-res-top')?.addEventListener('click', submit);
+
+      document.querySelectorAll('.res-room-num:not([disabled])').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const num = btn.dataset.room;
+          btn.classList.toggle('is-selected');
+          if (state.pickedNumbers.has(num)) state.pickedNumbers.delete(num);
+          else state.pickedNumbers.add(num);
+          syncRoomsToolbar();
+          PMS.toast('غرفة ' + num);
+        });
+      });
+
+      renderRooms();
+      syncUI();
     })();
   </script>
 </body>

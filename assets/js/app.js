@@ -1316,7 +1316,7 @@
     "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
     "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
   ];
-  const DP_WEEKDAYS_AR = ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
+  const DP_WEEKDAYS_AR = ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"];
 
   function pad2(n) {
     return String(n).padStart(2, "0");
@@ -1419,7 +1419,7 @@
 
       function position() {
         const rect = trigger.getBoundingClientRect();
-        const width = Math.min(296, window.innerWidth - 16);
+        const width = Math.min(328, window.innerWidth - 16);
         popover.style.width = width + "px";
         let left = rect.left;
         if (document.documentElement.dir === "rtl") left = rect.right - width;
@@ -1427,9 +1427,9 @@
         if (left < margin) left = margin;
         if (left + width > window.innerWidth - margin) left = window.innerWidth - width - margin;
         let finalTop = rect.bottom + 6;
-        const approxH = 360;
-        if (finalTop + approxH > window.innerHeight - margin) {
-          finalTop = Math.max(margin, rect.top - approxH - 6);
+        const popH = popover.offsetHeight || 360;
+        if (finalTop + popH > window.innerHeight - margin) {
+          finalTop = Math.max(margin, rect.top - popH - 6);
         }
         popover.style.left = left + "px";
         popover.style.top = finalTop + "px";

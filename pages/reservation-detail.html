@@ -18,7 +18,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=prop1" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=resdetail10" />
 </head>
 <body class="app-bg font-sans" data-page="reservations" data-title="تفاصيل الحجز"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الحجوزات","href":"reservations.html"},{"label":"RES-2026-00049"}]'>
@@ -26,339 +26,299 @@
     <aside id="app-sidebar"></aside>
     <div class="flex-1 min-w-0 flex flex-col">
       <header id="app-header"></header>
-      <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-5">
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-          <div class="flex items-start gap-3 min-w-0">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-extrabold text-lg shrink-0 shadow-lg shadow-primary/20">ا</div>
-            <div class="min-w-0">
-              <div class="flex flex-wrap items-center gap-2">
-                <h2 class="text-xl font-extrabold text-slate-800">ابراهيم</h2>
-                <span class="badge badge-neutral">RES-2026-00049</span>
-                <span class="badge badge-success inline-flex items-center gap-1">
-                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  تم الدخول
-                </span>
+      <main class="flex-1 res-detail res-detail--wide">
+
+        <!-- Reservation hero header -->
+        <div class="res-detail-hero">
+          <div class="res-detail-hero-main">
+            <div class="res-detail-hero-id">
+              <div class="res-detail-hero-copy">
+                <p class="res-detail-hero-kicker">تفاصيل الحجز</p>
+                <div class="res-detail-hero-title-row">
+                  <h1 class="res-detail-hero-name">ابراهيم</h1>
+                  <div class="res-detail-hero-badges">
+                    <span class="badge badge-neutral">RES-2026-00049</span>
+                    <span class="badge badge-success">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      تم الدخول
+                    </span>
+                  </div>
+                </div>
+                <div class="res-detail-hero-meta">
+                  <span>فندق المدينة بلازا</span>
+                  <span class="res-detail-hero-dot" aria-hidden="true"></span>
+                  <span class="font-semibold text-slate-600">MADINAH1</span>
+                  <span class="res-detail-hero-dot" aria-hidden="true"></span>
+                  <div class="res-detail-hero-dates">
+                    <span class="res-detail-hero-date is-checkin" title="تاريخ الوصول">
+                      <svg class="res-detail-hero-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17 15 12 10 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12H3" stroke-linecap="round"/></svg>
+                      <time datetime="2026-07-30" dir="ltr">30/07/2026</time>
+                    </span>
+                    <span class="res-detail-hero-date-sep" aria-hidden="true">→</span>
+                    <span class="res-detail-hero-date is-checkout" title="تاريخ المغادرة">
+                      <svg class="res-detail-hero-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H9" stroke-linecap="round"/></svg>
+                      <time datetime="2026-07-31" dir="ltr">31/07/2026</time>
+                    </span>
+                  </div>
+                  <span class="res-detail-hero-dot" aria-hidden="true"></span>
+                  <span>1 ليلة</span>
+                </div>
               </div>
-              <p class="text-sm text-slate-500 mt-1.5 font-semibold flex flex-wrap items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-secondary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linejoin="round"/></svg>
-                فندق المدينة بلازا · MADINAH1
-              </p>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 relative">
-            <button class="btn btn-secondary" data-action="toast" data-message="تحديث الحجز (تجريبي)">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              تحديث الحجز
-            </button>
-            <button class="btn btn-ghost" data-action="open-modal" data-target="payment-modal">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
-              سداد
-            </button>
+          <div class="res-detail-hero-actions res-detail-actions">
+            <button class="btn btn-secondary btn-sm" data-action="toast" data-message="تحديث الحجز (تجريبي)">تحديث</button>
+            <button class="btn btn-soft btn-sm" data-action="open-modal" data-target="payment-modal">سداد</button>
             <div class="relative">
-              <button class="btn btn-ghost" id="more-btn">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
-                المزيد
-              </button>
+              <button class="btn btn-ghost btn-sm" id="more-btn">المزيد</button>
               <div id="more-menu" class="hidden absolute end-0 mt-2 w-56 panel p-2 z-20">
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="استرجاع الحجز">
-                  <svg class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  استرجاع الحجز
-                </button>
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="طباعة الفاتورة">
-                  <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
-                  طباعة / مشاركة الفاتورة
-                </button>
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="إرسال رسالة للنزيل">
-                  <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 11.5A8.5 8.5 0 0 1 7.2 18.6L3.5 20l1.5-3.5A8.5 8.5 0 1 1 20 11.5Z" stroke-linejoin="round"/><path d="M9 10.5c.4 1.4 1.8 2.8 3.2 3.2l1-.9c.2-.2.5-.2.7-.1.6.2 1.3.4 2 .5.3 0 .5.3.5.6v1.4c0 .3-.2.6-.5.6A8 8 0 0 1 8 9.5c0-.3.2-.5.5-.5H10c.3 0 .5.2.6.5l.4 1.5c.1.2 0 .5-.2.7l-.8.8Z" stroke-linejoin="round"/></svg>
-                  إرسال رسالة للنزيل
-                </button>
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="تعديل التواريخ">
-                  <svg class="w-4 h-4 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 14h4" stroke-linecap="round"/></svg>
-                  تعديل التواريخ
-                </button>
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="تبديل الغرفة">
-                  <svg class="w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h7v18H7a2 2 0 0 1-2-2Z"/><path d="M14 3h3a2 2 0 0 1 2 2v16M12 12h.01" stroke-linecap="round"/></svg>
-                  تبديل الغرفة
-                </button>
-                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="toast" data-message="تحميل بطاقة التسجيل">
-                  <svg class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v12M8 11l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/></svg>
-                  تحميل بطاقة التسجيل
-                </button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold flex items-center gap-2" data-action="open-modal" data-target="refund-modal" data-txn-amount="11,099.35">استرجاع الحجز</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold" data-action="toast" data-message="طباعة الفاتورة">طباعة / مشاركة الفاتورة</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold" data-action="toast" data-message="إرسال رسالة للنزيل">إرسال رسالة للنزيل</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold" data-action="open-modal" data-target="dates-modal">تعديل التواريخ</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold" data-action="open-modal" data-target="room-edit-modal" data-room-label="—">تبديل الغرفة</button>
+                <button class="w-full text-start px-3 py-2 rounded-lg hover:bg-slate-50 text-sm font-semibold" data-action="toast" data-message="تحميل بطاقة التسجيل">تحميل بطاقة التسجيل</button>
               </div>
             </div>
           </div>
-        </div>
+        </div><!-- /res-detail-hero -->
 
-        <section class="grid grid-cols-2 xl:grid-cols-4 gap-3">
-          <article class="stat-card" data-tone="primary">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label">تاريخ الوصول</div>
-              <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-primary text-lg sm:text-xl">30 Jul 2026</div>
-          </article>
-          <article class="stat-card" data-tone="warning">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label">تاريخ المغادرة</div>
-              <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-amber-600 text-lg sm:text-xl">31 Jul 2026</div>
-          </article>
-          <article class="stat-card" data-tone="secondary">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label">الليالي</div>
-              <div class="w-9 h-9 rounded-xl bg-sky-100 text-secondary flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5z" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-secondary">1</div>
-          </article>
-          <article class="stat-card" data-tone="success">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label">النزلاء</div>
-              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-2.8 2.7-5 6-5s6 2.2 6 5M16 8a2.5 2.5 0 1 0 0-5M21 19c0-2.2-1.8-4-4-4" stroke-linecap="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-emerald-700 text-base sm:text-lg">1 بالغ · 0 أطفال</div>
-          </article>
-        </section>
+        <div class="res-new-layout">
 
-        <section class="grid lg:grid-cols-3 gap-4">
-          <article class="panel p-5 space-y-4">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-primary-soft text-primary flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5" stroke-linecap="round"/></svg>
-              </div>
-              <h3 class="font-extrabold text-slate-800">النزيل</h3>
-            </div>
-            <dl class="text-sm space-y-3">
-              <div class="flex justify-between gap-2 items-center">
-                <dt class="text-slate-500 font-semibold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h2a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.1 9.5a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9Z" stroke-linejoin="round"/></svg>
-                  الجوال
-                </dt>
-                <dd class="font-bold text-slate-800 dir-ltr">966564179297</dd>
-              </div>
-              <div class="flex justify-between gap-2 items-center">
-                <dt class="text-slate-500 font-semibold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  البريد
-                </dt>
-                <dd class="font-semibold text-slate-400">—</dd>
-              </div>
-              <div class="flex justify-between gap-2 items-center">
-                <dt class="text-slate-500 font-semibold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5" stroke-linecap="round"/></svg>
-                  نوع الهوية
-                </dt>
-                <dd class="font-bold text-slate-800">إخراج قيد</dd>
-              </div>
-              <div class="flex justify-between gap-2 items-center">
-                <dt class="text-slate-500 font-semibold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" stroke-linecap="round"/></svg>
-                  الجنسية
-                </dt>
-                <dd class="font-semibold text-slate-400">—</dd>
-              </div>
-            </dl>
-            <a href="guest-detail.html" class="btn btn-ghost btn-sm w-full sm:w-auto">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-              ملف النزيل
-            </a>
-          </article>
+          <!-- MAIN: rooms + transactions -->
+          <div class="res-new-main">
 
-          <article class="panel p-5 lg:col-span-2">
-            <div class="flex items-center gap-2.5 mb-4">
-              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2" stroke-linecap="round"/></svg>
-              </div>
-              <h3 class="font-extrabold text-slate-800">المدفوعات</h3>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div class="rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200 p-4">
-                <div class="text-xs text-slate-500 font-bold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-4M12 15V8M16 15v-6" stroke-linecap="round"/></svg>
-                  الإجمالي
-                </div>
-                <div class="text-2xl font-extrabold text-slate-800 mt-1.5 tracking-tight">2,400</div>
-              </div>
-              <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 p-4">
-                <div class="text-xs text-emerald-700/80 font-bold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  مدفوع
-                </div>
-                <div class="text-2xl font-extrabold text-emerald-700 mt-1.5 tracking-tight">13,499.35</div>
-              </div>
-              <div class="rounded-2xl bg-gradient-to-br from-sky-50 to-white border border-sky-100 p-4">
-                <div class="text-xs text-sky-700/80 font-bold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5" stroke-linecap="round"/></svg>
-                  المتبقي
-                </div>
-                <div class="text-2xl font-extrabold money-credit mt-1.5 tracking-tight">-11,099.35</div>
-                <div class="text-xs font-bold text-emerald-700 mt-1.5 inline-flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  رصيد دائن
-                </div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <section class="panel overflow-hidden">
-          <div class="px-5 py-4 border-b border-slate-200 flex justify-between items-center" style="background:linear-gradient(90deg,#EEF2FF,transparent)">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h7v18H7a2 2 0 0 1-2-2Z"/><path d="M14 3h3a2 2 0 0 1 2 2v16M12 12h.01" stroke-linecap="round"/></svg>
-              </div>
-              <h3 class="font-extrabold text-slate-800">الغرف <span class="badge badge-primary ms-1">5</span></h3>
-            </div>
+        <!-- Rooms — compact table, rows open detail modal -->
+        <section class="res-new-card overflow-hidden res-room-table">
+          <div class="res-new-card-head">
+            <h2>الغرف <span class="badge badge-primary ms-1">5</span></h2>
+            <span class="text-xs text-slate-500 font-semibold">اضغط على الصف لعرض التفاصيل</span>
           </div>
-          <div class="divide-y divide-slate-100">
-            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/60 transition-colors">
-              <div class="flex items-start gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h7v18H7a2 2 0 0 1-2-2Z"/><path d="M14 3h3a2 2 0 0 1 2 2v16" stroke-linecap="round"/></svg>
-                </div>
-                <div>
-                  <div class="font-extrabold text-slate-800">Double Room · غرفة MADINAH1-109</div>
-                  <div class="text-sm text-slate-500 font-semibold mt-0.5 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
-                    30 Jul 2026 → 30 Jul 2026
-                  </div>
-                  <span class="badge badge-neutral mt-2 inline-flex items-center gap-1">في الفندق</span>
-                </div>
-              </div>
-              <div class="flex flex-wrap gap-2 items-center">
-                <span class="font-extrabold text-slate-700 text-lg tabular-nums">0</span>
-                <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تحرير الغرفة">تحرير الغرفة</button>
-                <button class="btn btn-ghost btn-sm" data-action="toast" data-message="تعديل">تعديل</button>
-              </div>
-            </div>
-            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-amber-50/40 transition-colors">
-              <div class="flex items-start gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h7v18H7a2 2 0 0 1-2-2Z"/><path d="M14 3h3a2 2 0 0 1 2 2v16" stroke-linecap="round"/></svg>
-                </div>
-                <div>
-                  <div class="font-extrabold text-slate-800">Double Room</div>
-                  <div class="text-sm text-slate-500 font-semibold mt-0.5 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
-                    30 Jul 2026 → 31 Jul 2026
-                  </div>
-                  <span class="badge badge-warning mt-2 inline-flex items-center gap-1">غير مؤكد</span>
-                </div>
-              </div>
-              <div class="flex flex-wrap gap-2 items-center">
-                <span class="font-extrabold text-slate-800 text-lg tabular-nums">600</span>
-                <button class="btn btn-primary btn-sm" data-action="toast" data-message="تأكيد تخصيص غرفة">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  تأكيد تخصيص غرفة
-                </button>
-              </div>
-            </div>
-            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-amber-50/40 transition-colors">
-              <div class="flex items-start gap-3 min-w-0">
-                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 21V5a2 2 0 0 1 2-2h7v18H7a2 2 0 0 1-2-2Z"/><path d="M14 3h3a2 2 0 0 1 2 2v16" stroke-linecap="round"/></svg>
-                </div>
-                <div>
-                  <div class="font-extrabold text-slate-800">Double Room</div>
-                  <div class="text-sm text-slate-500 font-semibold mt-0.5 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg>
-                    30 Jul 2026 → 31 Jul 2026
-                  </div>
-                  <span class="badge badge-warning mt-2 inline-flex items-center gap-1">غير مؤكد</span>
-                </div>
-              </div>
-              <div class="flex flex-wrap gap-2 items-center">
-                <span class="font-extrabold text-slate-800 text-lg tabular-nums">600</span>
-                <button class="btn btn-primary btn-sm" data-action="toast" data-message="تأكيد تخصيص غرفة">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  تأكيد تخصيص غرفة
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel overflow-hidden">
-          <div class="px-5 py-4 border-b border-slate-200 flex items-center gap-2.5" style="background:linear-gradient(90deg,#F0FDF4,transparent)">
-            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
-            </div>
-            <h3 class="font-extrabold text-slate-800">سجل المعاملات</h3>
-          </div>
+          <div class="!p-0">
           <div class="table-wrap">
             <table class="data-table">
               <thead>
-                <tr><th>التاريخ</th><th>الحالة</th><th>الطريقة</th><th>المبلغ</th><th>العملة</th><th>سعر الصرف</th><th>القيمة الأساسية</th><th class="text-center">إجراءات</th></tr>
+                <tr>
+                  <th>النوع</th>
+                  <th>الغرفة</th>
+                  <th>التواريخ</th>
+                  <th>الحالة</th>
+                  <th class="text-end">المبلغ</th>
+                  <th class="text-center">إجراء</th>
+                </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td class="font-semibold text-slate-600">30 Jul 2026</td>
-                  <td><span class="badge badge-success">مدفوع</span></td>
-                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M7 15h2" stroke-linecap="round"/></svg>نقدي</span></td>
-                  <td class="font-extrabold">5,000</td>
-                  <td>Cash</td>
-                  <td class="text-slate-400">—</td>
-                  <td class="font-bold">5,000</td>
-                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="toast" data-message="استرجاع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+              <tbody id="res-rooms-body">
+                <tr class="res-room-row" tabindex="0" data-status="in-house"
+                    data-room-type="Double Room" data-room-number="MADINAH1-109"
+                    data-dates="30 Jul 2026 → 30 Jul 2026" data-status-label="في الفندق"
+                    data-amount="0" data-modal="room-detail-modal">
+                  <td><span class="res-room-name">Double Room</span></td>
+                  <td><span class="font-bold text-primary">109</span></td>
+                  <td>
+                    <div class="res-date-range">
+                      <time class="res-date-chip" datetime="2026-07-30"><b>30</b> Jul</time>
+                      <span class="res-date-arrow" aria-hidden="true">→</span>
+                      <time class="res-date-chip" datetime="2026-07-30"><b>30</b> Jul</time>
+                      <span class="res-date-range-year">2026</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-neutral">في الفندق</span></td>
+                  <td class="res-room-amount text-slate-500">0</td>
+                  <td>
+                    <div class="res-room-actions">
+                      <button type="button" class="btn btn-soft btn-sm" data-action="open-modal" data-target="room-edit-modal" data-room-label="MADINAH1-109">تعديل</button>
+                    </div>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="font-semibold text-slate-600">30 Jul 2026</td>
-                  <td><span class="badge badge-success">مدفوع</span></td>
-                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-secondary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>بطاقة</span></td>
-                  <td class="font-extrabold">1,000 SYP</td>
-                  <td>PMS Cash SYP</td>
-                  <td class="text-xs font-semibold text-slate-500">1 : 3,500 SYP</td>
-                  <td class="font-bold">0.29</td>
-                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="toast" data-message="استرجاع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                <tr class="res-room-row" tabindex="0" data-status="unconfirmed"
+                    data-room-type="Double Room" data-room-number=""
+                    data-dates="30 Jul 2026 → 31 Jul 2026" data-status-label="غير مؤكد"
+                    data-amount="600" data-modal="room-detail-modal">
+                  <td><span class="res-room-name">Double Room</span></td>
+                  <td><span class="text-slate-400 font-semibold">—</span></td>
+                  <td>
+                    <div class="res-date-range">
+                      <time class="res-date-chip" datetime="2026-07-30"><b>30</b> Jul</time>
+                      <span class="res-date-arrow" aria-hidden="true">→</span>
+                      <time class="res-date-chip" datetime="2026-07-31"><b>31</b> Jul</time>
+                      <span class="res-date-range-year">2026</span>
+                    </div>
+                    <span class="res-date-range-sub">1 ليلة</span>
+                  </td>
+                  <td><span class="badge badge-warning">غير مؤكد</span></td>
+                  <td class="res-room-amount">600</td>
+                  <td>
+                    <div class="res-room-actions">
+                      <button type="button" class="btn btn-primary btn-sm" data-action="open-modal" data-target="room-assign-modal" data-room-type="Double Room">تخصيص</button>
+                    </div>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="font-semibold text-slate-600">30 Jul 2026</td>
-                  <td><span class="badge badge-success">مدفوع</span></td>
-                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-emerald-700"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2" stroke-linecap="round"/></svg>محفظة</span></td>
-                  <td class="font-extrabold">2,000 USD</td>
-                  <td>PMS Cash USD</td>
-                  <td class="text-xs font-semibold text-slate-500">1 : 0.27 USD</td>
-                  <td class="font-bold">7,499.06</td>
-                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="toast" data-message="استرجاع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
-                </tr>
-                <tr>
-                  <td class="font-semibold text-slate-600">30 Jul 2026</td>
-                  <td><span class="badge badge-success">مدفوع</span></td>
-                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M7 15h2" stroke-linecap="round"/></svg>نقدي</span></td>
-                  <td class="font-extrabold">1,000</td>
-                  <td>Cash</td>
-                  <td class="text-slate-400">—</td>
-                  <td class="font-bold">1,000</td>
-                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="toast" data-message="استرجاع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                <tr class="res-room-row" tabindex="0" data-status="unconfirmed"
+                    data-room-type="Double Room" data-room-number=""
+                    data-dates="30 Jul 2026 → 31 Jul 2026" data-status-label="غير مؤكد"
+                    data-amount="600" data-modal="room-detail-modal">
+                  <td><span class="res-room-name">Double Room</span></td>
+                  <td><span class="text-slate-400 font-semibold">—</span></td>
+                  <td>
+                    <div class="res-date-range">
+                      <time class="res-date-chip" datetime="2026-07-30"><b>30</b> Jul</time>
+                      <span class="res-date-arrow" aria-hidden="true">→</span>
+                      <time class="res-date-chip" datetime="2026-07-31"><b>31</b> Jul</time>
+                      <span class="res-date-range-year">2026</span>
+                    </div>
+                    <span class="res-date-range-sub">1 ليلة</span>
+                  </td>
+                  <td><span class="badge badge-warning">غير مؤكد</span></td>
+                  <td class="res-room-amount">600</td>
+                  <td>
+                    <div class="res-room-actions">
+                      <button type="button" class="btn btn-primary btn-sm" data-action="open-modal" data-target="room-assign-modal" data-room-type="Double Room">تخصيص</button>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </section>
-
-        <section class="panel p-5">
-          <div class="flex items-start gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v12M8 11l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/></svg>
-            </div>
-            <div class="min-w-0 flex-1">
-              <h3 class="font-extrabold text-slate-800 mb-2">تأمين رصيد النزيل</h3>
-              <p class="text-sm text-amber-900 bg-amber-50 border border-amber-100 rounded-xl p-3 mb-3 font-semibold">يجب تأمين مبلغ قبل مغادرة النزيل · سيتم استخدام الرصيد لخصم المستحقات عند المغادرة. عند الحجز المسبق يُخصم تلقائياً.</p>
-              <button class="btn btn-secondary" data-action="toast" data-message="تم تأمين الرصيد">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v12M8 11l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/></svg>
-                تأمين رصيد النزيل
-              </button>
-            </div>
           </div>
         </section>
+
+        <section class="res-new-card overflow-hidden">
+          <div class="res-new-card-head is-txn">
+            <h2>سجل المعاملات</h2>
+            <button type="button" class="btn btn-soft btn-sm" data-action="open-modal" data-target="payment-modal">دفعة جديدة</button>
+          </div>
+          <div class="!p-0">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>التاريخ</th><th>الحالة</th><th>الطريقة</th><th>المبلغ</th><th>القيمة الأساسية</th><th class="text-center">إجراءات</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><time class="res-date-cell" datetime="2026-07-30"><span class="res-date-cell-day">30</span> Jul 2026</time></td>
+                  <td><span class="badge badge-success">مدفوع</span></td>
+                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M7 15h2" stroke-linecap="round"/></svg>نقدي</span></td>
+                  <td class="font-extrabold">5,000</td>
+                  <td class="font-bold">5,000</td>
+                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="open-modal" data-target="refund-modal" data-txn-amount="5,000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                </tr>
+                <tr>
+                  <td><time class="res-date-cell" datetime="2026-07-30"><span class="res-date-cell-day">30</span> Jul 2026</time></td>
+                  <td><span class="badge badge-success">مدفوع</span></td>
+                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-secondary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>بطاقة</span></td>
+                  <td class="font-extrabold">1,000 SYP</td>
+                  <td class="font-bold">0.29</td>
+                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="open-modal" data-target="refund-modal" data-txn-amount="1,000 SYP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                </tr>
+                <tr>
+                  <td><time class="res-date-cell" datetime="2026-07-30"><span class="res-date-cell-day">30</span> Jul 2026</time></td>
+                  <td><span class="badge badge-success">مدفوع</span></td>
+                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-emerald-700"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2" stroke-linecap="round"/></svg>محفظة</span></td>
+                  <td class="font-extrabold">2,000 USD</td>
+                  <td class="font-bold">7,499.06</td>
+                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="open-modal" data-target="refund-modal" data-txn-amount="2,000 USD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                </tr>
+                <tr>
+                  <td><time class="res-date-cell" datetime="2026-07-30"><span class="res-date-cell-day">30</span> Jul 2026</time></td>
+                  <td><span class="badge badge-success">مدفوع</span></td>
+                  <td><span class="inline-flex items-center gap-1.5 font-semibold text-primary"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M7 15h2" stroke-linecap="round"/></svg>نقدي</span></td>
+                  <td class="font-extrabold">1,000</td>
+                  <td class="font-bold">1,000</td>
+                  <td><div class="action-cell justify-center w-full"><button type="button" class="icon-btn is-danger" title="استرجاع" aria-label="استرجاع" data-action="open-modal" data-target="refund-modal" data-txn-amount="1,000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </section>
+
+          </div><!-- /res-new-main -->
+
+          <!-- SIDEBAR -->
+          <aside class="res-new-aside">
+
+            <section class="res-new-card res-stay-strip res-stay-strip--detail">
+              <div class="res-stay-item is-checkin" data-tone="primary">
+                <span class="res-stay-label">
+                  <svg class="res-stay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17 15 12 10 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12H3" stroke-linecap="round"/></svg>
+                  الوصول
+                </span>
+                <time class="res-stay-date" datetime="2026-07-30" dir="ltr">30/07/2026</time>
+              </div>
+              <div class="res-stay-item is-checkout" data-tone="warning">
+                <span class="res-stay-label">
+                  <svg class="res-stay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H9" stroke-linecap="round"/></svg>
+                  المغادرة
+                </span>
+                <time class="res-stay-date" datetime="2026-07-31" dir="ltr">31/07/2026</time>
+              </div>
+              <div class="res-stay-item" data-tone="secondary">
+                <span class="res-stay-label">
+                  <svg class="res-stay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  الليالي
+                </span>
+                <span class="res-stay-value">1</span>
+              </div>
+              <div class="res-stay-item" data-tone="success">
+                <span class="res-stay-label">
+                  <svg class="res-stay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  النزلاء
+                </span>
+                <span class="res-stay-value">1 بالغ · 0 أطفال</span>
+              </div>
+            </section>
+
+            <section class="res-new-card">
+              <div class="res-new-card-head">
+                <h2>النزيل</h2>
+                <a href="guest-detail.html" class="btn btn-soft btn-sm">ملف النزيل</a>
+              </div>
+              <div class="res-new-card-body">
+                <dl class="res-kv-grid">
+                  <div><dt>الجوال</dt><dd class="dir-ltr">966564179297</dd></div>
+                  <div><dt>البريد</dt><dd class="text-slate-400">—</dd></div>
+                  <div><dt>نوع الهوية</dt><dd>إخراج قيد</dd></div>
+                  <div><dt>الجنسية</dt><dd class="text-slate-400">—</dd></div>
+                </dl>
+              </div>
+            </section>
+
+            <section class="res-new-card res-new-summary">
+              <div class="res-new-card-head">
+                <h2>المدفوعات</h2>
+                <button type="button" class="btn btn-soft btn-sm" data-action="open-modal" data-target="payment-modal">إضافة دفعة</button>
+              </div>
+              <div class="res-new-card-body">
+                <div class="res-new-totals !border-t-0 !pt-0">
+                  <div class="res-new-total-row res-new-total-row--currency">
+                    <span>العملة</span>
+                    <span class="badge badge-primary">SYP</span>
+                  </div>
+                  <div class="res-new-total-row">
+                    <span>الإجمالي</span>
+                    <strong>2,400</strong>
+                  </div>
+                  <div class="res-new-total-row">
+                    <span>مدفوع</span>
+                    <strong class="text-emerald-700">13,499.35</strong>
+                  </div>
+                  <div class="res-new-total-row is-grand">
+                    <span>المتبقي</span>
+                    <strong class="money-credit">-11,099.35</strong>
+                  </div>
+                </div>
+                <span class="badge badge-success text-xs mt-3 inline-block">رصيد دائن</span>
+              </div>
+            </section>
+
+            <div class="help-callout is-warn flex-wrap items-center justify-between gap-3">
+              <span class="text-sm"><strong class="font-extrabold">تأمين رصيد النزيل</strong> — يُخصم تلقائياً عند الحجز المسبق</span>
+              <button type="button" class="btn btn-secondary btn-sm shrink-0" data-action="open-modal" data-target="hold-modal">تأمين</button>
+            </div>
+
+          </aside>
+
+        </div><!-- /res-new-layout -->
       </main>
     </div>
   </div>
@@ -371,16 +331,265 @@
         </div>
         <h3 class="font-extrabold">إضافة دفعة</h3>
       </div>
-      <button class="btn btn-ghost btn-sm" data-action="close-modal" data-target="payment-modal">إغلاق</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-modal" data-target="payment-modal">إغلاق</button>
     </div>
     <div class="p-5 space-y-4">
-      <div><label class="field-label">العملة</label><select class="field-select"><option>SYP</option><option>USD</option></select></div>
-      <div><label class="field-label">المبلغ</label><input type="number" class="field-input" /></div>
-      <div><label class="field-label">طريقة الدفع</label><select class="field-select"><option>نقدي</option><option>بطاقة</option><option>تحويل بنكي</option><option>شام كاش</option></select></div>
+      <div>
+        <label class="field-label">العملة</label>
+        <div class="pay-pick-grid" id="pay-currency-pick" role="group" aria-label="العملة">
+          <button type="button" class="pay-pick is-active" data-value="SYP" aria-pressed="true">
+            <span class="pay-pick-icon pay-pick-icon--text">ل.س</span>
+            <span class="pay-pick-label">SYP</span>
+          </button>
+          <button type="button" class="pay-pick" data-value="USD" aria-pressed="false">
+            <span class="pay-pick-icon pay-pick-icon--text">$</span>
+            <span class="pay-pick-label">USD</span>
+          </button>
+        </div>
+        <input type="hidden" id="pay-currency" value="SYP" />
+      </div>
+      <div>
+        <label class="field-label">المبلغ</label>
+        <input type="number" class="field-input" id="pay-amount" placeholder="0.00" />
+      </div>
+      <div>
+        <label class="field-label">طريقة الدفع</label>
+        <div class="pay-pick-grid pay-pick-grid--methods" id="pay-method-pick" role="group" aria-label="طريقة الدفع">
+          <button type="button" class="pay-pick is-active" data-value="cash" aria-pressed="true">
+            <span class="pay-pick-icon is-cash">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M7 15h2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pay-pick-label">نقدي</span>
+          </button>
+          <button type="button" class="pay-pick" data-value="card" aria-pressed="false">
+            <span class="pay-pick-icon is-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+            </span>
+            <span class="pay-pick-label">بطاقة</span>
+          </button>
+          <button type="button" class="pay-pick" data-value="bank" aria-pressed="false">
+            <span class="pay-pick-icon is-bank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l7-4 7 4v12"/><path d="M9 21v-6h6v6"/></svg>
+            </span>
+            <span class="pay-pick-label">تحويل بنكي</span>
+          </button>
+          <button type="button" class="pay-pick" data-value="wallet" aria-pressed="false">
+            <span class="pay-pick-icon is-wallet">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pay-pick-label">شام كاش</span>
+          </button>
+        </div>
+        <input type="hidden" id="pay-method" value="cash" />
+      </div>
     </div>
     <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
-      <button class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إغلاق</button>
-      <button class="btn btn-primary" data-action="close-modal" data-target="payment-modal" onclick="PMS.toast('تمت إضافة الدفعة (تجريبي)')">إضافة دفعة</button>
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="payment-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" data-action="close-modal" data-target="payment-modal" id="pay-submit-btn">إضافة دفعة</button>
+    </div>
+  </div>
+
+  <div id="room-detail-modal" class="modal is-wide">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold" id="room-detail-title">تفاصيل الغرفة</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-modal" data-target="room-detail-modal">إغلاق</button>
+    </div>
+    <div class="p-5">
+      <dl class="grid grid-cols-2 gap-4 text-sm">
+        <div><dt class="text-slate-500 font-semibold mb-1">النوع</dt><dd class="font-bold" id="room-detail-type">—</dd></div>
+        <div><dt class="text-slate-500 font-semibold mb-1">رقم الغرفة</dt><dd class="font-bold text-primary" id="room-detail-number">—</dd></div>
+        <div><dt class="text-slate-500 font-semibold mb-1">التواريخ</dt><dd class="font-bold" id="room-detail-dates">—</dd></div>
+        <div><dt class="text-slate-500 font-semibold mb-1">الحالة</dt><dd id="room-detail-status">—</dd></div>
+        <div><dt class="text-slate-500 font-semibold mb-1">المبلغ</dt><dd class="font-extrabold text-lg" id="room-detail-amount">—</dd></div>
+      </dl>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="room-detail-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" id="room-detail-primary-action">تعديل الغرفة</button>
+    </div>
+  </div>
+
+  <div id="room-assign-modal" class="modal is-fullwidth">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-start gap-3">
+      <div>
+        <h3 class="font-extrabold">تخصيص غرفة</h3>
+        <p class="text-sm text-slate-500 font-semibold mt-1">نوع الغرفة: <span class="text-slate-800 font-bold" id="room-assign-type">Double Room</span></p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm shrink-0" data-action="close-modal" data-target="room-assign-modal">إغلاق</button>
+    </div>
+    <div class="p-5">
+      <div class="room-assign-toolbar">
+        <span class="field-label mb-0">اختر الغرفة</span>
+        <div class="room-assign-legend">
+          <span class="badge badge-success">متاحة</span>
+          <span class="badge badge-neutral">محجوزة</span>
+        </div>
+      </div>
+      <div class="room-assign-floors">
+        <div class="room-assign-floor">
+          <div class="room-assign-floor-head">الطابق 1</div>
+          <div class="room-assign-grid" id="room-assign-grid">
+            <button type="button" class="room-assign-card is-available" data-room="109" aria-pressed="false">
+              <span class="room-assign-card-num">109</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+            <button type="button" class="room-assign-card is-available" data-room="110" aria-pressed="false">
+              <span class="room-assign-card-num">110</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+            <button type="button" class="room-assign-card is-available" data-room="111" aria-pressed="false">
+              <span class="room-assign-card-num">111</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+            <button type="button" class="room-assign-card is-available" data-room="112" aria-pressed="false">
+              <span class="room-assign-card-num">112</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+          </div>
+        </div>
+        <div class="room-assign-floor">
+          <div class="room-assign-floor-head">الطابق 2</div>
+          <div class="room-assign-grid">
+            <button type="button" class="room-assign-card is-busy" disabled data-room="201">
+              <span class="room-assign-card-num">201</span>
+              <span class="badge badge-neutral">محجوزة</span>
+            </button>
+            <button type="button" class="room-assign-card is-available" data-room="203" aria-pressed="false">
+              <span class="room-assign-card-num">203</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+            <button type="button" class="room-assign-card is-available" data-room="204" aria-pressed="false">
+              <span class="room-assign-card-num">204</span>
+              <span class="badge badge-success">متاحة</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="room-assign-selected" value="" />
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="room-assign-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" data-action="close-modal" data-target="room-assign-modal" id="room-assign-confirm" disabled>تأكيد التخصيص</button>
+    </div>
+  </div>
+
+  <div id="room-edit-modal" class="modal is-fullwidth">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-start gap-3">
+      <div>
+        <h3 class="font-extrabold">تعديل الغرفة</h3>
+        <p class="text-sm text-slate-500 font-semibold mt-1">الغرفة الحالية: <span class="text-primary font-bold" id="room-edit-current">MADINAH1-109</span></p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm shrink-0" data-action="close-modal" data-target="room-edit-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <div class="room-assign-toolbar">
+          <span class="field-label mb-0">غرفة بديلة</span>
+          <div class="room-assign-legend">
+            <span class="badge badge-primary">الحالية</span>
+            <span class="badge badge-success">متاحة</span>
+            <span class="badge badge-neutral">محجوزة</span>
+          </div>
+        </div>
+        <div class="room-assign-floors">
+          <div class="room-assign-floor">
+            <div class="room-assign-floor-head">الطابق 1</div>
+            <div class="room-assign-grid" id="room-edit-grid">
+              <button type="button" class="room-assign-card is-available" data-room="109" aria-pressed="false">
+                <span class="room-assign-card-num">109</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+              <button type="button" class="room-assign-card is-available" data-room="110" aria-pressed="false">
+                <span class="room-assign-card-num">110</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+              <button type="button" class="room-assign-card is-available" data-room="111" aria-pressed="false">
+                <span class="room-assign-card-num">111</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+              <button type="button" class="room-assign-card is-available" data-room="112" aria-pressed="false">
+                <span class="room-assign-card-num">112</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+            </div>
+          </div>
+          <div class="room-assign-floor">
+            <div class="room-assign-floor-head">الطابق 2</div>
+            <div class="room-assign-grid">
+              <button type="button" class="room-assign-card is-busy" disabled data-room="201">
+                <span class="room-assign-card-num">201</span>
+                <span class="badge badge-neutral">محجوزة</span>
+              </button>
+              <button type="button" class="room-assign-card is-available" data-room="203" aria-pressed="false">
+                <span class="room-assign-card-num">203</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+              <button type="button" class="room-assign-card is-available" data-room="204" aria-pressed="false">
+                <span class="room-assign-card-num">204</span>
+                <span class="badge badge-success room-edit-badge">متاحة</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="room-edit-selected" value="" />
+      </div>
+      <div>
+        <label class="field-label" for="room-edit-reason">سبب التبديل</label>
+        <select class="field-select" id="room-edit-reason">
+          <option>طلب النزيل</option>
+          <option>صيانة</option>
+          <option>ترقية</option>
+        </select>
+      </div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="room-edit-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" data-action="close-modal" data-target="room-edit-modal" id="room-edit-save" disabled>حفظ</button>
+    </div>
+  </div>
+
+  <div id="dates-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تعديل التواريخ</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-modal" data-target="dates-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div><label class="field-label">تاريخ الوصول</label><input type="date" class="field-input" value="2026-07-30" /></div>
+      <div><label class="field-label">تاريخ المغادرة</label><input type="date" class="field-input" value="2026-07-31" /></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="dates-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" data-action="close-modal" data-target="dates-modal" onclick="PMS.toast('تم تحديث التواريخ (تجريبي)')">حفظ</button>
+    </div>
+  </div>
+
+  <div id="refund-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">استرجاع دفعة</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-modal" data-target="refund-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <p class="text-sm font-semibold">المبلغ: <span class="font-extrabold text-danger" id="refund-amount">—</span></p>
+      <div><label class="field-label">سبب الاسترجاع</label><select class="field-select"><option>خطأ في التحصيل</option><option>طلب النزيل</option><option>إلغاء جزئي</option></select></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="refund-modal">إغلاق</button>
+      <button type="button" class="btn btn-danger" data-action="close-modal" data-target="refund-modal" onclick="PMS.toast('تم الاسترجاع (تجريبي)')">تأكيد الاسترجاع</button>
+    </div>
+  </div>
+
+  <div id="hold-modal" class="modal">
+    <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-extrabold">تأمين رصيد النزيل</h3>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-modal" data-target="hold-modal">إغلاق</button>
+    </div>
+    <div class="p-5 space-y-4">
+      <p class="text-sm text-slate-600 font-semibold">سيتم حجز جزء من الرصيد الدائن لضمان تغطية مستحقات المغادرة.</p>
+      <div><label class="field-label">المبلغ المؤمَّن</label><input type="number" class="field-input" value="2400" /></div>
+    </div>
+    <div class="p-5 border-t border-slate-200 flex justify-end gap-2">
+      <button type="button" class="btn btn-ghost" data-action="close-modal" data-target="hold-modal">إغلاق</button>
+      <button type="button" class="btn btn-primary" data-action="close-modal" data-target="hold-modal" onclick="PMS.toast('تم تأمين الرصيد (تجريبي)')">تأكيد</button>
     </div>
   </div>
 
@@ -388,9 +597,234 @@
 
   <script src="../assets/js/app.js"></script>
   <script>
-    document.getElementById('more-btn').addEventListener('click', () => {
-      document.getElementById('more-menu').classList.toggle('hidden');
-    });
+    (function () {
+      const moreBtn = document.getElementById('more-btn');
+      const moreMenu = document.getElementById('more-menu');
+      if (moreBtn && moreMenu) {
+        moreBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          moreMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function () {
+          moreMenu.classList.add('hidden');
+        });
+      }
+
+      function fillRoomDetail(row) {
+        const type = row.dataset.roomType || '—';
+        const number = row.dataset.roomNumber || 'غير مخصصة';
+        const dates = row.dataset.dates || '—';
+        const statusLabel = row.dataset.statusLabel || '—';
+        const amount = row.dataset.amount || '0';
+        const isUnconfirmed = row.dataset.status === 'unconfirmed';
+
+        document.getElementById('room-detail-title').textContent = type + (number ? ' · ' + number : '');
+        document.getElementById('room-detail-type').textContent = type;
+        document.getElementById('room-detail-number').textContent = number || '—';
+        document.getElementById('room-detail-dates').textContent = dates;
+        document.getElementById('room-detail-status').innerHTML = isUnconfirmed
+          ? '<span class="badge badge-warning">' + statusLabel + '</span>'
+          : '<span class="badge badge-neutral">' + statusLabel + '</span>';
+        document.getElementById('room-detail-amount').textContent = amount;
+
+        const primaryBtn = document.getElementById('room-detail-primary-action');
+        if (isUnconfirmed) {
+          primaryBtn.textContent = 'تخصيص غرفة';
+          primaryBtn.onclick = function () {
+            document.getElementById('room-assign-type').textContent = type;
+            resetRoomAssignPick();
+            PMS.closeModal('room-detail-modal');
+            PMS.openModal('room-assign-modal');
+          };
+        } else {
+          primaryBtn.textContent = 'تعديل الغرفة';
+          primaryBtn.onclick = function () {
+            openRoomEditModal(number || '—');
+            PMS.closeModal('room-detail-modal');
+            PMS.openModal('room-edit-modal');
+          };
+        }
+      }
+
+      function openRoomModal(row) {
+        const modalId = row.dataset.modal || 'room-detail-modal';
+        if (modalId === 'room-detail-modal') fillRoomDetail(row);
+        if (modalId === 'room-assign-modal') {
+          document.getElementById('room-assign-type').textContent = row.dataset.roomType || 'Double Room';
+          resetRoomAssignPick();
+        }
+        PMS.openModal(modalId);
+      }
+
+      document.querySelectorAll('.res-room-row').forEach(function (row) {
+        row.addEventListener('click', function (e) {
+          if (e.target.closest('button, a')) return;
+          openRoomModal(row);
+        });
+        row.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openRoomModal(row);
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-target="room-edit-modal"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openRoomEditModal(btn.dataset.roomLabel || 'MADINAH1-109');
+        });
+      });
+
+      function parseRoomNumber(label) {
+        if (!label || label === '—') return '';
+        const parts = String(label).split('-');
+        return parts[parts.length - 1] || label;
+      }
+
+      function openRoomEditModal(label) {
+        const currentEl = document.getElementById('room-edit-current');
+        if (currentEl) currentEl.textContent = label || '—';
+        resetRoomEditPick(parseRoomNumber(label));
+      }
+
+      function resetRoomEditPick(currentRoom) {
+        const hidden = document.getElementById('room-edit-selected');
+        const saveBtn = document.getElementById('room-edit-save');
+        if (hidden) hidden.value = '';
+        if (saveBtn) saveBtn.disabled = true;
+
+        document.querySelectorAll('#room-edit-modal .room-assign-card').forEach(function (card) {
+          const room = card.dataset.room || '';
+          const isCurrent = currentRoom && room === currentRoom;
+          const badge = card.querySelector('.room-edit-badge');
+
+          card.classList.remove('is-selected', 'is-current');
+          card.setAttribute('aria-pressed', 'false');
+
+          if (isCurrent && card.classList.contains('is-available')) {
+            card.classList.add('is-current');
+            card.disabled = true;
+            if (badge) {
+              badge.textContent = 'الحالية';
+              badge.className = 'badge badge-primary room-edit-badge';
+            }
+          } else if (card.classList.contains('is-available')) {
+            card.disabled = false;
+            if (badge) {
+              badge.textContent = 'متاحة';
+              badge.className = 'badge badge-success room-edit-badge';
+            }
+          }
+        });
+      }
+
+      document.querySelectorAll('#room-edit-modal .room-assign-card.is-available:not([disabled])').forEach(function (card) {
+        card.addEventListener('click', function () {
+          if (card.classList.contains('is-current')) return;
+          document.querySelectorAll('#room-edit-modal .room-assign-card.is-available').forEach(function (item) {
+            if (!item.classList.contains('is-current')) {
+              item.classList.remove('is-selected');
+              item.setAttribute('aria-pressed', 'false');
+            }
+          });
+          card.classList.add('is-selected');
+          card.setAttribute('aria-pressed', 'true');
+          const hidden = document.getElementById('room-edit-selected');
+          const saveBtn = document.getElementById('room-edit-save');
+          if (hidden) hidden.value = card.dataset.room || '';
+          if (saveBtn) saveBtn.disabled = false;
+        });
+      });
+
+      const roomEditSave = document.getElementById('room-edit-save');
+      if (roomEditSave) {
+        roomEditSave.addEventListener('click', function () {
+          const room = document.getElementById('room-edit-selected')?.value;
+          const reason = document.getElementById('room-edit-reason')?.selectedOptions[0]?.text || '';
+          if (room) PMS.toast('تم التبديل إلى الغرفة ' + room + ' (' + reason + ') — تجريبي');
+        });
+      }
+
+      document.querySelectorAll('[data-target="room-assign-modal"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const type = btn.dataset.roomType;
+          if (type) document.getElementById('room-assign-type').textContent = type;
+          resetRoomAssignPick();
+        });
+      });
+
+      function resetRoomAssignPick() {
+        const hidden = document.getElementById('room-assign-selected');
+        const confirmBtn = document.getElementById('room-assign-confirm');
+        if (hidden) hidden.value = '';
+        if (confirmBtn) confirmBtn.disabled = true;
+        document.querySelectorAll('#room-assign-modal .room-assign-card.is-available').forEach(function (card) {
+          card.classList.remove('is-selected');
+          card.setAttribute('aria-pressed', 'false');
+        });
+      }
+
+      document.querySelectorAll('#room-assign-modal .room-assign-card.is-available').forEach(function (card) {
+        card.addEventListener('click', function () {
+          document.querySelectorAll('#room-assign-modal .room-assign-card.is-available').forEach(function (item) {
+            item.classList.remove('is-selected');
+            item.setAttribute('aria-pressed', 'false');
+          });
+          card.classList.add('is-selected');
+          card.setAttribute('aria-pressed', 'true');
+          const hidden = document.getElementById('room-assign-selected');
+          const confirmBtn = document.getElementById('room-assign-confirm');
+          if (hidden) hidden.value = card.dataset.room || '';
+          if (confirmBtn) confirmBtn.disabled = false;
+        });
+      });
+
+      const roomAssignConfirm = document.getElementById('room-assign-confirm');
+      if (roomAssignConfirm) {
+        roomAssignConfirm.addEventListener('click', function () {
+          const room = document.getElementById('room-assign-selected')?.value;
+          if (room) PMS.toast('تم تخصيص الغرفة ' + room + ' (تجريبي)');
+        });
+      }
+
+      document.querySelectorAll('[data-target="refund-modal"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const amt = btn.dataset.txnAmount || '—';
+          document.getElementById('refund-amount').textContent = amt;
+        });
+      });
+
+      function initPayPickGrid(gridId, hiddenId) {
+        const grid = document.getElementById(gridId);
+        const hidden = document.getElementById(hiddenId);
+        if (!grid) return;
+        grid.querySelectorAll('.pay-pick').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            grid.querySelectorAll('.pay-pick').forEach(function (item) {
+              item.classList.remove('is-active');
+              item.setAttribute('aria-pressed', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-pressed', 'true');
+            if (hidden) hidden.value = btn.dataset.value || '';
+          });
+        });
+      }
+
+      initPayPickGrid('pay-currency-pick', 'pay-currency');
+      initPayPickGrid('pay-method-pick', 'pay-method');
+
+      const paySubmitBtn = document.getElementById('pay-submit-btn');
+      if (paySubmitBtn) {
+        paySubmitBtn.addEventListener('click', function () {
+          const amount = document.getElementById('pay-amount')?.value || '0';
+          const currency = document.getElementById('pay-currency')?.value || 'SYP';
+          const methodBtn = document.querySelector('#pay-method-pick .pay-pick.is-active .pay-pick-label');
+          const method = methodBtn ? methodBtn.textContent.trim() : 'نقدي';
+          PMS.toast('تمت إضافة ' + amount + ' ' + currency + ' (' + method + ') — تجريبي');
+        });
+      }
+    })();
   </script>
 </body>
 </html>

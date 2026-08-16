@@ -1,0 +1,18 @@
+STRICT DELTA — finish now. Do not plan, do not research, do not rewrite helpers.
+
+Fact: `pages/setup-*.html` STILL do not exist. Your previous turn ended mid-sentence before creating them.
+
+Do these steps immediately, in order:
+1. Write `scripts/generate-setup-pages.js` that emits ALL 43 `pages/setup-*.html` files listed in the original brief (Arabic-only UI, same shell as existing pages: sidebar/header, Cairo, Tailwind CDN, app.css, pms-data.js, app.js, setup-pages.js).
+2. Run: `node scripts/generate-setup-pages.js`
+3. Verify with a count that every nav href under the setup branch in `assets/js/app.js` has a matching file in `pages/`.
+4. Update `README.md` page map with the new setup pages.
+5. Run `npm run build` and report pass/fail.
+
+Do NOT:
+- commit
+- switch models / redesign unrelated pages
+- stop after writing the script without running it
+- leave any setup nav link as a 404
+
+Final report must include: number of setup HTML files created, list any missing filenames, build result.
