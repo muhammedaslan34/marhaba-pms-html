@@ -4899,21 +4899,21 @@ html.dark .res-detail .res-detail-actions .btn-ghost { background: rgba(17, 24, 
   color: #fff;
 }
 
-.res-new-room-table .data-table { min-width: 780px; table-layout: fixed; }
-.res-new-room-table .data-table td { padding: 0.9rem 1rem; font-size: 0.84rem; vertical-align: middle; }
-.res-new-room-table .data-table th:not(:first-child),
-.res-new-room-table .data-table td:not(:first-child) { white-space: nowrap; }
-.res-new-room-table .data-table th:first-child { width: 36%; }
-.res-new-room-table .data-table th:nth-child(2) { width: 8.5rem; text-align: center; }
-.res-new-room-table .data-table td:nth-child(2) { text-align: center; }
-.res-new-room-table .data-table th:nth-child(3) { width: 9.5rem; text-align: center; }
-.res-new-room-table .data-table td:nth-child(3) { text-align: center; }
-.res-new-room-table .data-table th:nth-child(4) { width: 8.5rem; text-align: center; }
-.res-new-room-table .data-table td:nth-child(4) { text-align: center; }
-.res-new-room-table .data-table th:nth-child(5) { width: 9.5rem; text-align: end; }
-.res-new-room-table .data-table td:nth-child(5) { text-align: end; }
-.res-new-room-table .data-table .res-room-type-cell { overflow: hidden; }
-.res-new-room-table .data-table th {
+.data-table.res-new-room-table { min-width: 780px; table-layout: fixed; }
+.data-table.res-new-room-table td { padding: 0.9rem 1rem; font-size: 0.84rem; vertical-align: middle; }
+.data-table.res-new-room-table th:not(:first-child),
+.data-table.res-new-room-table td:not(:first-child) { white-space: nowrap; }
+.data-table.res-new-room-table th:first-child { width: 36%; }
+.data-table.res-new-room-table th:nth-child(2) { width: 8.5rem; text-align: center; }
+.data-table.res-new-room-table td:nth-child(2) { text-align: center; }
+.data-table.res-new-room-table th:nth-child(3) { width: 9.5rem; text-align: center; }
+.data-table.res-new-room-table td:nth-child(3) { text-align: center; }
+.data-table.res-new-room-table th:nth-child(4) { width: 8.5rem; text-align: center; }
+.data-table.res-new-room-table td:nth-child(4) { text-align: center; }
+.data-table.res-new-room-table th:nth-child(5) { width: 9.5rem; text-align: end; }
+.data-table.res-new-room-table td:nth-child(5) { text-align: end; }
+.data-table.res-new-room-table .res-room-type-cell { overflow: hidden; }
+.data-table.res-new-room-table th {
   padding: 0.65rem 1rem;
   font-size: 0.72rem;
   background: #f8fafc;
@@ -5297,7 +5297,7 @@ html.dark .res-detail .res-detail-actions .btn-ghost { background: rgba(17, 24, 
 .res-rooms-by-number .res-room-num.is-busy::after { content: 'محجوز'; color: #f87171; }
 
 html.dark .res-rooms-toolbar { background: #0f172a; }
-html.dark .res-new-room-table .data-table th { background: #0f172a; }
+html.dark .data-table.res-new-room-table th { background: #0f172a; }
 html.dark .res-rooms-footer { background: #0f172a; }
 html.dark .res-rooms-stat,
 html.dark .res-rate-input,
