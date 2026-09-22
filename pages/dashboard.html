@@ -22,7 +22,7 @@
     };
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="../assets/css/app.css?v=dash5" />
+  <link rel="stylesheet" href="../assets/css/app.css?v=dash6" />
 </head>
 <body class="app-bg font-sans" data-page="dashboard" data-title="الرئيسية"
   data-crumbs='[{"label":"PMS","href":"dashboard.html"},{"label":"الرئيسية"}]'>
@@ -31,19 +31,115 @@
     <div class="flex-1 min-w-0 flex flex-col">
       <header id="app-header"></header>
       <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
-        <div class="page-hero">
-          <div>
+        <div class="page-hero dash-hero">
+          <div class="dash-hero-main">
             <p class="page-kicker">لوحة المعلومات</p>
             <p class="text-slate-800 font-extrabold text-lg mt-1">بإمكانك الاطلاع وإدارة المنشأة بأكملها في لمحة</p>
             <p class="text-sm text-slate-500 mt-1">30 يوليو 2026 · <span id="dash-property-label">MADINAH1</span></p>
+            <div class="dash-hero-meta">
+              <span class="dash-shift-pill" id="dash-shift-label">وردية صباحية</span>
+              <span class="dash-live-clock" id="dash-live-clock" aria-live="polite">--:--</span>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
-            <a href="reservations.html" class="btn btn-secondary">تسجيل الدخول</a>
+          <div class="dash-hero-side">
+            <div class="dash-occ-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120" class="dash-occ-ring-svg">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#E2E8F0" stroke-width="10"></circle>
+                <circle id="dash-occ-ring-arc" cx="60" cy="60" r="52" fill="none" stroke="#0027B7" stroke-width="10" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="0 327"></circle>
+              </svg>
+              <div class="dash-occ-ring-label">
+                <span class="dash-occ-ring-value" id="dash-hero-occupancy">0%</span>
+                <span class="dash-occ-ring-caption">إشغال الآن</span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 justify-end">
+              <a href="reservation-new.html" class="btn btn-primary">حجز جديد</a>
+              <a href="reservations.html" class="btn btn-secondary">تسجيل وصول</a>
+            </div>
           </div>
         </div>
 
-        <!-- Live Marhaba ops cards (missing from previous redesign) -->
+        <section id="dash-attention" class="dash-attention hidden" aria-label="تنبيهات اليوم">
+          <div class="dash-attention-head">
+            <h2>يتطلب انتباهك</h2>
+            <span class="dash-attention-count" id="dash-attention-count">0</span>
+          </div>
+          <ul class="dash-attention-list" id="dash-attention-list"></ul>
+        </section>
+
+        <section class="grid grid-cols-2 xl:grid-cols-5 gap-3 sm:gap-4 dash-kpi-row">
+          <article class="stat-card col-span-2 xl:col-span-1" data-tone="primary">
+            <div class="flex items-center justify-between gap-2">
+              <div class="stat-label mb-0">الإشغال</div>
+              <div class="stat-icon" data-tone="primary" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18"/><path d="M5 20V10l7-6 7 6v10" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value text-primary" id="dash-stat-occupancy">14.3%</div>
+            <div class="text-xs text-slate-500 mt-2 font-semibold" id="dash-stat-occupancy-sub">6 من أصل 42 غرفة</div>
+          </article>
+          <article class="stat-card" data-tone="secondary">
+            <div class="flex items-center justify-between gap-2">
+              <div class="stat-label mb-0">وصول اليوم</div>
+              <div class="stat-icon" data-tone="secondary" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value text-secondary" id="dash-stat-arrivals">6</div>
+            <div class="text-xs text-secondary mt-2 font-bold">جاهز للاستقبال</div>
+          </article>
+          <article class="stat-card" data-tone="warning">
+            <div class="flex items-center justify-between gap-2">
+              <div class="stat-label mb-0">مغادرة اليوم</div>
+              <div class="stat-icon" data-tone="warning" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-value text-amber-600" id="dash-stat-departures">4</div>
+            <div class="text-xs text-amber-600 mt-2 font-bold">يتطلب متابعة</div>
+          </article>
+          <article class="stat-card" data-tone="success">
+            <div class="flex items-center justify-between gap-2">
+              <div class="stat-label mb-0">إيراد اليوم</div>
+              <div class="stat-icon" data-tone="success" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c.6-1 1.5-1.5 2.5-1.5 1.4 0 2.5.9 2.5 2s-1.1 2-2.5 2h-1c-1.4 0-2.5.9-2.5 2s1.1 2 2.5 2c1 0 1.9-.5 2.5-1.5" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-money-stack">
+              <div class="stat-money-row is-syp text-emerald-600">
+                <span class="stat-value" id="dash-stat-revenue-syp">800,000</span>
+                <span class="stat-currency">ل.س</span>
+              </div>
+              <div class="stat-money-row is-usd">
+                <span class="stat-money-ltr">
+                  <span class="stat-currency">$</span>
+                  <span class="stat-value" id="dash-stat-revenue-usd">115.00</span>
+                </span>
+              </div>
+            </div>
+          </article>
+          <article class="stat-card" data-tone="danger">
+            <div class="flex items-center justify-between gap-2">
+              <div class="stat-label mb-0">المستحقات</div>
+              <div class="stat-icon" data-tone="danger" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-linejoin="round"/><path d="M14 3v6h6M9 13h6M9 17h4" stroke-linecap="round"/></svg>
+              </div>
+            </div>
+            <div class="stat-money-stack">
+              <div class="stat-money-row is-syp money-due">
+                <span class="stat-value" id="dash-stat-due-syp">2,450,000</span>
+                <span class="stat-currency">ل.س</span>
+              </div>
+              <div class="stat-money-row is-usd">
+                <span class="stat-money-ltr">
+                  <span class="stat-currency">$</span>
+                  <span class="stat-value" id="dash-stat-due-usd">85.00</span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </section>
+
         <section class="dash-ops" aria-label="ملخص العمليات اليومية">
           <div class="dash-ops-col space-y-5">
             <div class="dash-group">
@@ -205,79 +301,6 @@
               </div>
             </div>
           </div>
-        </section>
-
-        <section class="grid grid-cols-2 xl:grid-cols-5 gap-3 sm:gap-4">
-          <article class="stat-card col-span-2 xl:col-span-1" data-tone="primary">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label mb-0">الإشغال</div>
-              <div class="stat-icon" data-tone="primary" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18"/><path d="M5 20V10l7-6 7 6v10" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-primary" id="dash-stat-occupancy">14.3%</div>
-            <div class="text-xs text-slate-500 mt-2 font-semibold" id="dash-stat-occupancy-sub">6 من أصل 42 غرفة</div>
-          </article>
-          <article class="stat-card" data-tone="secondary">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label mb-0">وصول اليوم</div>
-              <div class="stat-icon" data-tone="secondary" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-secondary" id="dash-stat-arrivals">6</div>
-            <div class="text-xs text-secondary mt-2 font-bold">جاهز للاستقبال</div>
-          </article>
-          <article class="stat-card" data-tone="warning">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label mb-0">مغادرة اليوم</div>
-              <div class="stat-icon" data-tone="warning" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-value text-amber-600" id="dash-stat-departures">4</div>
-            <div class="text-xs text-amber-600 mt-2 font-bold">يتطلب متابعة</div>
-          </article>
-          <article class="stat-card" data-tone="success">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label mb-0">إيراد اليوم</div>
-              <div class="stat-icon" data-tone="success" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c.6-1 1.5-1.5 2.5-1.5 1.4 0 2.5.9 2.5 2s-1.1 2-2.5 2h-1c-1.4 0-2.5.9-2.5 2s1.1 2 2.5 2c1 0 1.9-.5 2.5-1.5" stroke-linecap="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-money-stack">
-              <div class="stat-money-row is-syp text-emerald-600">
-                <span class="stat-value" id="dash-stat-revenue-syp">800,000</span>
-                <span class="stat-currency">ل.س</span>
-              </div>
-              <div class="stat-money-row is-usd">
-                <span class="stat-money-ltr">
-                  <span class="stat-currency">$</span>
-                  <span class="stat-value" id="dash-stat-revenue-usd">115.00</span>
-                </span>
-              </div>
-            </div>
-          </article>
-          <article class="stat-card" data-tone="danger">
-            <div class="flex items-center justify-between gap-2">
-              <div class="stat-label mb-0">المستحقات</div>
-              <div class="stat-icon" data-tone="danger" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-linejoin="round"/><path d="M14 3v6h6M9 13h6M9 17h4" stroke-linecap="round"/></svg>
-              </div>
-            </div>
-            <div class="stat-money-stack">
-              <div class="stat-money-row is-syp money-due">
-                <span class="stat-value" id="dash-stat-due-syp">2,450,000</span>
-                <span class="stat-currency">ل.س</span>
-              </div>
-              <div class="stat-money-row is-usd">
-                <span class="stat-money-ltr">
-                  <span class="stat-currency">$</span>
-                  <span class="stat-value" id="dash-stat-due-usd">85.00</span>
-                </span>
-              </div>
-            </div>
-          </article>
         </section>
 
         <section class="quick-actions">
@@ -806,6 +829,52 @@
         setTxt("dash-fin-expenses", fmtMoney(fin.expenses, "SYP"));
       }
 
+      function updateHeroClock() {
+        const clockEl = document.getElementById("dash-live-clock");
+        const shiftEl = document.getElementById("dash-shift-label");
+        if (!clockEl) return;
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString("ar-SY", { hour: "2-digit", minute: "2-digit" });
+        if (shiftEl) {
+          const h = now.getHours();
+          shiftEl.textContent = h >= 6 && h < 14 ? "وردية صباحية" : h >= 14 && h < 22 ? "وردية مسائية" : "وردية ليلية";
+        }
+      }
+
+      function setOccupancyRing(pct) {
+        const arc = document.getElementById("dash-occ-ring-arc");
+        const heroVal = document.getElementById("dash-hero-occupancy");
+        const circumference = 2 * Math.PI * 52;
+        const clamped = Math.max(0, Math.min(100, pct || 0));
+        const filled = (clamped / 100) * circumference;
+        if (arc) {
+          arc.setAttribute("stroke-dasharray", filled.toFixed(1) + " " + circumference.toFixed(1));
+        }
+        if (heroVal) heroVal.textContent = clamped + "%";
+      }
+
+      function renderAttention(ids, stats, money, hk) {
+        const wrap = document.getElementById("dash-attention");
+        const list = document.getElementById("dash-attention-list");
+        const countEl = document.getElementById("dash-attention-count");
+        if (!wrap || !list) return;
+        const items = [];
+        if (hk.vacantDirty + hk.rentedDirty > 0) {
+          items.push({ tone: "warning", text: (hk.vacantDirty + hk.rentedDirty) + " غرفة تحتاج تنظيفاً", href: "housekeeping.html" });
+        }
+        if (money.dueSyp + money.dueUsd > 0) {
+          items.push({ tone: "danger", text: "مستحقات غير محصلة — راجع سجل الدفعات", href: "payments.html" });
+        }
+        if (stats.arrivalsToday > 0) {
+          items.push({ tone: "info", text: stats.arrivalsToday + " وصول اليوم — تأكد من جاهزية الغرف", href: "reservations.html" });
+        }
+        list.innerHTML = items.map(function (item) {
+          return '<li><a class="dash-attention-item" data-tone="' + item.tone + '" href="' + item.href + '">' + item.text + "</a></li>";
+        }).join("");
+        if (countEl) countEl.textContent = String(items.length);
+        wrap.classList.toggle("hidden", items.length === 0);
+      }
+
       function render() {
         const sel = PD.getSelectedPropertyId();
         const label = document.getElementById("dash-property-label");
@@ -820,6 +889,8 @@
         document.getElementById("dash-stat-occupancy-sub").textContent = s.occupiedRooms + " من أصل " + s.totalRooms + " غرفة";
         document.getElementById("dash-stat-arrivals").textContent = s.arrivalsToday;
         document.getElementById("dash-stat-departures").textContent = s.departuresToday;
+        setOccupancyRing(s.occupancy);
+        updateHeroClock();
 
         const money = aggregateMoney(ids);
         document.getElementById("dash-stat-revenue-syp").textContent = fmtMoney(money.revenueSyp, "SYP");
@@ -828,6 +899,8 @@
         document.getElementById("dash-stat-due-usd").textContent = fmtMoney(money.dueUsd, "USD");
 
         renderOpsCards(ids);
+        const hk = aggregateHousekeeping(ids);
+        renderAttention(ids, s, money, hk);
 
         if (typeof Chart !== "undefined") {
           const seed = hashSeed(ids.join(","));
@@ -839,6 +912,7 @@
       }
 
       window.addEventListener("pms:property-changed", render);
+      setInterval(updateHeroClock, 30000);
       render();
     })();
   </script>

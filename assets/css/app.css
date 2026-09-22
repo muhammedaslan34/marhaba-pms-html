@@ -3340,6 +3340,146 @@ html.dark .dash-metric {
   border-color: var(--color-border);
 }
 
+.dash-hero {
+  align-items: stretch;
+  gap: 1.25rem;
+}
+.dash-hero-main { flex: 1 1 16rem; min-width: 0; }
+.dash-hero-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex: 0 1 auto;
+}
+.dash-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+.dash-shift-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #0027B7;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+}
+.dash-live-clock {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+.dash-occ-ring {
+  position: relative;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+.dash-occ-ring-svg { width: 100%; height: 100%; }
+.dash-occ-ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.dash-occ-ring-value {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #0027B7;
+  line-height: 1.1;
+}
+.dash-occ-ring-caption {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+.dash-kpi-row { margin-top: 0.15rem; }
+.dash-attention {
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+  padding: 0.85rem 1rem;
+}
+.dash-attention.hidden { display: none; }
+.dash-attention-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+.dash-attention-head h2 {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+.dash-attention-count {
+  min-width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #0027B7;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dash-attention-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+.dash-attention-item {
+  display: block;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.dash-attention-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+.dash-attention-item[data-tone="warning"] {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+.dash-attention-item[data-tone="danger"] {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #9f1239;
+}
+.dash-attention-item[data-tone="info"] {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+html.dark .dash-attention {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+html.dark .dash-shift-pill {
+  background: rgba(0, 39, 183, 0.18);
+  color: #c7d2fe;
+}
+
 /* ─── Housekeeping room grid (design match) ─── */
 .hk-toolbar {
   display: flex;
